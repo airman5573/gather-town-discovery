@@ -7,6 +7,6 @@ module.exports = {
   database: process.env.DB_DATABASE || 'discovery',
   entities: ['dist/**/*.entity.js'],
   synchronize: false,
-  migrations: ['dist/src/migration/**/*.js'],
-  cli: { migrationsDir: 'dist/src/migration' },
+  migrations: ['dist/migration/*{.ts,.js}'],
+  cli: { migrationsDir: 'dist/migration' },
 };
