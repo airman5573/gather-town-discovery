@@ -8,3 +8,7 @@ export interface User {
   password: string;
   role: UserRole;
 }
+
+export interface LoginResponse {
+  access_token: string;
+}
