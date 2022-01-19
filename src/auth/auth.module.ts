@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-import { OptionsModule } from 'src/admin/options/options.module';
-import { TeamPasswordModule } from 'src/admin/team-password/team-password.module';
+import { OptionsModule } from 'src/options/options.module';
+import { TeamPasswordModule } from 'src/team-password/team-password.module';
 import { AuthController } from './auth.controller';
 import { AuthMiddleware } from './auth.middleware';
 import { AuthService } from './auth.service';

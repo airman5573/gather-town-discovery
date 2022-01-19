@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { sign } from 'jsonwebtoken';
-import { OptionsService } from 'src/admin/options/options.service';
-import { TeamPasswordService } from 'src/admin/team-password/team-password.service';
+import { OptionsService } from 'src/options/options.service';
+import { TeamPasswordService } from 'src/team-password/team-password.service';
 import { User, UserRole } from 'src/types';
 
 @Injectable()
