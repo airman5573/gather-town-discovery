@@ -1,35 +1,17 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { OptionsModule } from 'src/admin/options/options.module';
 import { TeamPasswordModule } from 'src/admin/team-password/team-password.module';
 import { AuthController } from './auth.controller';
+import { AuthMiddleware } from './auth.middleware';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { JwtStrategy } from './jwt.strategy';
 import { LocalAuthGuard } from './local-auth.guard';
 import { LocalStrategy } from './local.strategy';
 
 @Module({
-  imports: [
-    TeamPasswordModule,
-    PassportModule,
-    JwtModule.register({
-      secret: 'my-secret',
-      signOptions: { expiresIn: '60s' },
-    }),
-  ],
+  imports: [TeamPasswordModule, PassportModule, OptionsModule],
   controllers: [AuthController],
-  providers: [
-    LocalStrategy,
-    LocalAuthGuard,
-    AuthService,
-    JwtStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-  ],
-  exports: [LocalAuthGuard],
+  providers: [LocalStrategy, LocalAuthGuard, AuthService, AuthMiddleware],
+  exports: [LocalAuthGuard, AuthMiddleware, AuthService],
 })
 export class AuthModule {}

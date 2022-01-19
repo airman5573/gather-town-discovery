@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { sign } from 'jsonwebtoken';
+import { OptionsService } from 'src/admin/options/options.service';
 import { TeamPasswordService } from 'src/admin/team-password/team-password.service';
-import { LoginResponse, User, UserRole } from 'src/types';
+import { User, UserRole } from 'src/types';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private teamPasswordService: TeamPasswordService,
-    private jwtService: JwtService,
+    private readonly teamPasswordService: TeamPasswordService,
+    private readonly optionsService: OptionsService,
+    private readonly configService: ConfigService,
   ) {}
 
   async validateUser(password: string): Promise<User | null> {
@@ -18,13 +21,20 @@ export class AuthService {
         role: UserRole.USER,
       };
     }
+    const adminPassword = await this.optionsService.getAdminPassword();
+    if (password === adminPassword) {
+      return { password: adminPassword, role: UserRole.ADMIN };
+    }
     return null;
   }
 
-  async login(user: User): Promise<LoginResponse> {
-    const payload = { team: user.team, role: user.role };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  createAccessToken({ team, password, role }: User): string {
+    return sign(
+      { team, password, role },
+      this.configService.get<string>('ACCESS_TOKEN_SECRET'),
+      {
+        expiresIn: '1d',
+      },
+    );
   }
 }

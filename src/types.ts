@@ -9,6 +9,8 @@ export interface User {
   role: UserRole;
 }
 
+export type AccessTokenPayload = User;
+
 export interface LoginResponse {
   access_token: string;
 }
