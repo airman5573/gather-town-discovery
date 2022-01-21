@@ -2,16 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UpdateTeamPasswordsDto } from './team-password.dto';
-import { TeamPassword } from './team-password.entity';
+import { TeamPasswordEntity } from './team-password.entity';
 
 @Injectable()
 export class TeamPasswordService {
   constructor(
-    @InjectRepository(TeamPassword)
-    private teamPasswordRepository: Repository<TeamPassword>,
+    @InjectRepository(TeamPasswordEntity)
+    private teamPasswordRepository: Repository<TeamPasswordEntity>,
   ) {}
 
-  async findOne(password: string): Promise<TeamPassword | undefined> {
+  async findOne(password: string): Promise<TeamPasswordEntity | undefined> {
     return await this.teamPasswordRepository.findOne({ password });
   }
 
@@ -30,7 +30,7 @@ export class TeamPasswordService {
     return teamPasswords;
   }
 
-  async getAll(): Promise<TeamPassword[]> {
+  async getAll(): Promise<TeamPasswordEntity[]> {
     return await this.teamPasswordRepository.find();
   }
 }

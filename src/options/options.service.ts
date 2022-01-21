@@ -2,16 +2,16 @@ import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OptionKey, YesOrNo } from 'src/types';
 import { Repository } from 'typeorm';
-import { Options } from './options.entity';
+import { OptionEntity } from './options.entity';
 
 @Injectable()
 export class OptionsService {
   constructor(
-    @InjectRepository(Options)
-    private optionsRepository: Repository<Options>,
+    @InjectRepository(OptionEntity)
+    private optionsRepository: Repository<OptionEntity>,
   ) {}
 
-  async getOption(key: OptionKey): Promise<Options> {
+  async getOption(key: OptionKey): Promise<OptionEntity> {
     return await this.optionsRepository.findOne({
       option_key: key,
     });

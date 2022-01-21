@@ -5,7 +5,6 @@ import {
   IsNumber,
   Max,
   Min,
-  IsBoolean,
 } from 'class-validator';
 import { YesOrNo } from 'src/types';
 

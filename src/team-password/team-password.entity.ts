@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class TeamPassword {
+export class TeamPasswordEntity {
   @PrimaryColumn()
   team: number;
 
