@@ -8,8 +8,6 @@ import { TeamPasswordService } from './team-password.service';
 export class TeamPasswordController {
   constructor(private teamPasswordService: TeamPasswordService) {}
 
-  // get team passwords
-
   // update team passwords
   @Roles('admin')
   @Put('/')
