@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { AuthModule } from './auth/auth.module';
 import { RolesGuard } from './auth/roles.guard';
+import { PuzzleModule } from './puzzle/puzzle.module';
 import { TimerModule } from './timer/timer.module';
 
 @Module({
@@ -21,6 +22,7 @@ import { TimerModule } from './timer/timer.module';
     TypeOrmModule.forRoot(),
     AuthModule,
     TimerModule,
+    PuzzleModule,
   ],
   providers: [
     {
