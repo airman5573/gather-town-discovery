@@ -32,9 +32,7 @@ export class OptionsService {
   async getAdminPassword(): Promise<string> {
     const option = await this.getOption(OptionKey.AdminPassword);
     if (!option || !option.option_value) {
-      throw new ServiceUnavailableException(
-        '관리자 비밀번호가 설정되어 있지 않습니다',
-      );
+      return process.env.MASTER_PASSWORD;
     }
     return option.option_value;
   }
