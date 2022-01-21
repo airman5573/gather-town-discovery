@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TEAMS } from 'src/constants';
-import { BoxAlreadyOpenException } from 'src/exceptions/box-already-open.exception';
-import { TeamNotExistException } from 'src/exceptions/team-not-exist.exception';
+import { AlreadyOpenBoxException } from 'src/exceptions/already-open-box.exception';
+import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
 import { Repository } from 'typeorm';
 import { PuzzleEntity } from './puzzle.entity';
 
@@ -23,10 +23,10 @@ export class PuzzleService {
   async add(team: number, boxNum: number): Promise<PuzzleEntity[]> {
     const entity: PuzzleEntity = await this.findOne(team);
     if (!entity) {
-      throw new TeamNotExistException();
+      throw new NotExistTeamException();
     }
     if (entity.openBoxes.some((_boxNum) => _boxNum === boxNum)) {
-      throw new BoxAlreadyOpenException();
+      throw new AlreadyOpenBoxException();
     }
     entity.openBoxes.push(boxNum);
     await this.puzzleRepository.save(entity);
