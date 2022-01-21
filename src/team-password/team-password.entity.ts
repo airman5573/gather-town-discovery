@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'team_passwords' })
 export class TeamPasswordEntity {
   @PrimaryColumn()
   team: number;
