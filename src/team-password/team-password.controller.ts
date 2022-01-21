@@ -12,11 +12,11 @@ export class TeamPasswordController {
 
   // update team passwords
   @Roles('admin')
-  @Put('update')
+  @Put('/')
   async updateTeamPasswords(
     @Body() updateTeamPasswordsDto: UpdateTeamPasswordsDto,
   ) {
-    this.teamPasswordService.update(updateTeamPasswordsDto);
+    return this.teamPasswordService.update(updateTeamPasswordsDto);
   }
 
   @Roles('admin')

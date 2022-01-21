@@ -27,6 +27,7 @@ export class TeamPasswordService {
         }),
       );
     }
+    return teamPasswords;
   }
 
   async getAll(): Promise<TeamPassword[]> {
