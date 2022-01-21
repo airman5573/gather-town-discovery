@@ -4,7 +4,7 @@ import { UpdateTeamPasswordsDto } from './team-password.dto';
 import { TeamPasswordEntity } from './team-password.entity';
 import { TeamPasswordService } from './team-password.service';
 
-@Controller('team-passwords')
+@Controller('team-password')
 export class TeamPasswordController {
   constructor(private teamPasswordService: TeamPasswordService) {}
 
