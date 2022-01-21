@@ -10,6 +10,7 @@ module.exports = {
     'dist/**/team-password.entity.js',
     'dist/**/team-point.entity.js',
     'dist/**/timer.entity.js',
+    'dist/**/options.entity.js',
   ],
   synchronize: false,
   migrations: ['dist/migration/*{.ts,.js}'],
