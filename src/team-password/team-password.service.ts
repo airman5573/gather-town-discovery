@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TEAMS } from 'src/constants';
 import { Repository } from 'typeorm';
 import { UpdateTeamPasswordsDto } from './team-password.dto';
 import { TeamPasswordEntity } from './team-password.entity';
@@ -32,5 +33,19 @@ export class TeamPasswordService {
 
   async getAll(): Promise<TeamPasswordEntity[]> {
     return await this.teamPasswordRepository.find();
+  }
+
+  async reset(): Promise<TeamPasswordEntity[]> {
+    await this.teamPasswordRepository.clear();
+    const entites = [];
+    for (const team of TEAMS) {
+      const entity = this.teamPasswordRepository.create({
+        team,
+        password: `${team}`,
+      });
+      entites.push(entity);
+      await this.teamPasswordRepository.save(entity);
+    }
+    return entites;
   }
 }

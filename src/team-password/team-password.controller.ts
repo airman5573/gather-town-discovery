@@ -22,4 +22,10 @@ export class TeamPasswordController {
   async getAllTeamPasswords(): Promise<TeamPasswordEntity[]> {
     return await this.teamPasswordService.getAll();
   }
+
+  @Roles('admin')
+  @Get('reset')
+  async reset(): Promise<TeamPasswordEntity[]> {
+    return await this.teamPasswordService.reset();
+  }
 }
