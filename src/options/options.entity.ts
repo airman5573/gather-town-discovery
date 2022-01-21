@@ -8,6 +8,6 @@ export class Options {
   @Column()
   option_key: string;
 
-  @Column()
+  @Column('text')
   option_value: string;
 }

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { OptionsController } from './options-controller';
+import { OptionsController } from './options.controller';
 import { Options } from './options.entity';
 import { OptionsService } from './options.service';
 
