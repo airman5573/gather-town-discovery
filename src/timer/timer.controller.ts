@@ -37,4 +37,10 @@ export class TimerController {
   async start(@Body() createTimerDto: CreateTimerDto): Promise<TimerEntity[]> {
     return await this.timerService.create(createTimerDto.teams);
   }
+
+  @Roles('admin')
+  @Put('reset')
+  async reset(): Promise<TimerEntity[]> {
+    return await this.timerService.reset();
+  }
 }

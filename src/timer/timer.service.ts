@@ -1,6 +1,7 @@
 import { LocalDateTime } from '@js-joda/core';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TEAMS } from 'src/constants';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
 import { Repository } from 'typeorm';
 import { TimerEntity } from './timer.entity';
@@ -46,5 +47,20 @@ export class TimerService {
       timers.push(result);
     }
     return timers;
+  }
+
+  async reset(): Promise<TimerEntity[]> {
+    await this.timerRepository.clear();
+    const entites = [];
+    const startTime = LocalDateTime.now();
+    for (const team of TEAMS) {
+      const entity = this.timerRepository.create({
+        team,
+        startTime,
+      });
+      entites.push(entity);
+      await this.timerRepository.save(entity);
+    }
+    return entites;
   }
 }
