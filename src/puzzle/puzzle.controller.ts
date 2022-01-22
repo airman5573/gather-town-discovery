@@ -8,7 +8,7 @@ import { PuzzleService } from './puzzle.service';
 export class PuzzleController {
   constructor(private readonly puzzleService: PuzzleService) {}
 
-  @Get()
+  @Get('all')
   async getAllPuzzles(): Promise<PuzzleEntity[]> {
     return await this.puzzleService.findAll();
   }
