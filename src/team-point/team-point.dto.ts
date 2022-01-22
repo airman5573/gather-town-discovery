@@ -1,7 +1,7 @@
-import { IsEnum, IsPositive } from 'class-validator';
+import { IsArray, IsEnum, IsPositive } from 'class-validator';
 import { PointType } from 'src/types';
 
-export class UpdatePointDto {
+export class TeamPointDto {
   @IsPositive()
   team: number;
 
@@ -10,4 +10,9 @@ export class UpdatePointDto {
 
   @IsEnum(PointType)
   pointType: PointType;
+}
+
+export class UpdateTeamPointsDto {
+  @IsArray()
+  teamPoints: TeamPointDto[];
 }

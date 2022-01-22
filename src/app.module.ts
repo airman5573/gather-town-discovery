@@ -11,6 +11,7 @@ import { AuthMiddleware } from './auth/auth.middleware';
 import { AuthModule } from './auth/auth.module';
 import { RolesGuard } from './auth/roles.guard';
 import { PuzzleModule } from './puzzle/puzzle.module';
+import { TeamPointModule } from './team-point/team-point.module';
 import { TimerModule } from './timer/timer.module';
 
 @Module({
@@ -23,6 +24,7 @@ import { TimerModule } from './timer/timer.module';
     AuthModule,
     TimerModule,
     PuzzleModule,
+    TeamPointModule,
   ],
   providers: [
     {

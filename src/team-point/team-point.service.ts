@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
-import { PointType } from 'src/types';
 import resetTable from 'src/utils/reset-table';
 import { Repository } from 'typeorm';
+import { TeamPointDto } from './team-point.dto';
 import { TeamPointEntity } from './team-point.entity';
 
 @Injectable()
@@ -25,17 +25,26 @@ export class TeamPointService {
     return teamPoint;
   }
 
-  async updatePoint(
-    team: number,
-    pointType: PointType,
-    point: number,
-  ): Promise<TeamPointEntity> {
+  async updatePoint({
+    team,
+    point,
+    pointType,
+  }: TeamPointDto): Promise<TeamPointEntity> {
     const teamPoint = await this.getPoint(team);
     if (!teamPoint) {
       throw new NotExistTeamException();
     }
     teamPoint[pointType] += point;
     return await this.teamPointRepository.save(teamPoint);
+  }
+
+  async updatePoints(teamPoints: TeamPointDto[]): Promise<TeamPointEntity[]> {
+    const entites: TeamPointEntity[] = [];
+    for (const tp of teamPoints) {
+      const entity = await this.updatePoint(tp);
+      entites.push(entity);
+    }
+    return entites;
   }
 
   async reset(): Promise<TeamPointEntity[]> {
