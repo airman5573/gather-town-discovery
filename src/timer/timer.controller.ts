@@ -9,15 +9,21 @@ import { TimerService } from './timer.service';
 export class TimerController {
   constructor(private readonly timerService: TimerService) {}
 
+  @Get('all')
+  async getAllTimers(): Promise<TimerEntity[]> {
+    return await this.timerService.findAll();
+  }
+
   @Get(':team')
   async getTimer(@Param('team') team: number): Promise<TimerEntity> {
+    console.log('getTimer is called');
     return await this.timerService.findOne(team);
   }
 
-  @Get('all')
-  async getAllTimers(): Promise<TimerEntity[]> {
-    console.log('getAllTimers is called');
-    return await this.timerService.findAll();
+  @Roles('admin')
+  @Put('reset')
+  async reset(): Promise<TimerEntity[]> {
+    return await this.timerService.reset();
   }
 
   @Roles('admin')
@@ -36,11 +42,5 @@ export class TimerController {
   @Post()
   async start(@Body() createTimerDto: CreateTimerDto): Promise<TimerEntity[]> {
     return await this.timerService.create(createTimerDto.teams);
-  }
-
-  @Roles('admin')
-  @Put('reset')
-  async reset(): Promise<TimerEntity[]> {
-    return await this.timerService.reset();
   }
 }
