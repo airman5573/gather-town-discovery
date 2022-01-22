@@ -1,7 +1,7 @@
 import { LocalDateTime } from '@js-joda/core';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TeamNotExistException } from 'src/exceptions/team-not-exist.exception';
+import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
 import { Repository } from 'typeorm';
 import { TimerEntity } from './timer.entity';
 
@@ -23,7 +23,7 @@ export class TimerService {
   async update(team: number, startTime: LocalDateTime) {
     const timer = await this.findOne(team);
     if (!timer) {
-      throw new TeamNotExistException();
+      throw new NotExistTeamException();
     }
     return await this.timerRepository.save(
       this.timerRepository.create({
