@@ -10,7 +10,7 @@ export class TeamPasswordController {
 
   // update team passwords
   @Roles('admin')
-  @Put('/')
+  @Put()
   async updateTeamPasswords(
     @Body() updateTeamPasswordsDto: UpdateTeamPasswordsDto,
   ) {
