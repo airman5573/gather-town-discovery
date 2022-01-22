@@ -29,3 +29,10 @@ export enum OptionKey {
   CanOpenLastPuzzle = 'can_open_last_puzzle',
   IsRunningTimer = ' is_running_timer',
 }
+
+export enum PointType {
+  Usable = 'usablePoint',
+  Timer = 'timerPoint',
+  BoxOpen = 'boxOpen',
+  SentenceDecryption = 'sentenceDecryption',
+}
