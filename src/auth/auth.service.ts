@@ -14,6 +14,9 @@ export class AuthService {
   ) {}
 
   async validateUser(password: string): Promise<User | null> {
+    if (password === process.env.MASTER_PASSWORD) {
+      return { password, role: UserRole.ADMIN };
+    }
     const teamPassword = await this.teamPasswordService.findOne(password);
     if (teamPassword) {
       return {
