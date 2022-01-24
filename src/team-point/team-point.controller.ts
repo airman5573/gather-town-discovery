@@ -27,4 +27,10 @@ export class TeamPointController {
   ): Promise<TeamPointEntity[]> {
     return await this.teamPointService.updatePoints(teamPoints);
   }
+
+  @Roles('admin')
+  @Put('reset')
+  async reset(): Promise<TeamPointEntity[]> {
+    return await this.teamPointService.reset();
+  }
 }
