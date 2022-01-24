@@ -5,9 +5,9 @@ import { Column, Entity } from 'typeorm';
 @Entity({ name: 'puzzles' })
 export class PuzzleEntity extends TeamBaseEntity {
   @Column({
-    name: 'open_boxes',
+    name: 'opened_box_list',
     type: 'simple-array',
     transformer: new ArrayStringToNumTransformer(),
   })
-  openBoxes: number[];
+  openedBoxList: number[];
 }

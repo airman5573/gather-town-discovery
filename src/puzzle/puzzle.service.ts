@@ -13,24 +13,24 @@ export class PuzzleService {
     private readonly puzzleRepository: Repository<PuzzleEntity>,
   ) {}
 
-  async findOne(team: number): Promise<PuzzleEntity> | undefined {
+  async getOpenedBoxList(team: number): Promise<PuzzleEntity> | undefined {
     return await this.puzzleRepository.findOne({ team });
   }
-  async findAll(): Promise<PuzzleEntity[]> {
+  async getAllOpendBoxList(): Promise<PuzzleEntity[]> {
     return await this.puzzleRepository.find();
   }
 
   async add(team: number, boxNum: number): Promise<PuzzleEntity[]> {
-    const entity: PuzzleEntity = await this.findOne(team);
+    const entity: PuzzleEntity = await this.getOpenedBoxList(team);
     if (!entity) {
       throw new NotExistTeamException();
     }
-    if (entity.openBoxes.some((_boxNum) => _boxNum === boxNum)) {
+    if (entity.openedBoxList.some((_boxNum) => _boxNum === boxNum)) {
       throw new AlreadyOpenBoxException();
     }
-    entity.openBoxes.push(boxNum);
+    entity.openedBoxList.push(boxNum);
     await this.puzzleRepository.save(entity);
-    return await this.findAll();
+    return await this.getAllOpendBoxList();
   }
 
   async reset(): Promise<PuzzleEntity[]> {
@@ -39,7 +39,7 @@ export class PuzzleService {
     for (const team of TEAMS) {
       const entity = this.puzzleRepository.create({
         team,
-        openBoxes: [],
+        openedBoxList: [],
       });
       entities.push(entity);
       await this.puzzleRepository.save(entity);

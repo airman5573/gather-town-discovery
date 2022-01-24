@@ -9,13 +9,13 @@ export class PuzzleController {
   constructor(private readonly puzzleService: PuzzleService) {}
 
   @Get('all')
-  async getAllPuzzles(): Promise<PuzzleEntity[]> {
-    return await this.puzzleService.findAll();
+  async getAllOpenedBoxList(): Promise<PuzzleEntity[]> {
+    return await this.puzzleService.getAllOpendBoxList();
   }
 
   @Get(':team')
   async getPuzzle(@Param('team') team: number): Promise<PuzzleEntity> {
-    return await this.puzzleService.findOne(team);
+    return await this.puzzleService.getOpenedBoxList(team);
   }
 
   @Roles('user', 'admin')
