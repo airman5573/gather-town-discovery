@@ -1,6 +1,8 @@
-import { Injectable, ServiceUnavailableException } from '@nestjs/common';
+import { BadRequestException, Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PUZZLE_PLACE_HOLDER } from 'src/constants';
 import { OptionKey, YesOrNo } from 'src/types';
+import { shuffle } from 'src/utils/random';
 import { Repository } from 'typeorm';
 import { OptionEntity } from './options.entity';
 
@@ -69,8 +71,20 @@ export class OptionsService {
     return parseInt(result, 10);
   }
 
-  async getPuzzleMessage(): Promise<string> {
-    const puzzleMessageOption = await this.getOption(OptionKey.PuzzleMessage);
+  async getOriginalPuzzleMessage(): Promise<string> {
+    const puzzleMessageOption = await this.getOption(
+      OptionKey.OriginalPuzzleMessage,
+    );
+    if (!puzzleMessageOption || !puzzleMessageOption.option_value) {
+      return '';
+    }
+    return puzzleMessageOption.option_value;
+  }
+
+  async getShuffledPuzzleMessageWithPlaceholder(): Promise<string> {
+    const puzzleMessageOption = await this.getOption(
+      OptionKey.ShuffledPuzzleMessageWithPlaceHolder,
+    );
     if (!puzzleMessageOption || !puzzleMessageOption.option_value) {
       return '';
     }
@@ -78,7 +92,25 @@ export class OptionsService {
   }
 
   async updatePuzzleMessage(message: string): Promise<string> {
-    return await this.updateOption(OptionKey.PuzzleMessage, message);
+    const puzzleCount = await this.getPuzzleCount();
+    if (puzzleCount < message.length) {
+      throw new BadRequestException(
+        '암호의 길이가 퍼즐의 개수보다 작을 수 없습니다',
+      );
+    }
+    const noWhiteSpaceMessage = message.replace(/ /g, '');
+    const temp = PUZZLE_PLACE_HOLDER.repeat(
+      puzzleCount - noWhiteSpaceMessage.length,
+    ).concat(noWhiteSpaceMessage);
+    const shuffledMessageWithPlaceHolder = JSON.stringify(
+      shuffle(temp.split('')),
+    );
+
+    await this.updateOption(
+      OptionKey.ShuffledPuzzleMessageWithPlaceHolder,
+      shuffledMessageWithPlaceHolder,
+    );
+    return await this.updateOption(OptionKey.OriginalPuzzleMessage, message);
   }
 
   async getLastPuzzleVideoUrl(): Promise<string> {

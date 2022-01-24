@@ -61,9 +61,15 @@ export class OptionsController {
     );
   }
 
-  @Get('puzzle-message')
-  async getPuzzleMessage(): Promise<string> {
-    return await this.optionsService.getPuzzleMessage();
+  @Roles('admin')
+  @Get('original-puzzle-message')
+  async getOriginalPuzzleMessage(): Promise<string> {
+    return await this.optionsService.getOriginalPuzzleMessage();
+  }
+
+  @Get('shuffled-puzzle-message-with-placeholder')
+  async getShuffledPuzzleMessageWithPlaceholder(): Promise<string> {
+    return await this.optionsService.getShuffledPuzzleMessageWithPlaceholder();
   }
 
   @Roles('admin')
@@ -71,7 +77,6 @@ export class OptionsController {
   async updatePuzzleMessage(
     @Body() updatePuzzleMessageDto: UpdatePuzzleMessageDto,
   ): Promise<string> {
-    console.log('updatePuzzleMessageDto : ', updatePuzzleMessageDto);
     return await this.optionsService.updatePuzzleMessage(
       updatePuzzleMessageDto.message,
     );
