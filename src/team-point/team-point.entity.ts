@@ -30,4 +30,11 @@ export class TeamPointEntity extends TeamBaseEntity {
     default: 0,
   })
   sentenceDecryption: number;
+
+  @Column({
+    name: 'bingo',
+    type: 'int',
+    default: 0,
+  })
+  bingo: number;
 }
