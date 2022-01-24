@@ -37,4 +37,22 @@ export class PointTableService {
     );
     return item;
   }
+
+  async reset() {
+    const promises = [
+      this.updatePointTableItem(PointTableKey.TimerPlus, 100),
+      this.updatePointTableItem(PointTableKey.TimerMinus, 100),
+      this.updatePointTableItem(PointTableKey.Upload, 0),
+      this.updatePointTableItem(PointTableKey.OpenBoxCost, 1000),
+      this.updatePointTableItem(PointTableKey.OpenEmptyBox, 2000),
+      this.updatePointTableItem(PointTableKey.OpenLetterBox, 4000),
+      this.updatePointTableItem(PointTableKey.Bingo, 1000),
+      this.updatePointTableItem(PointTableKey.DescryptSentence, 20000),
+    ];
+    const results = await Promise.all(promises);
+    return results.reduce((acc: PointTable, { key, point }) => {
+      acc[key] = point;
+      return acc;
+    }, {});
+  }
 }

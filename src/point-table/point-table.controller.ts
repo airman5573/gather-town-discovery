@@ -22,6 +22,12 @@ export class PointTableController {
   }
 
   @Roles('admin')
+  @Put('reset')
+  async reset(): Promise<PointTable> {
+    return await this.pointTableService.reset();
+  }
+
+  @Roles('admin')
   @Put(':key')
   async updatePointTableItem(
     @Param() { key }: PointTableKeyDto,
