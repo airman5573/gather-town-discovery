@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { AuthModule } from './auth/auth.module';
 import { RolesGuard } from './auth/roles.guard';
+import { PointTableModule } from './point-table/point-table.module';
 import { PuzzleModule } from './puzzle/puzzle.module';
 import { TeamPointModule } from './team-point/team-point.module';
 import { TimerModule } from './timer/timer.module';
@@ -25,6 +26,7 @@ import { TimerModule } from './timer/timer.module';
     TimerModule,
     PuzzleModule,
     TeamPointModule,
+    PointTableModule,
   ],
   providers: [
     {

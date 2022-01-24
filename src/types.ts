@@ -36,3 +36,18 @@ export enum PointType {
   BoxOpen = 'boxOpen',
   SentenceDecryption = 'sentenceDecryption',
 }
+
+export enum PointTableKey {
+  TimerPlus = 'timer_plus',
+  TimerMinus = 'timer_minus',
+  Upload = 'upload',
+  OpenBox = 'open_box',
+  OpenBoxEmpty = 'open_box_empty',
+  OpenBoxFilled = 'open_box_filled',
+  Bingo = 'bingo',
+  DescryptSentence = 'descrypt_sentence',
+}
+
+export type PointTable = {
+  [k in PointTableKey]?: number;
+};
