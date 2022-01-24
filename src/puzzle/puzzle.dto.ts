@@ -8,7 +8,7 @@ export class OpenPuzzleDto {
   team: number;
 
   @IsPositive()
-  @Min(1)
+  @Min(0)
   @Max(MAX_PUZZLE_COUNT)
   boxNum: number;
 }
