@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, ServiceUnavailableException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PUZZLE_PLACE_HOLDER } from 'src/constants';
 import { OptionKey, YesOrNo } from 'src/types';
