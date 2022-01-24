@@ -4,30 +4,30 @@ import { Column, Entity } from 'typeorm';
 @Entity({ name: 'team_points' })
 export class TeamPointEntity extends TeamBaseEntity {
   @Column({
-    name: 'usable_point',
+    name: 'usable',
     type: 'int',
     default: 0,
   })
-  usablePoint: number;
+  usable: number;
 
   @Column({
-    name: 'timer_point',
+    name: 'timer',
     type: 'int',
     default: 0,
   })
-  timerPoint: number;
+  timer: number;
 
   @Column({
-    name: 'box_open_point',
+    name: 'box_open',
     type: 'int',
     default: 0,
   })
-  boxOpenPoint: number;
+  boxOpen: number;
 
   @Column({
-    name: 'sentence_decryption_point',
+    name: 'sentence_decryption',
     type: 'int',
     default: 0,
   })
-  sentenceDecryptionPoint: number;
+  sentenceDecryption: number;
 }

@@ -32,8 +32,8 @@ export enum OptionKey {
 }
 
 export enum PointType {
-  Usable = 'usablePoint',
-  Timer = 'timerPoint',
+  Usable = 'usable',
+  Timer = 'timer',
   BoxOpen = 'boxOpen',
   SentenceDecryption = 'sentenceDecryption',
 }
