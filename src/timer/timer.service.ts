@@ -18,7 +18,7 @@ export class TimerService {
   }
 
   async findAll(): Promise<TimerEntity[]> {
-    return this.timerRepository.find();
+    return this.timerRepository.find({ order: { team: 'ASC' } });
   }
 
   async update(team: number, startTime: LocalDateTime) {

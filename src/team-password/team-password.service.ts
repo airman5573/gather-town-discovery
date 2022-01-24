@@ -32,7 +32,7 @@ export class TeamPasswordService {
   }
 
   async getAll(): Promise<TeamPasswordEntity[]> {
-    return await this.teamPasswordRepository.find();
+    return await this.teamPasswordRepository.find({ order: { team: 'ASC' } });
   }
 
   async reset(): Promise<TeamPasswordEntity[]> {

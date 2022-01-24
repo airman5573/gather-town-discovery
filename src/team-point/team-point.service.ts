@@ -14,7 +14,7 @@ export class TeamPointService {
   ) {}
 
   async getAllTeamPoints(): Promise<TeamPointEntity[]> {
-    return await this.teamPointRepository.find();
+    return await this.teamPointRepository.find({ order: { team: 'ASC' } });
   }
 
   async getPoint(team: number): Promise<TeamPointEntity> {

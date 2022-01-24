@@ -17,7 +17,7 @@ export class PuzzleService {
     return await this.puzzleRepository.findOne({ team });
   }
   async getAllOpendBoxList(): Promise<PuzzleEntity[]> {
-    return await this.puzzleRepository.find();
+    return await this.puzzleRepository.find({ order: { team: 'ASC' } });
   }
 
   async add(team: number, boxNum: number): Promise<PuzzleEntity[]> {
