@@ -14,7 +14,7 @@ export class PuzzleController {
   }
 
   @Get(':team')
-  async getPuzzle(@Param('team') team: number): Promise<PuzzleEntity> {
+  async getOpenedBoxList(@Param('team') team: number): Promise<PuzzleEntity> {
     return await this.puzzleService.getOpenedBoxList(team);
   }
 
