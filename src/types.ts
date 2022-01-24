@@ -38,13 +38,14 @@ export enum PointType {
   SentenceDecryption = 'sentenceDecryption',
 }
 
+// OpenBox를 제외한 나머지는 reward이다.
 export enum PointTableKey {
   TimerPlus = 'timer_plus',
   TimerMinus = 'timer_minus',
   Upload = 'upload',
-  OpenBox = 'open_box',
-  OpenBoxEmpty = 'open_box_empty',
-  OpenBoxFilled = 'open_box_filled',
+  OpenBoxCost = 'open_box_cost',
+  OpenEmptyBox = 'open_empty_box',
+  OpenLetterBox = 'open_letter_box',
   Bingo = 'bingo',
   DescryptSentence = 'descrypt_sentence',
 }
