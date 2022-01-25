@@ -13,7 +13,7 @@ export class PuzzleMessageDto {
   originalPuzzleMessage: string;
 }
 
-export class OptionDto extends PuzzleMessageDto {
+export class AllOptionDto extends PuzzleMessageDto {
   adminPassword: string;
   canSubmitDescryptedSentence: YesOrNo;
   puzzleCount: number;

@@ -4,7 +4,7 @@ import { PUZZLE_PLACE_HOLDER } from 'src/constants';
 import { OptionKey, YesOrNo } from 'src/types';
 import { shuffle } from 'src/utils/random';
 import { Repository } from 'typeorm';
-import { OptionDto, PuzzleMessageDto } from './options.dto';
+import { AllOptionDto, PuzzleMessageDto } from './options.dto';
 import { OptionEntity } from './options.entity';
 
 @Injectable()
@@ -189,7 +189,7 @@ export class OptionsService {
     return await this.updateOption(OptionKey.MapImage, filename);
   }
 
-  async reset(): Promise<OptionDto> {
+  async reset(): Promise<AllOptionDto> {
     const adminPassword = await this.updateAdminPassword('5911');
     const canSubmitDescryptedSentence =
       await this.updateCanSubmitDecryptedSentence(YesOrNo.NO);
