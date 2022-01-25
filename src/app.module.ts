@@ -5,6 +5,7 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthMiddleware } from './auth/auth.middleware';
@@ -15,6 +16,7 @@ import { PuzzleModule } from './puzzle/puzzle.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { TeamPointModule } from './team-point/team-point.module';
 import { TimerModule } from './timer/timer.module';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -23,6 +25,11 @@ import { TimerModule } from './timer/timer.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(),
+    ServeStaticModule.forRoot({
+      // rootPath: join(__dirname, '../', process.env.PUBLIC_PATH),
+      rootPath: join(__dirname, '../', 'public'),
+      serveRoot: '/public/',
+    }),
     AuthModule,
     TimerModule,
     PuzzleModule,

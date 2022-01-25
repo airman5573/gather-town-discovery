@@ -29,6 +29,8 @@ export enum OptionKey {
   LastPuzzleVideoUrl = 'last_puzzle_video_url',
   CanOpenLastPuzzle = 'can_open_last_puzzle',
   IsRunningTimer = ' is_running_timer',
+  CompanyImage = 'company_image',
+  MapImage = 'map_image',
 }
 
 export enum PointType {

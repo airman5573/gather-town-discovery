@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Put,
+  Post,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
 import { ADMIN_ROLE } from 'src/constants';
 import { YesOrNo } from 'src/types';
@@ -12,6 +20,8 @@ import {
   UpdateIsRunningTimerDto,
 } from './options.dto';
 import { OptionsService } from './options.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { adminMulterOptions } from 'src/lib/multer-options';
 
 @Controller('options')
 export class OptionsController {
@@ -126,5 +136,23 @@ export class OptionsController {
     return await this.optionsService.updateIsRunningTimer(
       updateIsRunningTimerDto.status,
     );
+  }
+
+  // 'company-image' => formData의 key값
+  // null => 파일 최대 갯수
+  @UseInterceptors(FileInterceptor('image', adminMulterOptions))
+  @Roles(ADMIN_ROLE)
+  @Post('company-image')
+  async uploadCompayImage(@UploadedFile() file) {
+    await this.optionsService.updateCompayImage(file.filename);
+    return `${process.env.SERVER_URL}/${process.env.ADMIN_UPLOAD_PATH}/${file.filename}`;
+  }
+
+  @UseInterceptors(FileInterceptor('image', adminMulterOptions))
+  @Roles(ADMIN_ROLE)
+  @Post('map-image')
+  async uploadMapImage(@UploadedFile() file) {
+    await this.optionsService.updateMapImage(file.filename);
+    return `${process.env.SERVER_URL}/${process.env.ADMIN_UPLOAD_PATH}/${file.filename}`;
   }
 }

@@ -154,4 +154,28 @@ export class OptionsService {
       status,
     )) as YesOrNo;
   }
+
+  async getCompanyImage(): Promise<string> {
+    const option = await this.getOption(OptionKey.CompanyImage);
+    if (!option || !option.option_value) {
+      return 'default.png';
+    }
+    return option.option_value;
+  }
+
+  async updateCompayImage(filename: string): Promise<string> {
+    return await this.updateOption(OptionKey.CompanyImage, filename);
+  }
+
+  async getMapImage(): Promise<string> {
+    const option = await this.getOption(OptionKey.MapImage);
+    if (!option || !option.option_value) {
+      return 'default.png';
+    }
+    return option.option_value;
+  }
+
+  async updateMapImage(filename: string): Promise<string> {
+    return await this.updateOption(OptionKey.MapImage, filename);
+  }
 }
