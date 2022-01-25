@@ -17,6 +17,7 @@ import { StatisticsModule } from './statistics/statistics.module';
 import { TeamPointModule } from './team-point/team-point.module';
 import { TimerModule } from './timer/timer.module';
 import { join } from 'path';
+import { MissionUploadModule } from './mission-upload/mission-upload.module';
 
 @Module({
   imports: [
@@ -26,7 +27,6 @@ import { join } from 'path';
     }),
     TypeOrmModule.forRoot(),
     ServeStaticModule.forRoot({
-      // rootPath: join(__dirname, '../', process.env.PUBLIC_PATH),
       rootPath: join(__dirname, '../', 'public'),
       serveRoot: '/public/',
     }),
@@ -36,6 +36,7 @@ import { join } from 'path';
     TeamPointModule,
     PointTableModule,
     StatisticsModule,
+    MissionUploadModule,
   ],
   providers: [
     {

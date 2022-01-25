@@ -12,6 +12,7 @@ module.exports = {
     'dist/**/timer.entity.js',
     'dist/**/options.entity.js',
     'dist/**/point-table.entity.js',
+    'dist/**/mission-upload.entity.js',
   ],
   synchronize: false,
   migrations: ['dist/migration/*{.ts,.js}'],
