@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsDateString, IsPositive } from 'class-validator';
 
 export class UpdateTimerDto {
@@ -7,5 +8,6 @@ export class UpdateTimerDto {
 
 export class CreateTimerDto {
   @IsPositive({ each: true })
+  @Type(() => Number)
   teams: number[];
 }

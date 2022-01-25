@@ -1,5 +1,5 @@
 import { PickType } from '@nestjs/mapped-types';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { IsEnum, IsPositive } from 'class-validator';
 import { PointTableKey } from 'src/types';
 import { hyphenToUnderscoreTransformer } from 'src/utils/hyphen-to-under_score-transformer';
@@ -11,6 +11,7 @@ export class PointTableKeyDto {
 }
 
 export class PointTableDto extends PointTableKeyDto {
+  @Type(() => Number)
   @IsPositive()
   point: number;
 }
