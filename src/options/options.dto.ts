@@ -8,6 +8,11 @@ import {
 } from 'class-validator';
 import { YesOrNo } from 'src/types';
 
+export class PuzzleMessageDto {
+  shuffledPuzzleMessageWithPlaceHolder: Array<string>;
+  originalPuzzleMessage: string;
+}
+
 // Admin Password
 export class UpdateAdminPasswordDto {
   @IsNotEmpty()

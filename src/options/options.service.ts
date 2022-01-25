@@ -4,6 +4,7 @@ import { PUZZLE_PLACE_HOLDER } from 'src/constants';
 import { OptionKey, YesOrNo } from 'src/types';
 import { shuffle } from 'src/utils/random';
 import { Repository } from 'typeorm';
+import { PuzzleMessageDto } from './options.dto';
 import { OptionEntity } from './options.entity';
 
 @Injectable()
@@ -91,7 +92,7 @@ export class OptionsService {
     return puzzleMessageOption.option_value;
   }
 
-  async updatePuzzleMessage(message: string): Promise<string> {
+  async updatePuzzleMessage(message: string): Promise<PuzzleMessageDto> {
     const puzzleCount = await this.getPuzzleCount();
     if (puzzleCount < message.length) {
       throw new BadRequestException(
@@ -110,7 +111,16 @@ export class OptionsService {
       OptionKey.ShuffledPuzzleMessageWithPlaceHolder,
       shuffledMessageWithPlaceHolder,
     );
-    return await this.updateOption(OptionKey.OriginalPuzzleMessage, message);
+    const originalPuzzleMessage = await this.updateOption(
+      OptionKey.OriginalPuzzleMessage,
+      message,
+    );
+    return {
+      originalPuzzleMessage,
+      shuffledPuzzleMessageWithPlaceHolder: JSON.parse(
+        shuffledMessageWithPlaceHolder,
+      ),
+    };
   }
 
   async getLastPuzzleVideoUrl(): Promise<string> {

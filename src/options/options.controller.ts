@@ -88,9 +88,11 @@ export class OptionsController {
   async updatePuzzleMessage(
     @Body() updatePuzzleMessageDto: UpdatePuzzleMessageDto,
   ): Promise<string> {
-    return await this.optionsService.updatePuzzleMessage(
-      updatePuzzleMessageDto.message,
-    );
+    const { originalPuzzleMessage } =
+      await this.optionsService.updatePuzzleMessage(
+        updatePuzzleMessageDto.message,
+      );
+    return originalPuzzleMessage;
   }
 
   @Get('last-puzzle-video-url')
