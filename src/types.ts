@@ -43,14 +43,14 @@ export enum PointType {
 
 // OpenBox를 제외한 나머지는 reward이다.
 export enum PointTableKey {
-  TimerPlus = 'timer_plus',
-  TimerMinus = 'timer_minus',
+  TimerPlus = 'timerPlus',
+  TimerMinus = 'timerMinus',
   Upload = 'upload',
-  OpenBoxCost = 'open_box_cost',
-  OpenEmptyBox = 'open_empty_box',
-  OpenLetterBox = 'open_letter_box',
+  OpenBoxCost = 'openBoxCost',
+  OpenEmptyBox = 'openEmptyBox',
+  OpenLetterBox = 'openLetterBox',
   Bingo = 'bingo',
-  DescryptSentence = 'descrypt_sentence',
+  DescryptSentence = 'descryptSentence',
 }
 
 export type PointTable = {

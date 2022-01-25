@@ -2,10 +2,10 @@ import { PickType } from '@nestjs/mapped-types';
 import { Transform, Type } from 'class-transformer';
 import { IsEnum, IsPositive } from 'class-validator';
 import { PointTableKey } from 'src/types';
-import { hyphenToUnderscoreTransformer } from 'src/utils/hyphen-to-under_score-transformer';
+import { hyphenToCamelCase } from 'src/utils/hyphen-to-camelCase';
 
 export class PointTableKeyDto {
-  @Transform(({ value }) => hyphenToUnderscoreTransformer(value))
+  @Transform(({ value }) => hyphenToCamelCase(value))
   @IsEnum(PointTableKey)
   key: PointTableKey;
 }
