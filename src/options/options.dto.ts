@@ -13,6 +13,17 @@ export class PuzzleMessageDto {
   originalPuzzleMessage: string;
 }
 
+export class OptionDto extends PuzzleMessageDto {
+  adminPassword: string;
+  canSubmitDescryptedSentence: YesOrNo;
+  puzzleCount: number;
+  lastPuzzleVideoUrl: string;
+  canOpenLastPuzzle: YesOrNo;
+  isRunningTimer: YesOrNo;
+  companyImage: string;
+  mapImage: string;
+}
+
 // Admin Password
 export class UpdateAdminPasswordDto {
   @IsNotEmpty()

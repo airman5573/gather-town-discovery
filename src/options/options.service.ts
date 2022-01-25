@@ -4,7 +4,7 @@ import { PUZZLE_PLACE_HOLDER } from 'src/constants';
 import { OptionKey, YesOrNo } from 'src/types';
 import { shuffle } from 'src/utils/random';
 import { Repository } from 'typeorm';
-import { PuzzleMessageDto } from './options.dto';
+import { OptionDto, PuzzleMessageDto } from './options.dto';
 import { OptionEntity } from './options.entity';
 
 @Injectable()
@@ -187,5 +187,32 @@ export class OptionsService {
 
   async updateMapImage(filename: string): Promise<string> {
     return await this.updateOption(OptionKey.MapImage, filename);
+  }
+
+  async reset(): Promise<OptionDto> {
+    const adminPassword = await this.updateAdminPassword('5911');
+    const canSubmitDescryptedSentence =
+      await this.updateCanSubmitDecryptedSentence(YesOrNo.NO);
+    const puzzleCount = await this.updatePuzzleCount(0);
+    const { originalPuzzleMessage } = await this.updatePuzzleMessage('');
+    const shuffledPuzzleMessageWithPlaceHolder = [];
+    const lastPuzzleVideoUrl = await this.updateLastPuzzleVideoUrl('');
+    const canOpenLastPuzzle = await this.updateCanOpenLastPuzzle(YesOrNo.NO);
+    const isRunningTimer = await this.updateIsRunningTimer(YesOrNo.NO);
+    const companyImage = await this.updateCompayImage('');
+    const mapImage = await this.updateMapImage('');
+
+    return {
+      adminPassword,
+      canSubmitDescryptedSentence,
+      puzzleCount,
+      originalPuzzleMessage,
+      shuffledPuzzleMessageWithPlaceHolder,
+      lastPuzzleVideoUrl,
+      canOpenLastPuzzle,
+      isRunningTimer,
+      companyImage,
+      mapImage,
+    };
   }
 }
