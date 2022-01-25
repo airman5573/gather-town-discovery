@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
+import { ADMIN_ROLE } from 'src/constants';
 import { YesOrNo } from 'src/types';
 import {
   UpdateAdminPasswordDto,
@@ -16,13 +17,13 @@ import { OptionsService } from './options.service';
 export class OptionsController {
   constructor(private optionsService: OptionsService) {}
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Get('admin-password')
   async getAdminPassword(): Promise<string> {
     return await this.optionsService.getAdminPassword();
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put('admin-password')
   async updateAdminPassword(
     @Body() updateAdminPasswordDto: UpdateAdminPasswordDto,
@@ -37,7 +38,7 @@ export class OptionsController {
     return await this.optionsService.getCanSubmitDescryptedSentence();
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put('can-submit-descrypted-sentence')
   async updateCanSubmitDescryptedSentence(
     @Body()
@@ -53,7 +54,7 @@ export class OptionsController {
     return await this.optionsService.getPuzzleCount();
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put('puzzle-count')
   async updatePuzzleCount(@Body() updatePuzzleCountDto: UpdatePuzzleCountDto) {
     return await this.optionsService.updatePuzzleCount(
@@ -61,7 +62,7 @@ export class OptionsController {
     );
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Get('original-puzzle-message')
   async getOriginalPuzzleMessage(): Promise<string> {
     return await this.optionsService.getOriginalPuzzleMessage();
@@ -72,7 +73,7 @@ export class OptionsController {
     return await this.optionsService.getShuffledPuzzleMessageWithPlaceholder();
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put('puzzle-message')
   async updatePuzzleMessage(
     @Body() updatePuzzleMessageDto: UpdatePuzzleMessageDto,
@@ -87,7 +88,7 @@ export class OptionsController {
     return await this.optionsService.getLastPuzzleVideoUrl();
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put('last-puzzle-video-url')
   async updateLastPuzzleVideoUrl(
     @Body() updateLastPuzzleVideoUrlDto: UpdateLastPuzzleVideoUrlDto,
@@ -102,7 +103,7 @@ export class OptionsController {
     return await this.optionsService.getCanOpenLastPuzzle();
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put('can-open-last-puzzle')
   async updateCanOpenLastPuzzle(
     @Body() updateCanOpenLastPuzzleDto: UpdateCanOpenLastPuzzleDto,
@@ -117,7 +118,7 @@ export class OptionsController {
     return await this.optionsService.getIsRunningTimer();
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put('is-running-timer')
   async updateIsRunningTimer(
     @Body() updateIsRunningTimerDto: UpdateIsRunningTimerDto,

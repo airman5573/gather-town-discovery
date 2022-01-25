@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
+import { ADMIN_ROLE } from 'src/constants';
 import { UpdateTeamPasswordsDto } from './team-password.dto';
 import { TeamPasswordEntity } from './team-password.entity';
 import { TeamPasswordService } from './team-password.service';
@@ -9,7 +10,7 @@ export class TeamPasswordController {
   constructor(private teamPasswordService: TeamPasswordService) {}
 
   // update team passwords
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put()
   async updateTeamPasswords(
     @Body() updateTeamPasswordsDto: UpdateTeamPasswordsDto,
@@ -17,13 +18,13 @@ export class TeamPasswordController {
     return this.teamPasswordService.update(updateTeamPasswordsDto);
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Get('all')
   async getAllTeamPasswords(): Promise<TeamPasswordEntity[]> {
     return await this.teamPasswordService.getAll();
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Get('reset')
   async reset(): Promise<TeamPasswordEntity[]> {
     return await this.teamPasswordService.reset();
