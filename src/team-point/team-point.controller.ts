@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
+import { User } from 'src/auth/user.decorator';
 import { UpdateTeamPointsDto } from './team-point.dto';
 import { TeamPointEntity } from './team-point.entity';
 import { TeamPointService } from './team-point.service';
@@ -8,9 +9,15 @@ import { TeamPointService } from './team-point.service';
 export class TeamPointController {
   constructor(private readonly teamPointService: TeamPointService) {}
 
-  @Roles('admin', 'user')
+  @Roles('user')
+  @Get()
+  async getPointByUser(@User('team') team: number): Promise<TeamPointEntity> {
+    return await this.teamPointService.getPoint(team);
+  }
+
+  @Roles('admin')
   @Get(':team')
-  async getPoint(@Param('team') team: number): Promise<TeamPointEntity> {
+  async getPointByAdmin(@Param('team') team: number): Promise<TeamPointEntity> {
     return await this.teamPointService.getPoint(team);
   }
 

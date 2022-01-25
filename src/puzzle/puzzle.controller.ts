@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
+import { User } from 'src/auth/user.decorator';
 import { OpenPuzzleDto } from './puzzle.dto';
 import { PuzzleEntity } from './puzzle.entity';
 import { PuzzleService } from './puzzle.service';
@@ -18,10 +19,11 @@ export class PuzzleController {
     return await this.puzzleService.getOpenedBoxList(team);
   }
 
-  @Roles('user', 'admin')
+  @Roles('user')
   @Post('open')
   async openPuzzle(
-    @Body() { team, boxNum }: OpenPuzzleDto,
+    @Body() { boxNum }: OpenPuzzleDto,
+    @User('team') team: number,
   ): Promise<PuzzleEntity[]> {
     return await this.puzzleService.add(team, boxNum);
   }
