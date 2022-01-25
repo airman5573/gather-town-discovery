@@ -38,6 +38,7 @@ export enum PointType {
   Timer = 'timer',
   BoxOpen = 'boxOpen',
   SentenceDecryption = 'sentenceDecryption',
+  Bingo = 'bingo',
 }
 
 // OpenBox를 제외한 나머지는 reward이다.
