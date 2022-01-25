@@ -21,16 +21,16 @@ export enum YesOrNo {
 }
 
 export enum OptionKey {
-  AdminPassword = 'admin_password',
-  CanSubmitDescryptedSentence = 'can_submit_descrypted_sentence',
-  PuzzleCount = 'puzzle_count',
-  OriginalPuzzleMessage = 'original_puzzle_message',
-  ShuffledPuzzleMessageWithPlaceHolder = 'shuffled_puzzle_message_with_placeholder',
-  LastPuzzleVideoUrl = 'last_puzzle_video_url',
-  CanOpenLastPuzzle = 'can_open_last_puzzle',
-  IsRunningTimer = ' is_running_timer',
-  CompanyImage = 'company_image',
-  MapImage = 'map_image',
+  AdminPassword = 'adminPassword',
+  CanSubmitDescryptedSentence = 'canSubmitDescryptedSentence',
+  PuzzleCount = 'puzzleCount',
+  OriginalPuzzleMessage = 'originalPuzzleMessage',
+  ShuffledPuzzleMessageWithPlaceHolder = 'shuffledPuzzleMessageWithPlaceholder',
+  LastPuzzleVideoUrl = 'lastPuzzleVideoRrl',
+  CanOpenLastPuzzle = 'canOpenLastPuzzle',
+  IsRunningTimer = ' isRunningTimer',
+  CompanyImage = 'companyImage',
+  MapImage = 'mapImage',
 }
 
 export enum PointType {
