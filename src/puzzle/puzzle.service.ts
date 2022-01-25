@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TEAMS } from 'src/constants';
 import { AlreadyOpenBoxException } from 'src/exceptions/already-open-box.exception';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
+import { OptionsService } from 'src/options/options.service';
+import { OptionKey } from 'src/types';
 import { Repository } from 'typeorm';
 import { PuzzleEntity } from './puzzle.entity';
 
@@ -11,6 +13,7 @@ export class PuzzleService {
   constructor(
     @InjectRepository(PuzzleEntity)
     private readonly puzzleRepository: Repository<PuzzleEntity>,
+    private readonly optionsService: OptionsService,
   ) {}
 
   async getOpenedBoxList(team: number): Promise<PuzzleEntity> | undefined {
@@ -25,7 +28,24 @@ export class PuzzleService {
     if (!entity) {
       throw new NotExistTeamException();
     }
-    if (entity.openedBoxList.some((_boxNum) => _boxNum === boxNum)) {
+
+    const { option_value } = await this.optionsService.getOption(
+      OptionKey.PuzzleCount,
+    );
+    const puzzleCount = parseInt(option_value, 10);
+
+    // 열려고 하는 박스가 puzzle count보다 크면 안된다
+    if (boxNum >= puzzleCount) {
+      throw new BadRequestException('허용하지 않는 범위값입니다');
+    }
+
+    // 이미 열린 박스인지 체크한다(모든 팀을 체크한다)
+    const allTeamOpenedBoxList = await this.getAllOpendBoxList();
+    if (
+      allTeamOpenedBoxList.some(({ openedBoxList }) =>
+        openedBoxList.some((_boxNum: number) => _boxNum === boxNum),
+      )
+    ) {
       throw new AlreadyOpenBoxException();
     }
     entity.openedBoxList.push(boxNum);
