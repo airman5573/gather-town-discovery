@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TEAMS } from 'src/constants';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
 import resetTable from 'src/utils/reset-table';
 import { Repository } from 'typeorm';
@@ -48,6 +49,21 @@ export class TeamPointService {
   }
 
   async reset(): Promise<TeamPointEntity[]> {
-    return await resetTable(this.teamPointRepository);
+    this.teamPointRepository.clear();
+    await this.teamPointRepository.clear();
+    const entites = [];
+    for (const team of TEAMS) {
+      const entity = this.teamPointRepository.create({
+        team,
+        usable: 0,
+        timer: 0,
+        boxOpen: 0,
+        sentenceDecryption: 0,
+        bingo: 0,
+      });
+      entites.push(entity);
+      await this.teamPointRepository.save(entity);
+    }
+    return entites;
   }
 }
