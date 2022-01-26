@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TEAMS } from 'src/constants';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
-import resetTable from 'src/utils/reset-table';
 import { Repository } from 'typeorm';
 import { TeamPointDto } from './team-point.dto';
 import { TeamPointEntity } from './team-point.entity';
