@@ -17,7 +17,6 @@ export class TimerController {
 
   @Get(':team')
   async getTimer(@Param('team') team: number): Promise<TimerEntity> {
-    console.log('getTimer is called');
     return await this.timerService.findOne(team);
   }
 

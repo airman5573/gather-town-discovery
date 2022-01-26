@@ -26,7 +26,7 @@ export enum OptionKey {
   PuzzleCount = 'puzzleCount',
   OriginalPuzzleMessage = 'originalPuzzleMessage',
   ShuffledPuzzleMessageWithPlaceHolder = 'shuffledPuzzleMessageWithPlaceholder',
-  LastPuzzleVideoUrl = 'lastPuzzleVideoRrl',
+  LastPuzzleVideoUrl = 'lastPuzzleVideoUrl',
   CanOpenLastPuzzle = 'canOpenLastPuzzle',
   IsRunningTimer = ' isRunningTimer',
   CompanyImage = 'companyImage',
