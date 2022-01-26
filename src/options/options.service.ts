@@ -4,7 +4,7 @@ import { PUZZLE_PLACE_HOLDER } from 'src/constants';
 import { OptionKey, YesOrNo } from 'src/types';
 import { shuffle } from 'src/utils/random';
 import { Repository } from 'typeorm';
-import { AllOptionDto, PuzzleMessageDto } from './options.dto';
+import { OptionDto } from './options.dto';
 import { OptionEntity } from './options.entity';
 
 @Injectable()
@@ -14,86 +14,71 @@ export class OptionsService {
     private optionsRepository: Repository<OptionEntity>,
   ) {}
 
-  async getOption(key: OptionKey): Promise<OptionEntity> {
-    return await this.optionsRepository.findOne({
-      option_key: key,
-    });
+  async getOptions(): Promise<OptionEntity> {
+    const entity = await this.optionsRepository.findOne();
+    if (!entity) {
+      return await this.reset();
+    }
+    return entity;
   }
 
-  async updateOption(key: OptionKey, value: string): Promise<string> {
-    const option = await this.getOption(key);
-    await this.optionsRepository.save(
-      this.optionsRepository.create({
-        id: option?.id,
-        option_key: key,
-        option_value: value,
-      }),
+  async getAdminPassword(): Promise<OptionDto> {
+    const { adminPassword } = await this.getOptions();
+    return OptionDto.create(OptionKey.AdminPassword, adminPassword);
+  }
+
+  async updateAdminPassword(password: string): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.adminPassword = password;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.AdminPassword, password);
+  }
+
+  async getCanSubmitDescryptedSentence(): Promise<OptionDto> {
+    const { canSubmitDescryptedSentence } = await this.getOptions();
+    return OptionDto.create(
+      OptionKey.AdminPassword,
+      canSubmitDescryptedSentence,
     );
-    return value;
   }
 
-  async getAdminPassword(): Promise<string> {
-    const option = await this.getOption(OptionKey.AdminPassword);
-    if (!option || !option.option_value) {
-      return process.env.MASTER_PASSWORD;
-    }
-    return option.option_value;
+  async updateCanSubmitDecryptedSentence(status: YesOrNo): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.canSubmitDescryptedSentence = status;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.CanSubmitDescryptedSentence, status);
   }
 
-  async updateAdminPassword(password: string): Promise<string> {
-    return await this.updateOption(OptionKey.AdminPassword, password);
+  async getPuzzleCount(): Promise<OptionDto> {
+    const { puzzleCount } = await this.getOptions();
+    return OptionDto.create(OptionKey.PuzzleCount, puzzleCount);
   }
 
-  async getCanSubmitDescryptedSentence(): Promise<YesOrNo> {
-    const option = await this.getOption(OptionKey.CanSubmitDescryptedSentence);
-    if (!option || !option.option_value) {
-      return YesOrNo.NO;
-    }
-    return option.option_value as YesOrNo;
+  async updatePuzzleCount(count: number): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.puzzleCount = count;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.PuzzleCount, count);
   }
 
-  async updateCanSubmitDecryptedSentence(status: YesOrNo): Promise<YesOrNo> {
-    return (await this.updateOption(
-      OptionKey.CanSubmitDescryptedSentence,
-      status,
-    )) as YesOrNo;
-  }
-
-  async getPuzzleCount(): Promise<number> {
-    const puzzleCountOption = await this.getOption(OptionKey.PuzzleCount);
-    if (!puzzleCountOption || !puzzleCountOption.option_value) {
-      return 0;
-    }
-    return parseInt(puzzleCountOption.option_value, 10);
-  }
-
-  async updatePuzzleCount(count: number): Promise<number> {
-    const result = await this.updateOption(OptionKey.PuzzleCount, `${count}`);
-    return parseInt(result, 10);
-  }
-
-  async getOriginalPuzzleMessage(): Promise<string> {
-    const puzzleMessageOption = await this.getOption(
+  async getOriginalPuzzleMessage(): Promise<OptionDto> {
+    const { originalPuzzleMessage } = await this.getOptions();
+    return OptionDto.create(
       OptionKey.OriginalPuzzleMessage,
+      originalPuzzleMessage,
     );
-    if (!puzzleMessageOption || !puzzleMessageOption.option_value) {
-      return '';
-    }
-    return puzzleMessageOption.option_value;
   }
 
-  async getShuffledPuzzleMessageWithPlaceholder(): Promise<string> {
-    const puzzleMessageOption = await this.getOption(
+  async getShuffledPuzzleMessageWithPlaceholder(): Promise<OptionDto> {
+    const { shuffledPuzzleMessageWithPlaceholder } = await this.getOptions();
+    return OptionDto.create(
       OptionKey.ShuffledPuzzleMessageWithPlaceHolder,
+      shuffledPuzzleMessageWithPlaceholder,
     );
-    if (!puzzleMessageOption || !puzzleMessageOption.option_value) {
-      return '';
-    }
-    return puzzleMessageOption.option_value;
   }
 
-  async updatePuzzleMessage(message: string): Promise<PuzzleMessageDto> {
-    const puzzleCount = await this.getPuzzleCount();
+  async updatePuzzleMessage(message: string): Promise<OptionDto> {
+    const { optionValue: puzzleCount } = await this.getPuzzleCount();
     if (puzzleCount < message.length) {
       throw new BadRequestException(
         '암호의 길이가 퍼즐의 개수보다 작을 수 없습니다',
@@ -103,116 +88,90 @@ export class OptionsService {
     const temp = PUZZLE_PLACE_HOLDER.repeat(
       puzzleCount - noWhiteSpaceMessage.length,
     ).concat(noWhiteSpaceMessage);
-    const shuffledMessageWithPlaceHolder = JSON.stringify(
-      shuffle(temp.split('')),
-    );
+    const shuffledMessageWithPlaceHolder = shuffle(temp.split(''));
 
-    await this.updateOption(
-      OptionKey.ShuffledPuzzleMessageWithPlaceHolder,
-      shuffledMessageWithPlaceHolder,
-    );
-    const originalPuzzleMessage = await this.updateOption(
-      OptionKey.OriginalPuzzleMessage,
-      message,
-    );
-    return {
-      originalPuzzleMessage,
-      shuffledPuzzleMessageWithPlaceHolder: JSON.parse(
-        shuffledMessageWithPlaceHolder,
-      ),
-    };
+    const entity = await this.getOptions();
+    entity.originalPuzzleMessage = message;
+    entity.shuffledPuzzleMessageWithPlaceholder =
+      shuffledMessageWithPlaceHolder;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.OriginalPuzzleMessage, message);
   }
 
-  async getLastPuzzleVideoUrl(): Promise<string> {
-    const option = await this.getOption(OptionKey.LastPuzzleVideoUrl);
-    if (!option || !option.option_value) {
-      return '';
-    }
-    return option.option_value;
+  async getLastPuzzleVideoUrl(): Promise<OptionDto> {
+    const { lastPuzzleVideoUrl } = await this.getOptions();
+    return OptionDto.create(OptionKey.LastPuzzleVideoUrl, lastPuzzleVideoUrl);
   }
 
-  async updateLastPuzzleVideoUrl(videoUrl: string): Promise<string> {
-    return await this.updateOption(OptionKey.LastPuzzleVideoUrl, videoUrl);
+  async updateLastPuzzleVideoUrl(videoUrl: string): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.lastPuzzleVideoUrl = videoUrl;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.LastPuzzleVideoUrl, videoUrl);
   }
 
-  async getCanOpenLastPuzzle(): Promise<YesOrNo> {
-    const option = await this.getOption(OptionKey.CanOpenLastPuzzle);
-    if (!option || !option.option_value) {
-      return YesOrNo.NO;
-    }
-    return option.option_value as YesOrNo;
+  async getCanOpenLastPuzzle(): Promise<OptionDto> {
+    const { canOpenLastPuzzle } = await this.getOptions();
+    return OptionDto.create(OptionKey.CanOpenLastPuzzle, canOpenLastPuzzle);
   }
 
-  async updateCanOpenLastPuzzle(status: YesOrNo): Promise<YesOrNo> {
-    return (await this.updateOption(
-      OptionKey.CanOpenLastPuzzle,
-      status,
-    )) as YesOrNo;
+  async updateCanOpenLastPuzzle(status: YesOrNo): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.canOpenLastPuzzle = status;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.CanOpenLastPuzzle, status);
   }
 
-  async getIsRunningTimer(): Promise<YesOrNo> {
-    const option = await this.getOption(OptionKey.IsRunningTimer);
-    if (!option || !option.option_value) {
-      return YesOrNo.NO;
-    }
-    return option.option_value as YesOrNo;
+  async getIsRunningTimer(): Promise<OptionDto> {
+    const { isRunningTimer } = await this.getOptions();
+    return OptionDto.create(OptionKey.IsRunningTimer, isRunningTimer);
   }
 
-  async updateIsRunningTimer(status: YesOrNo): Promise<YesOrNo> {
-    return (await this.updateOption(
-      OptionKey.IsRunningTimer,
-      status,
-    )) as YesOrNo;
+  async updateIsRunningTimer(status: YesOrNo): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.isRunningTimer = status;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.IsRunningTimer, status);
   }
 
-  async getCompanyImage(): Promise<string> {
-    const option = await this.getOption(OptionKey.CompanyImage);
-    if (!option || !option.option_value) {
-      return 'default.png';
-    }
-    return option.option_value;
+  async getCompanyImage(): Promise<OptionDto> {
+    const { companyImage } = await this.getOptions();
+    return OptionDto.create(OptionKey.CompanyImage, companyImage);
   }
 
-  async updateCompayImage(filename: string): Promise<string> {
-    return await this.updateOption(OptionKey.CompanyImage, filename);
+  async updateCompayImage(filename: string): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.companyImage = filename;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.CompanyImage, filename);
   }
 
-  async getMapImage(): Promise<string> {
-    const option = await this.getOption(OptionKey.MapImage);
-    if (!option || !option.option_value) {
-      return 'default.png';
-    }
-    return option.option_value;
+  async getMapImage(): Promise<OptionDto> {
+    const { mapImage } = await this.getOptions();
+    return OptionDto.create(OptionKey.MapImage, mapImage);
   }
 
-  async updateMapImage(filename: string): Promise<string> {
-    return await this.updateOption(OptionKey.MapImage, filename);
+  async updateMapImage(filename: string): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.mapImage = filename;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.MapImage, filename);
   }
 
-  async reset(): Promise<AllOptionDto> {
-    const adminPassword = await this.updateAdminPassword('5911');
-    const canSubmitDescryptedSentence =
-      await this.updateCanSubmitDecryptedSentence(YesOrNo.NO);
-    const puzzleCount = await this.updatePuzzleCount(0);
-    const { originalPuzzleMessage } = await this.updatePuzzleMessage('');
-    const shuffledPuzzleMessageWithPlaceHolder = [];
-    const lastPuzzleVideoUrl = await this.updateLastPuzzleVideoUrl('');
-    const canOpenLastPuzzle = await this.updateCanOpenLastPuzzle(YesOrNo.NO);
-    const isRunningTimer = await this.updateIsRunningTimer(YesOrNo.NO);
-    const companyImage = await this.updateCompayImage('');
-    const mapImage = await this.updateMapImage('');
+  async reset(): Promise<OptionEntity> {
+    const entity = new OptionEntity();
+    entity.adminPassword = '5911';
+    entity.canSubmitDescryptedSentence = YesOrNo.NO;
+    entity.puzzleCount = 0;
+    entity.originalPuzzleMessage = '';
+    entity.shuffledPuzzleMessageWithPlaceholder = [];
+    entity.lastPuzzleVideoUrl = '';
+    entity.canOpenLastPuzzle = YesOrNo.NO;
+    entity.isRunningTimer = YesOrNo.NO;
+    entity.companyImage = 'default.png';
+    entity.mapImage = 'default.png';
+    this.optionsRepository.save(entity);
 
-    return {
-      adminPassword,
-      canSubmitDescryptedSentence,
-      puzzleCount,
-      originalPuzzleMessage,
-      shuffledPuzzleMessageWithPlaceHolder,
-      lastPuzzleVideoUrl,
-      canOpenLastPuzzle,
-      isRunningTimer,
-      companyImage,
-      mapImage,
-    };
+    return entity;
   }
 }

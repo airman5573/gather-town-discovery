@@ -3,7 +3,6 @@ import { PUZZLE_PLACE_HOLDER } from 'src/constants';
 import { OptionsService } from 'src/options/options.service';
 import { PuzzleService } from 'src/puzzle/puzzle.service';
 import { TeamPointService } from 'src/team-point/team-point.service';
-import { OptionKey } from 'src/types';
 import { TeamStatisticsDto } from './statistics.dto';
 
 @Injectable()
@@ -18,12 +17,10 @@ export class StatisticsService {
     const statistics = [];
     const allTeamPoints = await this.teamPointService.getAllTeamPoints();
     const allTeamOpenedBoxList = await this.puzzleService.getAllOpendBoxList();
-    const shuffledPuzzleMessageWithPlaceholder = this.optionService.getOption(
-      OptionKey.ShuffledPuzzleMessageWithPlaceHolder,
-    );
-    const { option_value: puzzleCount } = await this.optionService.getOption(
-      OptionKey.PuzzleCount,
-    );
+    const { optionValue: shuffledPuzzleMessageWithPlaceholder } =
+      await this.optionService.getShuffledPuzzleMessageWithPlaceholder();
+    const { optionValue: puzzleCount } =
+      await this.optionService.getPuzzleCount();
     for (let i = 0; i < allTeamPoints.length; i += 1) {
       const teamPoint = allTeamPoints[i];
       const { team, openedBoxList } = allTeamOpenedBoxList[i];

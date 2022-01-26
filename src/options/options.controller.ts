@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
 import { ADMIN_ROLE } from 'src/constants';
-import { YesOrNo } from 'src/types';
 import {
   UpdateAdminPasswordDto,
   UpdateLastPuzzleVideoUrlDto,
@@ -18,6 +17,7 @@ import {
   UpdateCanSubmitDescryptedSentenceDto,
   UpdateCanOpenLastPuzzleDto,
   UpdateIsRunningTimerDto,
+  OptionDto,
 } from './options.dto';
 import { OptionsService } from './options.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -29,7 +29,7 @@ export class OptionsController {
 
   @Roles(ADMIN_ROLE)
   @Get('admin-password')
-  async getAdminPassword(): Promise<string> {
+  async getAdminPassword(): Promise<OptionDto> {
     return await this.optionsService.getAdminPassword();
   }
 
@@ -37,14 +37,14 @@ export class OptionsController {
   @Put('admin-password')
   async updateAdminPassword(
     @Body() updateAdminPasswordDto: UpdateAdminPasswordDto,
-  ): Promise<string> {
+  ): Promise<OptionDto> {
     return await this.optionsService.updateAdminPassword(
       updateAdminPasswordDto.password,
     );
   }
 
   @Get('can-submit-descrypted-sentence')
-  async getCanSubmitDescryptedSentence(): Promise<YesOrNo> {
+  async getCanSubmitDescryptedSentence(): Promise<OptionDto> {
     return await this.optionsService.getCanSubmitDescryptedSentence();
   }
 
@@ -53,20 +53,22 @@ export class OptionsController {
   async updateCanSubmitDescryptedSentence(
     @Body()
     updateCanSubmitDescryptedSentenceDto: UpdateCanSubmitDescryptedSentenceDto,
-  ): Promise<YesOrNo> {
+  ): Promise<OptionDto> {
     return await this.optionsService.updateCanSubmitDecryptedSentence(
       updateCanSubmitDescryptedSentenceDto.status,
     );
   }
 
   @Get('puzzle-count')
-  async getPuzzleCount(): Promise<number> {
+  async getPuzzleCount(): Promise<OptionDto> {
     return await this.optionsService.getPuzzleCount();
   }
 
   @Roles(ADMIN_ROLE)
   @Put('puzzle-count')
-  async updatePuzzleCount(@Body() updatePuzzleCountDto: UpdatePuzzleCountDto) {
+  async updatePuzzleCount(
+    @Body() updatePuzzleCountDto: UpdatePuzzleCountDto,
+  ): Promise<OptionDto> {
     return await this.optionsService.updatePuzzleCount(
       updatePuzzleCountDto.puzzleCount,
     );
@@ -74,12 +76,12 @@ export class OptionsController {
 
   @Roles(ADMIN_ROLE)
   @Get('original-puzzle-message')
-  async getOriginalPuzzleMessage(): Promise<string> {
+  async getOriginalPuzzleMessage(): Promise<OptionDto> {
     return await this.optionsService.getOriginalPuzzleMessage();
   }
 
   @Get('shuffled-puzzle-message-with-placeholder')
-  async getShuffledPuzzleMessageWithPlaceholder(): Promise<string> {
+  async getShuffledPuzzleMessageWithPlaceholder(): Promise<OptionDto> {
     return await this.optionsService.getShuffledPuzzleMessageWithPlaceholder();
   }
 
@@ -87,16 +89,14 @@ export class OptionsController {
   @Put('puzzle-message')
   async updatePuzzleMessage(
     @Body() updatePuzzleMessageDto: UpdatePuzzleMessageDto,
-  ): Promise<string> {
-    const { originalPuzzleMessage } =
-      await this.optionsService.updatePuzzleMessage(
-        updatePuzzleMessageDto.message,
-      );
-    return originalPuzzleMessage;
+  ): Promise<OptionDto> {
+    return await this.optionsService.updatePuzzleMessage(
+      updatePuzzleMessageDto.message,
+    );
   }
 
   @Get('last-puzzle-video-url')
-  async getLastPuzzleVideoUrl(): Promise<string> {
+  async getLastPuzzleVideoUrl(): Promise<OptionDto> {
     return await this.optionsService.getLastPuzzleVideoUrl();
   }
 
@@ -104,14 +104,14 @@ export class OptionsController {
   @Put('last-puzzle-video-url')
   async updateLastPuzzleVideoUrl(
     @Body() updateLastPuzzleVideoUrlDto: UpdateLastPuzzleVideoUrlDto,
-  ): Promise<string> {
+  ): Promise<OptionDto> {
     return await this.optionsService.updateLastPuzzleVideoUrl(
       updateLastPuzzleVideoUrlDto.videoUrl,
     );
   }
 
   @Get('can-open-last-puzzle')
-  async getCanOpenLastPuzzle(): Promise<YesOrNo> {
+  async getCanOpenLastPuzzle(): Promise<OptionDto> {
     return await this.optionsService.getCanOpenLastPuzzle();
   }
 
@@ -119,14 +119,14 @@ export class OptionsController {
   @Put('can-open-last-puzzle')
   async updateCanOpenLastPuzzle(
     @Body() updateCanOpenLastPuzzleDto: UpdateCanOpenLastPuzzleDto,
-  ): Promise<YesOrNo> {
+  ): Promise<OptionDto> {
     return await this.optionsService.updateCanOpenLastPuzzle(
       updateCanOpenLastPuzzleDto.status,
     );
   }
 
   @Get('is-running-timer')
-  async getIsRunningTimer(): Promise<YesOrNo> {
+  async getIsRunningTimer(): Promise<OptionDto> {
     return await this.optionsService.getIsRunningTimer();
   }
 
@@ -134,7 +134,7 @@ export class OptionsController {
   @Put('is-running-timer')
   async updateIsRunningTimer(
     @Body() updateIsRunningTimerDto: UpdateIsRunningTimerDto,
-  ): Promise<YesOrNo> {
+  ): Promise<OptionDto> {
     return await this.optionsService.updateIsRunningTimer(
       updateIsRunningTimerDto.status,
     );

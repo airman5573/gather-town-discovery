@@ -4,7 +4,6 @@ import { TEAMS } from 'src/constants';
 import { AlreadyOpenBoxException } from 'src/exceptions/already-open-box.exception';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
 import { OptionsService } from 'src/options/options.service';
-import { OptionKey } from 'src/types';
 import { Repository } from 'typeorm';
 import { PuzzleEntity } from './puzzle.entity';
 
@@ -29,10 +28,8 @@ export class PuzzleService {
       throw new NotExistTeamException();
     }
 
-    const { option_value } = await this.optionsService.getOption(
-      OptionKey.PuzzleCount,
-    );
-    const puzzleCount = parseInt(option_value, 10);
+    const { optionValue: puzzleCount } =
+      await this.optionsService.getPuzzleCount();
 
     // 열려고 하는 박스가 puzzle count보다 크면 안된다
     if (boxNum >= puzzleCount) {

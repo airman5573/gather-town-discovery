@@ -24,7 +24,8 @@ export class AuthService {
         role: UserRole.USER,
       };
     }
-    const adminPassword = await this.optionsService.getAdminPassword();
+    const { optionValue: adminPassword } =
+      await this.optionsService.getAdminPassword();
     if (password === adminPassword) {
       return { password: adminPassword, role: UserRole.ADMIN };
     }

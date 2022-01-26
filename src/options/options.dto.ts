@@ -6,22 +6,18 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { YesOrNo } from 'src/types';
+import { OptionKey, YesOrNo } from 'src/types';
 
-export class PuzzleMessageDto {
-  shuffledPuzzleMessageWithPlaceHolder: Array<string>;
-  originalPuzzleMessage: string;
-}
+export class OptionDto {
+  optionKey: OptionKey;
+  optionValue: any;
 
-export class AllOptionDto extends PuzzleMessageDto {
-  adminPassword: string;
-  canSubmitDescryptedSentence: YesOrNo;
-  puzzleCount: number;
-  lastPuzzleVideoUrl: string;
-  canOpenLastPuzzle: YesOrNo;
-  isRunningTimer: YesOrNo;
-  companyImage: string;
-  mapImage: string;
+  static create(key: OptionKey, value: any): OptionDto {
+    const dto = new OptionDto();
+    dto.optionKey = key;
+    dto.optionValue = value;
+    return dto;
+  }
 }
 
 // Admin Password
