@@ -159,7 +159,8 @@ export class OptionsService {
   }
 
   async reset(): Promise<OptionEntity> {
-    const entity = new OptionEntity();
+    const entity =
+      (await this.optionsRepository.findOne()) || new OptionEntity();
     entity.adminPassword = '5911';
     entity.canSubmitDescryptedSentence = YesOrNo.NO;
     entity.puzzleCount = 0;
