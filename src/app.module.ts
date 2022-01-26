@@ -18,6 +18,7 @@ import { TeamPointModule } from './team-point/team-point.module';
 import { TimerModule } from './timer/timer.module';
 import { join } from 'path';
 import { MissionUploadModule } from './mission-upload/mission-upload.module';
+import { ResetModule } from './reset/reset.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { MissionUploadModule } from './mission-upload/mission-upload.module';
     PointTableModule,
     StatisticsModule,
     MissionUploadModule,
+    ResetModule,
   ],
   providers: [
     {

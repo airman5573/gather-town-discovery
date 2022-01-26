@@ -8,6 +8,6 @@ import { PointTableService } from './point-table.service';
   imports: [TypeOrmModule.forFeature([PointTableEntity])],
   controllers: [PointTableController],
   providers: [PointTableService],
-  exports: [],
+  exports: [PointTableService],
 })
 export class PointTableModule {}

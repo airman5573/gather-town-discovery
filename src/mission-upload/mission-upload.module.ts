@@ -8,6 +8,6 @@ import { MissionUploadService } from './mission-upload.service';
   imports: [TypeOrmModule.forFeature([MissionUploadEntity])],
   controllers: [MissionUploadController],
   providers: [MissionUploadService],
-  exports: [],
+  exports: [MissionUploadService],
 })
 export class MissionUploadModule {}
