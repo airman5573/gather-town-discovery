@@ -20,19 +20,6 @@ export class OptionDto {
   }
 }
 
-export class AllOptionsDto {
-  adminPassword: string;
-  canSubmitDescryptedSentence: YesOrNo;
-  puzzleCount: number;
-  originalPuzzleMessage: string;
-  shuffledPuzzleMessageWithPlaceholder: string[];
-  lastPuzzleVideoUrl: string;
-  canOpenLastPuzzle: YesOrNo;
-  isRunningTimer: YesOrNo;
-  companyImage: string;
-  mapImage: string;
-}
-
 // Admin Password
 export class UpdateAdminPasswordDto {
   @IsNotEmpty()

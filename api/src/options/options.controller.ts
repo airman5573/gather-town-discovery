@@ -18,11 +18,11 @@ import {
   UpdateCanOpenLastPuzzleDto,
   UpdateIsRunningTimerDto,
   OptionDto,
-  AllOptionsDto,
 } from './options.dto';
 import { OptionsService } from './options.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { adminMulterOptions } from 'src/lib/multer-options';
+import { OptionEntity } from './options.entity';
 
 @Controller('options')
 export class OptionsController {
@@ -30,8 +30,10 @@ export class OptionsController {
 
   @Roles(ADMIN_ROLE)
   @Get()
-  async getAllOptions(): Promise<AllOptionsDto> {
-    return await this.optionsService.getAllOptions();
+  async getAllOptions(): Promise<OptionEntity> {
+    const options = await this.optionsService.getOptions();
+    delete options.id;
+    return options;
   }
 
   @Roles(ADMIN_ROLE)
