@@ -23,7 +23,7 @@ export enum OptionKey {
   ShuffledPuzzleMessageWithPlaceHolder = 'shuffledPuzzleMessageWithPlaceholder',
   LastPuzzleVideoUrl = 'lastPuzzleVideoUrl',
   CanOpenLastPuzzle = 'canOpenLastPuzzle',
-  IsRunningTimer = ' isRunningTimer',
+  IsRunningTimer = 'isRunningTimer',
   CompanyImage = 'companyImage',
   MapImage = 'mapImage',
 }
