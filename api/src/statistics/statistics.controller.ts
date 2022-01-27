@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { Roles } from 'src/auth/roles.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE } from 'src/constants';
 import { TeamStatisticsDto } from './statistics.dto';
 import { StatisticsService } from './statistics.service';

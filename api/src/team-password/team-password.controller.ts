@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
-import { Roles } from 'src/auth/roles.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE } from 'src/constants';
 import { UpdateTeamPasswordsDto } from './team-password.dto';
 import { TeamPasswordEntity } from './team-password.entity';

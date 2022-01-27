@@ -3,7 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { sign } from 'jsonwebtoken';
 import { OptionsService } from 'src/options/options.service';
 import { TeamPasswordService } from 'src/team-password/team-password.service';
-import { User, UserRole } from 'src/types';
+import { UserRole } from 'src/types';
+import { UserDto } from './dtos/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async validateUser(password: string): Promise<User | null> {
+  async validateUser(password: string): Promise<UserDto | null> {
     if (password === process.env.MASTER_PASSWORD) {
       return { password, role: UserRole.ADMIN };
     }
@@ -32,7 +33,7 @@ export class AuthService {
     return null;
   }
 
-  createAccessToken({ team, password, role }: User): string {
+  createAccessToken({ team, password, role }: UserDto): string {
     return sign(
       { team, password, role },
       this.configService.get<string>('ACCESS_TOKEN_SECRET'),

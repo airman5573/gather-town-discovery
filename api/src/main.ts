@@ -12,6 +12,11 @@ async function bootstrap() {
     }),
   );
   app.setGlobalPrefix('api');
+  app.enableCors({
+    origin: true,
+    credentials: true,
+    exposedHeaders: ['Authorization'],
+  });
   await app.listen(3000);
 }
 bootstrap();

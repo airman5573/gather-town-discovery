@@ -7,7 +7,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Roles } from 'src/auth/roles.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE, USER_ROLE } from 'src/constants';
 import { userMulterOptions } from 'src/lib/multer-options';
 import { UploadMissionFileDto } from './mission-upload.dto';

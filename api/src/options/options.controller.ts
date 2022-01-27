@@ -7,7 +7,7 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { Roles } from 'src/auth/roles.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE } from 'src/constants';
 import {
   UpdateAdminPasswordDto,

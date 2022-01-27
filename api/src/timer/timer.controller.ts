@@ -1,6 +1,6 @@
 import { LocalDateTime } from '@js-joda/core';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
-import { Roles } from 'src/auth/roles.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE } from 'src/constants';
 import { CreateTimerDto, UpdateTimerDto } from './timer.dto';
 import { TimerEntity } from './timer.entity';

@@ -1,15 +1,10 @@
+import { UserDto } from './auth/dtos/user.dto';
+
 export enum UserRole {
   ADMIN = 'admin',
   USER = 'user',
 }
-
-export interface User {
-  team?: number;
-  password: string;
-  role: UserRole;
-}
-
-export type AccessTokenPayload = User;
+export type AccessTokenPayload = UserDto;
 
 export interface LoginResponse {
   access_token: string;

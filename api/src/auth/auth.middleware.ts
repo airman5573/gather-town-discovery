@@ -2,8 +2,8 @@ import { ForbiddenException, Injectable, NestMiddleware } from '@nestjs/common';
 import { verify } from 'jsonwebtoken';
 import { AccessTokenPayload, UserRole } from 'src/types';
 import { AuthService } from './auth.service';
-import { User } from '../types';
 import { ConfigService } from '@nestjs/config';
+import { UserDto } from './dtos/user.dto';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -15,7 +15,7 @@ export class AuthMiddleware implements NestMiddleware {
   async use(req: Request | any, res: Response, next: () => void) {
     const bearerHeader = req.headers.authorization;
     const accessToken = bearerHeader && bearerHeader.split(' ')[1];
-    let user: User;
+    let user: UserDto;
 
     if (
       req.body.hasOwnProperty('password') &&

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
-import { Roles } from 'src/auth/roles.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { PointTable } from 'src/types';
 import { PointTableKeyDto, UpdatePointTableItemDto } from './point-table.dto';
 import { PointTableEntity } from './point-table.entity';

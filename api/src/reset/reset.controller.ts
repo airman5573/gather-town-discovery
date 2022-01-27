@@ -1,5 +1,5 @@
 import { Controller, Put } from '@nestjs/common';
-import { Roles } from 'src/auth/roles.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { MissionUploadService } from 'src/mission-upload/mission-upload.service';
 import { OptionsService } from 'src/options/options.service';
 import { PointTableService } from 'src/point-table/point-table.service';

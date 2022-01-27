@@ -5,8 +5,8 @@ import { TeamPasswordModule } from 'src/team-password/team-password.module';
 import { AuthController } from './auth.controller';
 import { AuthMiddleware } from './auth.middleware';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './local-auth.guard';
-import { LocalStrategy } from './local.strategy';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   imports: [TeamPasswordModule, PassportModule, OptionsModule],

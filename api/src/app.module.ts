@@ -10,7 +10,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { AuthModule } from './auth/auth.module';
-import { RolesGuard } from './auth/roles.guard';
+import { RolesGuard } from './auth/guards/roles.guard';
 import { PointTableModule } from './point-table/point-table.module';
 import { PuzzleModule } from './puzzle/puzzle.module';
 import { StatisticsModule } from './statistics/statistics.module';
