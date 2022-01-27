@@ -21,7 +21,7 @@ export class PuzzleController {
   }
 
   @Roles(USER_ROLE)
-  @Post('open')
+  @Put('open')
   async openPuzzle(
     @Body() { boxNum }: OpenPuzzleDto,
     @AuthUser('team') team: number,
