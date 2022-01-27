@@ -25,7 +25,7 @@ export class TeamPasswordController {
   }
 
   @Roles(ADMIN_ROLE)
-  @Get('reset')
+  @Put('reset')
   async reset(): Promise<TeamPasswordEntity[]> {
     return await this.teamPasswordService.reset();
   }
