@@ -4,7 +4,7 @@ import { PUZZLE_PLACE_HOLDER } from 'src/constants';
 import { OptionKey, YesOrNo } from 'src/types';
 import { shuffle } from 'src/utils/random';
 import { Repository } from 'typeorm';
-import { OptionDto } from './options.dto';
+import { AllOptionsDto, OptionDto } from './options.dto';
 import { OptionEntity } from './options.entity';
 
 @Injectable()
@@ -25,6 +25,27 @@ export class OptionsService {
   async getAdminPassword(): Promise<OptionDto> {
     const { adminPassword } = await this.getOptions();
     return OptionDto.create(OptionKey.AdminPassword, adminPassword);
+  }
+
+  async getAllOptions(): Promise<AllOptionsDto> {
+    const options = new AllOptionsDto();
+    const promises = [
+      this.getAdminPassword(),
+      this.getCanSubmitDescryptedSentence(),
+      this.getPuzzleCount(),
+      this.getOriginalPuzzleMessage(),
+      this.getShuffledPuzzleMessageWithPlaceholder(),
+      this.getLastPuzzleVideoUrl(),
+      this.getCanOpenLastPuzzle(),
+      this.getIsRunningTimer(),
+      this.getCompanyImage(),
+      this.getMapImage(),
+    ];
+    const results = await Promise.all(promises);
+    return results.reduce((acc, { optionKey, optionValue }) => {
+      acc[optionKey] = optionValue;
+      return acc;
+    }, options);
   }
 
   async updateAdminPassword(password: string): Promise<OptionDto> {
