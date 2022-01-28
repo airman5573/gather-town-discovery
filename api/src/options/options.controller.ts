@@ -149,6 +149,16 @@ export class OptionsController {
     );
   }
 
+  @Get('company-image')
+  async getCompanyImage() {
+    return await this.optionsService.getCompanyImage();
+  }
+
+  @Get('map-image')
+  async getMapImage() {
+    return await this.optionsService.getMapImage();
+  }
+
   // 'company-image' => formData의 key값
   // null => 파일 최대 갯수
   @UseInterceptors(FileInterceptor('image', adminMulterOptions))
