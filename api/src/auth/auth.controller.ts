@@ -12,6 +12,7 @@ export class AuthController {
   async login(@Request() req) {
     return {
       accessToken: this.authService.createAccessToken(req.user as UserDto),
+      user: req.user,
     };
   }
 }
