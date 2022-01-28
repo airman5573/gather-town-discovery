@@ -169,8 +169,8 @@ export class OptionsService {
     entity.lastPuzzleVideoUrl = '';
     entity.canOpenLastPuzzle = YesOrNo.NO;
     entity.isRunningTimer = YesOrNo.NO;
-    entity.companyImage = 'default.png';
-    entity.mapImage = 'default.png';
+    entity.companyImage = '';
+    entity.mapImage = '';
     this.optionsRepository.save(entity);
 
     return entity;
