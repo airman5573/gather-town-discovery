@@ -1,5 +1,6 @@
-import { Request, Controller, Post, UseGuards } from '@nestjs/common';
+import { Request, Controller, Post, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { Roles } from './decorators/roles.decorator';
 import { UserDto } from './dtos/user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
@@ -14,5 +15,11 @@ export class AuthController {
       accessToken: this.authService.createAccessToken(req.user as UserDto),
       user: req.user,
     };
+  }
+
+  @Get('user')
+  @Roles('user', 'admin')
+  async getUser(@Request() req) {
+    return req.user;
   }
 }
