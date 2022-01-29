@@ -150,12 +150,12 @@ export class OptionsController {
   }
 
   @Get('company-image')
-  async getCompanyImage() {
+  async getCompanyImage(): Promise<OptionDto> {
     return await this.optionsService.getCompanyImage();
   }
 
   @Get('map-image')
-  async getMapImage() {
+  async getMapImage(): Promise<OptionDto> {
     return await this.optionsService.getMapImage();
   }
 
