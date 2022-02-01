@@ -15,10 +15,4 @@ export class AuthController {
       accessToken: this.authService.createAccessToken(req.user as UserDto),
     };
   }
-
-  @Get('user')
-  @Roles('user', 'admin')
-  async getUser(@Request() req) {
-    return req.user;
-  }
 }
