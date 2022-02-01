@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TEAMS } from 'src/constants';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
+import { YesOrNo } from 'src/types';
 import { Repository } from 'typeorm';
 import { TimerEntity } from './timer.entity';
 
@@ -30,6 +31,7 @@ export class TimerService {
       this.timerRepository.create({
         team,
         startTime,
+        isRunning: YesOrNo.YES,
       }),
     );
   }
@@ -42,6 +44,7 @@ export class TimerService {
         this.timerRepository.create({
           team: timer?.team || team,
           startTime: LocalDateTime.now(),
+          isRunning: YesOrNo.YES,
         }),
       );
       timers.push(result);
@@ -57,6 +60,7 @@ export class TimerService {
       const entity = this.timerRepository.create({
         team,
         startTime,
+        isRunning: YesOrNo.NO,
       });
       entites.push(entity);
       await this.timerRepository.save(entity);
