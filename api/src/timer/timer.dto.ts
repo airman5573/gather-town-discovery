@@ -6,7 +6,7 @@ export class UpdateTimerDto {
   startTime: string;
 }
 
-export class CreateTimerDto {
+export class StartTimerDto {
   @IsPositive({ each: true })
   @Type(() => Number)
   teams: number[];

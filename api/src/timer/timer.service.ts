@@ -36,7 +36,7 @@ export class TimerService {
     );
   }
 
-  async create(teams: number[]): Promise<TimerEntity[]> {
+  async start(teams: number[]): Promise<TimerEntity[]> {
     const timers = [];
     for (const team of teams) {
       const timer = await this.findOne(team);
@@ -70,9 +70,6 @@ export class TimerService {
 
   async stop(team: number): Promise<TimerEntity> {
     const timer = await this.findOne(team);
-    if (!timer) {
-      throw new NotExistTeamException();
-    }
     return await this.timerRepository.save(
       this.timerRepository.create({
         ...timer,

@@ -2,7 +2,7 @@ import { LocalDateTime } from '@js-joda/core';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE } from 'src/constants';
-import { CreateTimerDto, StopTimerDto, UpdateTimerDto } from './timer.dto';
+import { StartTimerDto, StopTimerDto, UpdateTimerDto } from './timer.dto';
 import { TimerEntity } from './timer.entity';
 import { TimerService } from './timer.service';
 
@@ -46,7 +46,7 @@ export class TimerController {
 
   @Roles(ADMIN_ROLE)
   @Post()
-  async start(@Body() createTimerDto: CreateTimerDto): Promise<TimerEntity[]> {
-    return await this.timerService.create(createTimerDto.teams);
+  async start(@Body() startTimerDto: StartTimerDto): Promise<TimerEntity[]> {
+    return await this.timerService.start(startTimerDto.teams);
   }
 }
