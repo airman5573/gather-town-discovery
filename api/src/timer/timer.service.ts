@@ -22,20 +22,6 @@ export class TimerService {
     return this.timerRepository.find({ order: { team: 'ASC' } });
   }
 
-  async update(team: number, startTime: LocalDateTime) {
-    const timer = await this.findOne(team);
-    if (!timer) {
-      throw new NotExistTeamException();
-    }
-    return await this.timerRepository.save(
-      this.timerRepository.create({
-        team,
-        startTime,
-        isRunning: YesOrNo.YES,
-      }),
-    );
-  }
-
   async start(teams: number[]): Promise<TimerEntity[]> {
     const timers = [];
     for (const team of teams) {
