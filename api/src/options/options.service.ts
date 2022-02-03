@@ -134,6 +134,18 @@ export class OptionsService {
     return OptionDto.create(OptionKey.IsRunningTimer, status);
   }
 
+  async getLapTime(): Promise<OptionDto> {
+    const { lapTime } = await this.getOptions();
+    return OptionDto.create(OptionKey.LapTime, lapTime);
+  }
+
+  async updateLapTime(timeInSeconds: number): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.lapTime = timeInSeconds;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.LapTime, timeInSeconds);
+  }
+
   async getCompanyImage(): Promise<OptionDto> {
     const { companyImage } = await this.getOptions();
     return OptionDto.create(OptionKey.CompanyImage, companyImage);

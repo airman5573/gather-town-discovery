@@ -56,6 +56,13 @@ export class OptionEntity {
   isRunningTimer: YesOrNo;
 
   @Column({
+    type: 'int',
+    name: 'lap_time',
+    default: 0,
+  })
+  lapTime: number;
+
+  @Column({
     type: 'text',
     name: 'company_image',
   })

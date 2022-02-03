@@ -18,6 +18,7 @@ import {
   UpdateCanOpenLastPuzzleDto,
   UpdateIsRunningTimerDto,
   OptionDto,
+  UpdateLapTimeDto,
 } from './options.dto';
 import { OptionsService } from './options.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -132,6 +133,19 @@ export class OptionsController {
     return await this.optionsService.updateCanOpenLastPuzzle(
       updateCanOpenLastPuzzleDto.status,
     );
+  }
+
+  @Get('lap-time')
+  async getLapTime(): Promise<OptionDto> {
+    return await this.optionsService.getLapTime();
+  }
+
+  @Roles(ADMIN_ROLE)
+  @Put('lap-time')
+  async updateLapTime(
+    @Body() updateLapTimeDto: UpdateLapTimeDto,
+  ): Promise<OptionDto> {
+    return await this.optionsService.updateLapTime(updateLapTimeDto.lapTime);
   }
 
   @Get('is-running-timer')

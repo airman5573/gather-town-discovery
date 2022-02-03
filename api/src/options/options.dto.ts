@@ -5,6 +5,7 @@ import {
   IsNumber,
   Max,
   Min,
+  IsPositive,
 } from 'class-validator';
 import { OptionKey, YesOrNo } from 'src/types';
 
@@ -61,4 +62,11 @@ export class UpdateCanOpenLastPuzzleDto {
 export class UpdateIsRunningTimerDto {
   @IsEnum(YesOrNo)
   status: YesOrNo;
+}
+
+export class UpdateLapTimeDto {
+  @IsPositive({
+    message: '숫자만 입력 가능합니다',
+  })
+  lapTime: number;
 }

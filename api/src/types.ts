@@ -24,6 +24,7 @@ export enum OptionKey {
   LastPuzzleVideoUrl = 'lastPuzzleVideoUrl',
   CanOpenLastPuzzle = 'canOpenLastPuzzle',
   IsRunningTimer = 'isRunningTimer',
+  LapTime = 'lapTime',
   CompanyImage = 'companyImage',
   MapImage = 'mapImage',
 }
