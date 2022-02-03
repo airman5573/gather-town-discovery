@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TEAMS } from 'src/constants';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
 import { YesOrNo } from 'src/types';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { TimerEntity } from './timer.entity';
 
 @Injectable()
@@ -66,5 +66,18 @@ export class TimerService {
       await this.timerRepository.save(entity);
     }
     return entites;
+  }
+
+  async stop(team: number): Promise<TimerEntity> {
+    const timer = await this.findOne(team);
+    if (!timer) {
+      throw new NotExistTeamException();
+    }
+    return await this.timerRepository.save(
+      this.timerRepository.create({
+        ...timer,
+        isRunning: YesOrNo.NO,
+      }),
+    );
   }
 }

@@ -11,3 +11,8 @@ export class CreateTimerDto {
   @Type(() => Number)
   teams: number[];
 }
+
+export class StopTimerDto {
+  @IsPositive()
+  team: number;
+}
