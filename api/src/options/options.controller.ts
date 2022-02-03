@@ -180,7 +180,9 @@ export class OptionsController {
   @Post('company-image')
   async uploadCompayImage(@UploadedFile() file) {
     await this.optionsService.updateCompayImage(file.filename);
-    return `${process.env.SERVER_URL}/${process.env.ADMIN_UPLOAD_PATH}/${file.filename}`;
+    return {
+      imgPath: `${process.env.SERVER_URL}/${process.env.ADMIN_UPLOAD_PATH}/${file.filename}`,
+    };
   }
 
   @UseInterceptors(FileInterceptor('image', adminMulterOptions))
@@ -188,6 +190,8 @@ export class OptionsController {
   @Post('map-image')
   async uploadMapImage(@UploadedFile() file) {
     await this.optionsService.updateMapImage(file.filename);
-    return `${process.env.SERVER_URL}/${process.env.ADMIN_UPLOAD_PATH}/${file.filename}`;
+    return {
+      imgPath: `${process.env.SERVER_URL}/${process.env.ADMIN_UPLOAD_PATH}/${file.filename}`,
+    };
   }
 }
