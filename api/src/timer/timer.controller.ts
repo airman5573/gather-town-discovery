@@ -32,7 +32,7 @@ export class TimerController {
   }
 
   @Roles(ADMIN_ROLE)
-  @Post()
+  @Put('start')
   async start(@Body() startTimerDto: StartTimerDto): Promise<TimerEntity[]> {
     return await this.timerService.start(startTimerDto.teams);
   }
