@@ -100,7 +100,7 @@ export default function TimerModal() {
         <Row>
           {timers?.map(({ team, startTime, isRunning }) => {
             return (
-              <Col sm="3" className="mb-3">
+              <Col sm="3" className="mb-3" key={team}>
                 <TimerBtn
                   team={team}
                   startTime={startTime}
