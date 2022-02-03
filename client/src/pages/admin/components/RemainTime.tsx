@@ -26,7 +26,6 @@ export default function RemainTime({ startTime, lapTime }: TProps) {
       setRemainTime((prev) => prev - 1);
     }, 1000);
     return () => {
-      console.log('component unmounted');
       clearInterval(timer);
     };
   }, [lapTime, startTime]);

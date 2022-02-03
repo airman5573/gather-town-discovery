@@ -5,7 +5,6 @@ import useAuth from '../../auth/auth.hooks';
 import toasty from '../../utils/toasty';
 
 export default function LoginPage() {
-  console.log('loginPage is called');
   const { login } = useAuth();
   const [companyImage, setCompanyImage] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);

@@ -13,7 +13,6 @@ export default function AdminPage() {
 
   useEffect(() => {
     // user가 없거나, 있는데 ADMIN이 아닌 경우
-    console.log('user in AdminPage :', user);
     if (!user || (user && user.role !== UserRole.ADMIN)) {
       toasty.error('해당 페이지에 접근할 수 없습니다');
     }

@@ -67,13 +67,6 @@ export default function TimerModal() {
       });
   };
 
-  useEffect(() => {
-    console.log('Timer Modal is Mounted');
-    return () => {
-      console.log('Timer Modal is Unmounted');
-    };
-  }, []);
-
   return (
     <CustomModal
       className="timer-modal"
