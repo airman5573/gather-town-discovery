@@ -2,8 +2,8 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { TeamPassword } from '../../../../types';
 import baseQueryWithAuth from './baseQueryWithAuth';
 
-const teamPasswordsApi = createApi({
-  reducerPath: 'team-passwords',
+const teamPasswordApi = createApi({
+  reducerPath: 'team-password',
   tagTypes: ['TeamPasswords'],
   baseQuery: baseQueryWithAuth({
     baseUrl: 'team-password',
@@ -26,4 +26,4 @@ const teamPasswordsApi = createApi({
   }),
 });
 
-export default teamPasswordsApi;
+export default teamPasswordApi;

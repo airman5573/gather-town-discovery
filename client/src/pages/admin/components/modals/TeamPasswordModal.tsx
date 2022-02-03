@@ -10,12 +10,15 @@ import {
 import { useForm } from 'react-hook-form';
 import { NavMenuItemEnum, TeamPassword } from '../../../../types';
 import toasty from '../../../../utils/toasty';
-import teamPasswordsApi from '../../redux/api/team-passwords.api';
+import { useAppDispatch } from '../../redux';
+import teamPasswordsApi from '../../redux/api/team-password.api';
+import { updateActiveNavMenuItem } from '../../redux/features/modal-control.slice';
 import CustomModal from '../CustomModal';
 
 type FormValues = Array<TeamPassword>;
 
-export default function TeamPasswordsModal() {
+export default function TeamPasswordModal() {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -23,14 +26,7 @@ export default function TeamPasswordsModal() {
     reset,
     formState: { errors },
   } = useForm<FormValues>();
-  const {
-    data: teamPasswords,
-    isLoading,
-    isFetching,
-    isSuccess,
-    isError,
-    error,
-  } = teamPasswordsApi.useGetAllQuery();
+  const { data: teamPasswords } = teamPasswordsApi.useGetAllQuery();
 
   const [updateTeamPasswords] = teamPasswordsApi.useUpdateMutation();
   const onSubmit = (data: { [team: number]: TeamPassword }) => {
@@ -100,7 +96,11 @@ export default function TeamPasswordsModal() {
   };
 
   return (
-    <CustomModal size="lg" navMenuItem={NavMenuItemEnum.TeamPasswords}>
+    <CustomModal
+      className="team-password-modal"
+      size="lg"
+      navMenuItem={NavMenuItemEnum.TeamPasswords}
+    >
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Header>팀 비밀번호 설정</Modal.Header>
         <Modal.Body>
@@ -137,7 +137,14 @@ export default function TeamPasswordsModal() {
           <Button variant="primary" type="submit">
             적용
           </Button>
-          <Button variant="secondary">닫기</Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              dispatch(updateActiveNavMenuItem(null));
+            }}
+          >
+            닫기
+          </Button>
         </Modal.Footer>
       </Form>
     </CustomModal>

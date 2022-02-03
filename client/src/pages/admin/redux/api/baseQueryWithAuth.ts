@@ -30,7 +30,6 @@ const baseQueryWithAuth =
     });
     const result = await query(args, api, extraOptions);
     const error = result.error;
-    console.log('error in baseQuery :', error);
     if (error && (error.status === 401 || error.status === 403)) {
       window.localStorage.removeItem(ACCESS_TOKEN_KEY);
       window.location.href = window.location.href;

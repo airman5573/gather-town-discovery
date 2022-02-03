@@ -4,18 +4,29 @@ import { useAppDispatch, useAppSelector } from '../redux';
 import { updateActiveNavMenuItem } from '../redux/features/modal-control.slice';
 
 type Props = {
+  className: string;
   size?: 'sm' | 'lg' | 'xl';
   navMenuItem: NavMenuItemEnum;
   children: JSX.Element | JSX.Element[];
 };
 
-export default function CustomModal({ size, navMenuItem, children }: Props) {
+export default function CustomModal({
+  className,
+  size,
+  navMenuItem,
+  children,
+}: Props) {
   const dispatch = useAppDispatch();
   const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
   const show = activeNavMenuItem === navMenuItem;
   const handleHide = () => dispatch(updateActiveNavMenuItem(null));
   return (
-    <Modal size={size ? size : 'lg'} show={show} onHide={handleHide}>
+    <Modal
+      className={className}
+      size={size ? size : 'lg'}
+      show={show}
+      onHide={handleHide}
+    >
       {children}
     </Modal>
   );

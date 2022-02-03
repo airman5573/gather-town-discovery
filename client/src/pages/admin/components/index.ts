@@ -1,6 +1,6 @@
 import Board from './Board';
 import MenuItem from './MenuItem';
 import NavMenu from './NavMenu';
-import TeamPasswords from './modals/TeamPasswordsModal';
+import TeamPasswordModal from './modals/TeamPasswordModal';
 
-export { Board, NavMenu, MenuItem, TeamPasswords };
+export { Board, NavMenu, MenuItem, TeamPasswordModal };

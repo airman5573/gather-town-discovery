@@ -1,17 +1,30 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import teamPasswordsApi from './api/team-passwords.api';
+import optionApi from './api/option.api';
+import teamPasswordApi from './api/team-password.api';
+import timerApi from './api/timer.api';
 import modalControlReducer from './features/modal-control.slice';
-import teamPasswordsReducer from './features/team-passwords.slice';
+import teamPasswordReducer from './features/team-password.slice';
+import timerReducer from './features/timers.slice';
 
 export const store = configureStore({
   reducer: {
     modalControl: modalControlReducer,
-    teamPasswords: teamPasswordsReducer,
-    [teamPasswordsApi.reducerPath]: teamPasswordsApi.reducer,
+    teamPasswords: teamPasswordReducer,
+    timers: timerReducer,
+    [teamPasswordApi.reducerPath]: teamPasswordApi.reducer,
+    [timerApi.reducerPath]: timerApi.reducer,
+    [optionApi.reducerPath]: optionApi.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(teamPasswordsApi.middleware),
+  middleware: (getDefaultMiddleware) => {
+    const middlewares = getDefaultMiddleware();
+    return [
+      ...middlewares,
+      teamPasswordApi.middleware,
+      timerApi.middleware,
+      optionApi.middleware,
+    ];
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

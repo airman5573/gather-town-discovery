@@ -1,3 +1,10 @@
+import { LocalDateTime } from '@js-joda/core';
+
+export enum YesOrNo {
+  YES = 'yes',
+  NO = 'no',
+}
+
 export enum PointTableKey {
   TimerPlus = 'timerPlus',
   TimerMinus = 'timerMinus',
@@ -51,4 +58,15 @@ export enum NavMenuItemEnum {
   Timer = 'timer',
   Upload = 'upload',
   AdminPassword = 'admin-password',
+}
+
+export interface Timer {
+  team: number;
+  startTime: string;
+  isRunning: YesOrNo;
+}
+
+export interface Option<ValueType> {
+  optionKey: string;
+  optionValue: ValueType;
 }

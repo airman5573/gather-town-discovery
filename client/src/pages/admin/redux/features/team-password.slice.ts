@@ -14,10 +14,10 @@ const initialState: InitialState = {
     }),
 };
 
-const teamPasswordsSlice = createSlice({
-  name: 'team-passwords',
+const teamPasswordSlice = createSlice({
+  name: 'team-password',
   initialState,
   reducers: {},
 });
 
-export default teamPasswordsSlice.reducer;
+export default teamPasswordSlice.reducer;

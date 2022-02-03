@@ -2,7 +2,7 @@ import { toast, ToastOptions } from 'react-toastify';
 
 const defaultToastOptions: ToastOptions = {
   position: 'top-right',
-  autoClose: 4500,
+  autoClose: 3500,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
