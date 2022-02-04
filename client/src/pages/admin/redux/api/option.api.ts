@@ -12,6 +12,7 @@ const optionApi = createApi({
     'LastPuzzleVideoUrl',
     'CanOpenLastPuzzle',
     'CanSubmitDescryptedSentence',
+    'AdminPassword',
   ],
   baseQuery: baseQueryWithAuth({
     baseUrl: 'options',
@@ -111,6 +112,18 @@ const optionApi = createApi({
         body,
       }),
       invalidatesTags: ['CanSubmitDescryptedSentence'],
+    }),
+    getAdminPassword: build.query<Option<string>, void>({
+      query: () => ({ url: 'admin-password' }),
+      providesTags: ['AdminPassword'],
+    }),
+    updateAdminPassword: build.mutation<Option<string>, { password: string }>({
+      query: (body) => ({
+        url: 'admin-password',
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['AdminPassword'],
     }),
   }),
 });
