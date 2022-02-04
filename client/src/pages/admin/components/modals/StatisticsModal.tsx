@@ -75,7 +75,7 @@ function StatisticsTable({ data }: TStatisticsTable) {
       </thead>
       <tbody>
         {data.map((row) => {
-          return <TableRow row={row} />;
+          return <TableRow row={row} key={row.team} />;
         })}
       </tbody>
     </Table>
