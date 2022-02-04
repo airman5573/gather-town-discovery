@@ -22,6 +22,7 @@ import { useAppDispatch, useAppSelector } from '../../redux';
 import classNames from 'classnames';
 import TimerBtn from '../TimerBtn';
 import { TEAMS } from '../../../../constants';
+import CustomModalFooter from '../CustomModalFooter';
 
 type LapTimeFormValue = {
   lapTime: string;
@@ -113,16 +114,7 @@ export default function TimerModal() {
           })}
         </Row>
       </Modal.Body>
-      <Modal.Footer>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            dispatch(updateActiveNavMenuItem(null));
-          }}
-        >
-          닫기
-        </Button>
-      </Modal.Footer>
+      <CustomModalFooter />
     </CustomModal>
   );
 }

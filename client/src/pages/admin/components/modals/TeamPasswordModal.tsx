@@ -10,15 +10,13 @@ import {
 import { useForm } from 'react-hook-form';
 import { NavMenuItemEnum, TeamPassword } from '../../../../types';
 import toasty from '../../../../utils/toasty';
-import { useAppDispatch } from '../../redux';
 import teamPasswordsApi from '../../redux/api/team-password.api';
-import { updateActiveNavMenuItem } from '../../redux/features/modal-control.slice';
 import CustomModal from '../CustomModal';
+import CustomModalFooter from '../CustomModalFooter';
 
 type FormValues = Array<TeamPassword>;
 
 export default function TeamPasswordModal() {
-  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -133,19 +131,11 @@ export default function TeamPasswordModal() {
             })}
           </Row>
         </Modal.Body>
-        <Modal.Footer>
+        <CustomModalFooter>
           <Button variant="primary" type="submit">
             적용
           </Button>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              dispatch(updateActiveNavMenuItem(null));
-            }}
-          >
-            닫기
-          </Button>
-        </Modal.Footer>
+        </CustomModalFooter>
       </Form>
     </CustomModal>
   );
