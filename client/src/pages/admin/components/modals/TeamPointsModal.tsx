@@ -5,7 +5,10 @@ import CustomModalFooter from '../CustomModalFooter';
 
 export default function TeamPointsModal() {
   return (
-    <CustomModal navMenuItem={NavMenuItemEnum.TeamPoints}>
+    <CustomModal
+      className="team-points-modal"
+      navMenuItem={NavMenuItemEnum.TeamPoints}
+    >
       <Modal.Header>본부 점수 제공</Modal.Header>
       <Modal.Body></Modal.Body>
       <CustomModalFooter />

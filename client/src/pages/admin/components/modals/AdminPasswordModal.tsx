@@ -5,7 +5,10 @@ import CustomModalFooter from '../CustomModalFooter';
 
 export default function AdminPasswordModal() {
   return (
-    <CustomModal navMenuItem={NavMenuItemEnum.AdminPassword}>
+    <CustomModal
+      className="admin-password-modal"
+      navMenuItem={NavMenuItemEnum.AdminPassword}
+    >
       <Modal.Header>관리자 비밀번호</Modal.Header>
       <Modal.Body></Modal.Body>
       <CustomModalFooter />
