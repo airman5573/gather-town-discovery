@@ -4,7 +4,7 @@ import baseQueryWithAuth from './baseQueryWithAuth';
 
 const optionApi = createApi({
   reducerPath: 'option',
-  tagTypes: ['LapTime'],
+  tagTypes: ['LapTime', 'CompanyImage', 'MapImage'],
   baseQuery: baseQueryWithAuth({
     baseUrl: 'options',
   }),
@@ -22,6 +22,30 @@ const optionApi = createApi({
         },
       }),
       invalidatesTags: ['LapTime'],
+    }),
+    getCompanyImage: build.query<Option<string>, void>({
+      query: () => ({ url: 'company-image' }),
+      providesTags: ['CompanyImage'],
+    }),
+    uploadCompanyImage: build.mutation<string, FormData>({
+      query: (body) => ({
+        url: 'company-image',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['CompanyImage'],
+    }),
+    getMapImage: build.query<Option<string>, void>({
+      query: () => ({ url: 'map-image' }),
+      providesTags: ['MapImage'],
+    }),
+    uploadMapImage: build.mutation<string, FormData>({
+      query: (body) => ({
+        url: 'map-image',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['MapImage'],
     }),
   }),
 });

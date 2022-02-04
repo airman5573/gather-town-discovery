@@ -256,3 +256,8 @@ export const API_URL = {
     },
   },
 };
+
+export const FILE_EXTENSIONS = {
+  video: ['3gp', 'avi', 'mov', 'mp4', 'mpeg', 'ogg', 'ogv', 'webm', 'wmv'],
+  image: ['jpeg', 'jpg', 'png', 'gif'],
+};
