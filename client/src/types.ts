@@ -70,3 +70,26 @@ export interface Option<ValueType> {
   optionKey: string;
   optionValue: ValueType;
 }
+
+export enum PointType {
+  Usable = 'usable',
+  Timer = 'timer',
+  BoxOpen = 'boxOpen',
+  SentenceDecryption = 'sentenceDecryption',
+  Bingo = 'bingo',
+}
+
+export interface TeamPointEntity {
+  team: number;
+  usable: number;
+  timer: number;
+  boxOpen: number;
+  sentenceDescription: number;
+  bingo: number;
+}
+
+export interface TeamPoint {
+  team: number;
+  point: number;
+  pointType: PointType;
+}

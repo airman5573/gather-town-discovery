@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import optionApi from './api/option.api';
 import teamPasswordApi from './api/team-password.api';
 import timerApi from './api/timer.api';
+import teamPointApi from './api/team-point.api';
 import modalControlReducer from './features/modal-control.slice';
 import teamPasswordReducer from './features/team-password.slice';
 import timerReducer from './features/timers.slice';
@@ -15,6 +16,7 @@ export const store = configureStore({
     [teamPasswordApi.reducerPath]: teamPasswordApi.reducer,
     [timerApi.reducerPath]: timerApi.reducer,
     [optionApi.reducerPath]: optionApi.reducer,
+    [teamPointApi.reducerPath]: teamPointApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     const middlewares = getDefaultMiddleware();
@@ -23,6 +25,7 @@ export const store = configureStore({
       teamPasswordApi.middleware,
       timerApi.middleware,
       optionApi.middleware,
+      teamPointApi.middleware,
     ];
   },
 });
