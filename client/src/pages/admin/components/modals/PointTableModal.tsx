@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { Alert, Form, Modal, Table, Button, InputGroup } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { NavMenuItemEnum, PointTableKey } from '../../../../types';
 import toasty from '../../../../utils/toasty';
+import { useAppSelector } from '../../redux';
 import pointTableApi from '../../redux/api/point-table.api';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
@@ -60,7 +62,13 @@ function PointTableRow({ name, pointTableKey, point }: TPointTableRowProps) {
 }
 
 export default function PointTableModal() {
-  const { data } = pointTableApi.useGetPointTableQuery();
+  const { data, refetch } = pointTableApi.useGetPointTableQuery();
+
+  const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
+  useEffect(() => {
+    refetch();
+  }, [activeNavMenuItem]);
+
   return (
     <CustomModal
       className="point-table-modal"

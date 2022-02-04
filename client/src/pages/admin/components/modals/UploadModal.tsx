@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Button, Col, FormControl, Modal, Row } from 'react-bootstrap';
 import { NavMenuItemEnum } from '../../../../types';
 import { getFileExtension } from '../../../../utils/files';
+import { useAppSelector } from '../../redux';
 import optionApi from '../../redux/api/option.api';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
@@ -37,6 +38,13 @@ export default function UploadModal() {
       console.log('e :', e);
     }
   };
+
+  const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
+  useEffect(() => {
+    companyImageObj.refetch();
+    mapImageObj.refetch();
+  }, [activeNavMenuItem]);
+
   return (
     <CustomModal
       size="md"

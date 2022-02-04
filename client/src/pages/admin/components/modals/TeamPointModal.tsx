@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Button,
   Col,
@@ -10,6 +11,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { NavMenuItemEnum, PointType, TeamPoint } from '../../../../types';
 import toasty from '../../../../utils/toasty';
+import { useAppSelector } from '../../redux';
 import teamPointApi from '../../redux/api/team-point.api';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
@@ -24,7 +26,7 @@ export default function TeamPointModal() {
     reset,
     formState: { errors },
   } = useForm<FormValues>();
-  const { data: teamPoints } = teamPointApi.useGetAllQuery();
+  const { data: teamPoints, refetch } = teamPointApi.useGetAllQuery();
 
   const [updateTeamPoints] = teamPointApi.useUpdateMutation();
   const onSubmit = (data: { [team: number]: TeamPoint }) => {
@@ -52,6 +54,11 @@ export default function TeamPointModal() {
         toasty.error(message);
       });
   };
+
+  const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
+  useEffect(() => {
+    refetch();
+  }, [activeNavMenuItem]);
 
   return (
     <CustomModal

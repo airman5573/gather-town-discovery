@@ -29,7 +29,6 @@ type LapTimeFormValue = {
 };
 
 export default function TimerModal() {
-  const dispatch = useAppDispatch();
   // lapTime Query
   const lapTimeObj = optionApi.useGetLapTimeQuery();
   const lapTime = lapTimeObj.data?.optionValue
@@ -68,6 +67,12 @@ export default function TimerModal() {
         });
       });
   };
+
+  const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
+  useEffect(() => {
+    lapTimeObj.refetch();
+    timerObj.refetch();
+  }, [activeNavMenuItem]);
 
   return (
     <CustomModal

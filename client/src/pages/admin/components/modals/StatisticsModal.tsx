@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { Modal, Table } from 'react-bootstrap';
 import { NavMenuItemEnum, TeamStatistics } from '../../../../types';
+import { useAppSelector } from '../../redux';
 import statisticsApi from '../../redux/api/statistics.api';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
@@ -83,7 +85,13 @@ function StatisticsTable({ data }: TStatisticsTable) {
 }
 
 export default function StatisticsModal() {
-  const { data } = statisticsApi.useGetStatisticsQuery();
+  const { data, refetch } = statisticsApi.useGetStatisticsQuery();
+
+  const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
+  useEffect(() => {
+    refetch();
+  }, [activeNavMenuItem]);
+
   return (
     <CustomModal
       size="xl"

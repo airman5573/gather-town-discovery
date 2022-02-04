@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { NavMenuItemEnum } from '../../../../types';
 import toasty from '../../../../utils/toasty';
+import { useAppSelector } from '../../redux';
 import optionApi from '../../redux/api/option.api';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
@@ -12,7 +14,7 @@ type TFormValue = {
 
 export default function AdminPasswordModal() {
   const { register, handleSubmit, reset } = useForm<TFormValue>();
-  const { data } = optionApi.useGetAdminPasswordQuery();
+  const { data, refetch } = optionApi.useGetAdminPasswordQuery();
   const [updateAdminPassword] = optionApi.useUpdateAdminPasswordMutation();
 
   const handlePasswordSubmit = (data: TFormValue) => {
@@ -27,6 +29,12 @@ export default function AdminPasswordModal() {
         toasty.error(message);
       });
   };
+
+  const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
+  useEffect(() => {
+    refetch();
+  }, [activeNavMenuItem]);
+
   return (
     <CustomModal
       size="sm"

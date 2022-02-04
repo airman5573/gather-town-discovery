@@ -23,7 +23,6 @@ export default function ResetModal() {
       .unwrap()
       .then((data) => {
         toasty.success('초기화 성공');
-        window.location.href = window.location.href;
       })
       .catch((e) => {
         console.error(e);

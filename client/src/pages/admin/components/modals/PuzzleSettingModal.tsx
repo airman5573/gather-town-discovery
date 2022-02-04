@@ -1,9 +1,10 @@
 import classNames from 'classnames';
-import React, { ChangeEventHandler } from 'react';
+import React, { ChangeEventHandler, useEffect } from 'react';
 import { Button, Modal, Row, Col, InputGroup, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { NavMenuItemEnum, YesOrNo } from '../../../../types';
 import toasty from '../../../../utils/toasty';
+import { useAppSelector } from '../../redux';
 import optionApi from '../../redux/api/option.api';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
@@ -103,6 +104,15 @@ export default function PuzzleSettingModal() {
         toasty.error(message[0]);
       });
   };
+
+  const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
+  useEffect(() => {
+    puzzleMessageObj.refetch();
+    lastPuzzleVideoUrlObj.refetch();
+    canOpenLastPuzzleObj.refetch();
+    canSubmitDescryptedSentenceObj.refetch();
+  }, [activeNavMenuItem]);
+
   return (
     <CustomModal
       className="puzzle-setting-modal"

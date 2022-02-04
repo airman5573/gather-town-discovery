@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Button,
   Col,
@@ -10,6 +11,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { NavMenuItemEnum, TeamPassword } from '../../../../types';
 import toasty from '../../../../utils/toasty';
+import { useAppSelector } from '../../redux';
 import teamPasswordsApi from '../../redux/api/team-password.api';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
@@ -24,7 +26,7 @@ export default function TeamPasswordModal() {
     reset,
     formState: { errors },
   } = useForm<FormValues>();
-  const { data: teamPasswords } = teamPasswordsApi.useGetAllQuery();
+  const { data: teamPasswords, refetch } = teamPasswordsApi.useGetAllQuery();
 
   const [updateTeamPasswords] = teamPasswordsApi.useUpdateMutation();
   const onSubmit = (data: { [team: number]: TeamPassword }) => {
@@ -92,6 +94,11 @@ export default function TeamPasswordModal() {
         reset();
       });
   };
+
+  const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
+  useEffect(() => {
+    refetch();
+  }, [activeNavMenuItem]);
 
   return (
     <CustomModal
