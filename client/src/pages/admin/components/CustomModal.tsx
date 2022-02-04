@@ -5,7 +5,7 @@ import { updateActiveNavMenuItem } from '../redux/features/modal-control.slice';
 
 type Props = {
   className: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'sm' | 'lg' | 'xl';
   navMenuItem: NavMenuItemEnum;
   children: JSX.Element | JSX.Element[];
 };

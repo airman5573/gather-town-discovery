@@ -47,7 +47,7 @@ export default function UploadModal() {
 
   return (
     <CustomModal
-      size="md"
+      size="lg"
       className="upload-modal"
       navMenuItem={NavMenuItemEnum.Upload}
     >
