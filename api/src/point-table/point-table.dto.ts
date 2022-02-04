@@ -12,7 +12,9 @@ export class PointTableKeyDto {
 
 export class PointTableDto extends PointTableKeyDto {
   @Type(() => Number)
-  @IsPositive()
+  @IsPositive({
+    message: '0이상의 점수를 입력해 주세요',
+  })
   point: number;
 }
 
