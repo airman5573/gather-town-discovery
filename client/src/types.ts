@@ -103,3 +103,17 @@ export type PointTableEntity = {
   key: PointTableKey;
   point: number;
 };
+
+export type TeamStatistics = {
+  team: number;
+  usable: number;
+  timer: number;
+  boxOpen: number;
+  sentenceDecryption: number;
+  bingo: number;
+  openEmptyBoxCount: number;
+  openLetterBoxCount: number;
+  percentageOfBoxOpen: number;
+  sumOfPoint: number;
+  contributionRank: number;
+};

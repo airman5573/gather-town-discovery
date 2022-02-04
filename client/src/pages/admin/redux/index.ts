@@ -9,6 +9,7 @@ import teamPasswordReducer from './features/team-password.slice';
 import timerReducer from './features/timers.slice';
 import pointTableApi from './api/point-table.api';
 import resetApi from './api/reset.api';
+import statisticsApi from './api/statistics.api';
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     [teamPointApi.reducerPath]: teamPointApi.reducer,
     [pointTableApi.reducerPath]: pointTableApi.reducer,
     [resetApi.reducerPath]: resetApi.reducer,
+    [statisticsApi.reducerPath]: statisticsApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     const middlewares = getDefaultMiddleware();
@@ -32,6 +34,7 @@ export const store = configureStore({
       teamPointApi.middleware,
       pointTableApi.middleware,
       resetApi.middleware,
+      statisticsApi.middleware,
     ];
   },
 });
