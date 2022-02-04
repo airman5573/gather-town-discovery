@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
+import { ADMIN_ROLE } from 'src/constants';
 import { PointTable } from 'src/types';
 import { PointTableKeyDto, UpdatePointTableItemDto } from './point-table.dto';
 import { PointTableEntity } from './point-table.entity';
@@ -21,18 +22,18 @@ export class PointTableController {
     return await this.pointTableService.getPointTableItem(key);
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put('reset')
   async reset(): Promise<PointTable> {
     return await this.pointTableService.reset();
   }
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put(':key')
   async updatePointTableItem(
     @Param() { key }: PointTableKeyDto,
     @Body() { point }: UpdatePointTableItemDto,
-  ) {
+  ): Promise<PointTableEntity> {
     return await this.pointTableService.updatePointTableItem(key, point);
   }
 }
