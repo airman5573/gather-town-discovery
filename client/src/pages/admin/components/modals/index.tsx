@@ -5,7 +5,7 @@ import PuzzleStatusModal from './PuzzleStatusModal';
 import ResetModal from './ResetModal';
 import StatisticsModal from './StatisticsModal';
 import TeamPasswordModal from './TeamPasswordModal';
-import TeamPointsModal from './TeamPointsModal';
+import TeamPointModal from './TeamPointModal';
 import TimerModal from './TimerModal';
 import UploadModal from './UploadModal';
 
@@ -18,7 +18,7 @@ export default function Modals() {
       <ResetModal></ResetModal>
       <StatisticsModal></StatisticsModal>
       <TeamPasswordModal></TeamPasswordModal>
-      <TeamPointsModal></TeamPointsModal>
+      <TeamPointModal></TeamPointModal>
       <TimerModal></TimerModal>
       <UploadModal></UploadModal>
       <AdminPasswordModal></AdminPasswordModal>

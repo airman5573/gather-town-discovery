@@ -97,7 +97,7 @@ export default function TeamPasswordModal() {
     <CustomModal
       className="team-password-modal"
       size="lg"
-      navMenuItem={NavMenuItemEnum.TeamPasswords}
+      navMenuItem={NavMenuItemEnum.TeamPassword}
     >
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Header>팀 비밀번호 설정</Modal.Header>

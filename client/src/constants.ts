@@ -12,12 +12,12 @@ enum REQUEST_METHOD {
 }
 
 export const MENU_ITEM_LIST: Array<MenuItemProps> = [
-  { label: '팀 비밀번호', className: NavMenuItemEnum.TeamPasswords },
+  { label: '팀 비밀번호', className: NavMenuItemEnum.TeamPassword },
   { label: '타이머', className: NavMenuItemEnum.Timer },
   { label: '이미지설정', className: NavMenuItemEnum.Upload },
   { label: '구역설정', className: NavMenuItemEnum.PuzzleSetting },
   { label: '구역점유현황', className: NavMenuItemEnum.PuzzleStatus },
-  { label: '본부 점수 제공', className: NavMenuItemEnum.TeamPoints },
+  { label: '본부 점수 제공', className: NavMenuItemEnum.TeamPoint },
   { label: '최종결과', className: NavMenuItemEnum.Statistics },
   { label: '점수배정표', className: NavMenuItemEnum.PointTable },
   { label: '관리자 비밀번호', className: NavMenuItemEnum.AdminPassword },
