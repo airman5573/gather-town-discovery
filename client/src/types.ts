@@ -5,17 +5,6 @@ export enum YesOrNo {
   NO = 'no',
 }
 
-export enum PointTableKey {
-  TimerPlus = 'timerPlus',
-  TimerMinus = 'timerMinus',
-  Upload = 'upload',
-  OpenBoxCost = 'openBoxCost',
-  OpenEmptyBox = 'openEmptyBox',
-  OpenLetterBox = 'openLetterBox',
-  Bingo = 'bingo',
-  DescryptSentence = 'descryptSentence',
-}
-
 export enum UserRole {
   ADMIN = 'admin',
   USER = 'user',
@@ -93,3 +82,24 @@ export interface TeamPoint {
   point: number;
   pointType: PointType;
 }
+
+export enum PointTableKey {
+  TimerPlus = 'timerPlus',
+  TimerMinus = 'timerMinus',
+  Upload = 'upload',
+  OpenBoxCost = 'openBoxCost',
+  OpenEmptyBox = 'openEmptyBox',
+  OpenLetterBox = 'openLetterBox',
+  Bingo = 'bingo',
+  DescryptSentence = 'descryptSentence',
+}
+
+export type PointTable = {
+  [k in PointTableKey]?: number;
+};
+
+export type PointTableEntity = {
+  id: number;
+  key: PointTableKey;
+  point: number;
+};

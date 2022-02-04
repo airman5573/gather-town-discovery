@@ -7,6 +7,7 @@ import teamPointApi from './api/team-point.api';
 import modalControlReducer from './features/modal-control.slice';
 import teamPasswordReducer from './features/team-password.slice';
 import timerReducer from './features/timers.slice';
+import pointTableApi from './api/point-table.api';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     [timerApi.reducerPath]: timerApi.reducer,
     [optionApi.reducerPath]: optionApi.reducer,
     [teamPointApi.reducerPath]: teamPointApi.reducer,
+    [pointTableApi.reducerPath]: pointTableApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     const middlewares = getDefaultMiddleware();
@@ -26,6 +28,7 @@ export const store = configureStore({
       timerApi.middleware,
       optionApi.middleware,
       teamPointApi.middleware,
+      pointTableApi.middleware,
     ];
   },
 });
