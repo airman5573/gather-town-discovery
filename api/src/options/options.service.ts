@@ -175,7 +175,7 @@ export class OptionsService {
       (await this.optionsRepository.findOne()) || new OptionEntity();
     entity.adminPassword = '5911';
     entity.canSubmitDescryptedSentence = YesOrNo.NO;
-    entity.puzzleCount = 0;
+    entity.puzzleCount = 10 * 8;
     entity.originalPuzzleMessage = '';
     entity.shuffledPuzzleMessageWithPlaceholder = [];
     entity.lastPuzzleVideoUrl = '';
