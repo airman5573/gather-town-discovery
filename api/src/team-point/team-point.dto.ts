@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsEnum, IsPositive, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsEnum,
+  IsNumber,
+  IsPositive,
+  ValidateNested,
+} from 'class-validator';
 import { PointType } from 'src/types';
 
 export class TeamPointDto {
@@ -8,7 +14,7 @@ export class TeamPointDto {
   team: number;
 
   @Type(() => Number)
-  @IsPositive()
+  @IsNumber()
   point: number;
 
   @IsEnum(PointType)
