@@ -1,5 +1,6 @@
 import { Controller, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
+import { ADMIN_ROLE } from 'src/constants';
 import { MissionUploadService } from 'src/mission-upload/mission-upload.service';
 import { OptionsService } from 'src/options/options.service';
 import { PointTableService } from 'src/point-table/point-table.service';
@@ -20,7 +21,7 @@ export class ResetController {
     private readonly missionUploadService: MissionUploadService,
   ) {}
 
-  @Roles('admin')
+  @Roles(ADMIN_ROLE)
   @Put()
   async reset() {
     const pointTable = await this.pointTableService.reset();
