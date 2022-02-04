@@ -12,35 +12,29 @@ export default function UploadModal() {
   const [uploadMapImage] = optionApi.useUploadMapImageMutation();
   const companyImageInputRef = useRef<HTMLInputElement>(null);
   const mapImageInputRef = useRef<HTMLInputElement>(null);
-  const handleCompanyImageInput = (e: any) => {
+  const handleCompanyImageInput = async (e: any) => {
     const companyImage = e.target.files[0];
     const fd = new FormData();
     const fileExtension = getFileExtension(companyImage.name);
     const fileName = `company-image.${fileExtension}`;
     fd.append('image', companyImage, fileName);
-    uploadCompanyImage(fd)
-      .unwrap()
-      .then((data) => {
-        console.log('data :', data);
-      })
-      .catch((e) => {
-        console.log('e :', e);
-      });
+    try {
+      await uploadCompanyImage(fd);
+    } catch (e: any) {
+      console.log('e :', e);
+    }
   };
-  const handleMapImageInput = (e: any) => {
+  const handleMapImageInput = async (e: any) => {
     const mapImage = e.target.files[0];
     const fd = new FormData();
     const fileExtension = getFileExtension(mapImage.name);
     const fileName = `map-image.${fileExtension}`;
     fd.append('image', mapImage, fileName);
-    uploadMapImage(fd)
-      .unwrap()
-      .then((data) => {
-        console.log('data :', data);
-      })
-      .catch((e) => {
-        console.log('e :', e);
-      });
+    try {
+      await uploadMapImage(fd);
+    } catch (e: any) {
+      console.log('e :', e);
+    }
   };
   return (
     <CustomModal
