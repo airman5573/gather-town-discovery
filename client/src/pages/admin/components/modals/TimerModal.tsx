@@ -28,6 +28,7 @@ type LapTimeFormValue = {
 };
 
 export default function TimerModal() {
+  const dispatch = useAppDispatch();
   // lapTime Query
   const lapTimeObj = optionApi.useGetLapTimeQuery();
   const lapTime = lapTimeObj.data?.optionValue
@@ -112,6 +113,16 @@ export default function TimerModal() {
           })}
         </Row>
       </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            dispatch(updateActiveNavMenuItem(null));
+          }}
+        >
+          닫기
+        </Button>
+      </Modal.Footer>
     </CustomModal>
   );
 }

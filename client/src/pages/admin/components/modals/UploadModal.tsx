@@ -2,10 +2,13 @@ import { useRef } from 'react';
 import { Button, Col, FormControl, Modal, Row } from 'react-bootstrap';
 import { NavMenuItemEnum } from '../../../../types';
 import { getFileExtension } from '../../../../utils/files';
+import { useAppDispatch } from '../../redux';
 import optionApi from '../../redux/api/option.api';
+import { updateActiveNavMenuItem } from '../../redux/features/modal-control.slice';
 import CustomModal from '../CustomModal';
 
 export default function UploadModal() {
+  const dispatch = useAppDispatch();
   const companyImageObj = optionApi.useGetCompanyImageQuery();
   const [uploadCompanyImage] = optionApi.useUploadCompanyImageMutation();
   const mapImageObj = optionApi.useGetMapImageQuery();
@@ -102,7 +105,14 @@ export default function UploadModal() {
         </Row>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary">닫기</Button>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            dispatch(updateActiveNavMenuItem(null));
+          }}
+        >
+          닫기
+        </Button>
       </Modal.Footer>
     </CustomModal>
   );
