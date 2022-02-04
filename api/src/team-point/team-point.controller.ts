@@ -18,16 +18,22 @@ export class TeamPointController {
     return await this.teamPointService.getPoint(team);
   }
 
+  @Roles(ADMIN_ROLE, USER_ROLE)
+  @Get('all')
+  async getAllTeamPoint(): Promise<TeamPointEntity[]> {
+    return await this.teamPointService.getAllTeamPoints();
+  }
+
   @Roles(ADMIN_ROLE)
   @Get(':team')
   async getPointByAdmin(@Param('team') team: number): Promise<TeamPointEntity> {
     return await this.teamPointService.getPoint(team);
   }
 
-  @Roles(ADMIN_ROLE, USER_ROLE)
-  @Get('all')
-  async getAllTeamPoint(): Promise<TeamPointEntity[]> {
-    return await this.teamPointService.getAllTeamPoints();
+  @Roles(ADMIN_ROLE)
+  @Put('reset')
+  async reset(): Promise<TeamPointEntity[]> {
+    return await this.teamPointService.reset();
   }
 
   @Roles(ADMIN_ROLE)
@@ -36,11 +42,5 @@ export class TeamPointController {
     @Body() { teamPoints }: UpdateTeamPointsDto,
   ): Promise<TeamPointEntity[]> {
     return await this.teamPointService.updatePoints(teamPoints);
-  }
-
-  @Roles(ADMIN_ROLE)
-  @Put('reset')
-  async reset(): Promise<TeamPointEntity[]> {
-    return await this.teamPointService.reset();
   }
 }
