@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { InputGroup } from 'react-bootstrap';
-import { YesOrNo } from '../../../types';
+import { YesOrNo } from '../../../common/types';
 import toasty from '../../../utils/toasty';
 import timerApi from '../redux/api/timer.api';
 import RemainTime from './RemainTime';

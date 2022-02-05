@@ -1,5 +1,5 @@
 import { ACCESS_TOKEN_KEY } from '../constants';
-import { User } from '../types';
+import { User } from '../common/types';
 import { apiRequest } from '../utils/axios-jwt';
 import jwt_decode from 'jwt-decode';
 

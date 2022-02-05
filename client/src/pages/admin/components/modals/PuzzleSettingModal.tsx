@@ -2,10 +2,11 @@ import classNames from 'classnames';
 import React, { ChangeEventHandler, useEffect } from 'react';
 import { Button, Modal, Row, Col, InputGroup, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { NavMenuItemEnum, YesOrNo } from '../../../../types';
+import { YesOrNo } from '../../../../common/types';
 import toasty from '../../../../utils/toasty';
 import { useAppSelector } from '../../redux';
 import optionApi from '../../redux/api/option.api';
+import { NavMenuItemEnum } from '../../types';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
 

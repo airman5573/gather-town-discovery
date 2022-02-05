@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../auth/auth.hooks';
-import { UserRole } from '../../types';
+import { UserRole } from '../../common/types';
 import toasty from '../../utils/toasty';
 
 export default function UserPage() {

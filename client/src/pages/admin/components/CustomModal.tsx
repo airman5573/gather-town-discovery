@@ -1,5 +1,5 @@
 import { Modal } from 'react-bootstrap';
-import { NavMenuItemEnum } from '../../../types';
+import { NavMenuItemEnum } from '../../../common/types';
 import { useAppDispatch, useAppSelector } from '../redux';
 import { updateActiveNavMenuItem } from '../redux/features/modal-control.slice';
 

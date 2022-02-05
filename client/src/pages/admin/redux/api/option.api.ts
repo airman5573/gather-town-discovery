@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { Option, YesOrNo } from '../../../../types';
+import { Option, YesOrNo } from '../../../../common/types';
 import baseQueryWithAuth from './baseQueryWithAuth';
 
 const optionApi = createApi({

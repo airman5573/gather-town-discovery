@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { useEffect } from 'react';
 import {
   Button,
@@ -9,12 +10,19 @@ import {
   Row,
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { NavMenuItemEnum, TeamPassword } from '../../../../types';
+import { TeamPassword } from '../../../../common/types';
 import toasty from '../../../../utils/toasty';
 import { useAppSelector } from '../../redux';
 import teamPasswordsApi from '../../redux/api/team-password.api';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
+import { css } from '@emotion/react';
+import { NavMenuItemEnum } from '../../types';
+
+const style = css`
+  color: hotpink;
+  margin-right: 100px;
+`;
 
 type FormValues = Array<TeamPassword>;
 

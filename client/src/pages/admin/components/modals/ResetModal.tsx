@@ -1,8 +1,8 @@
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { NavMenuItemEnum } from '../../../../types';
 import toasty from '../../../../utils/toasty';
 import resetApi from '../../redux/api/reset.api';
+import { NavMenuItemEnum } from '../../types';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
 
