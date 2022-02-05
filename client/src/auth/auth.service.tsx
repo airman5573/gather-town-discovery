@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN_KEY, API_URL } from '../constants';
+import { ACCESS_TOKEN_KEY } from '../constants';
 import { User } from '../types';
 import { apiRequest } from '../utils/axios-jwt';
 import jwt_decode from 'jwt-decode';
@@ -9,7 +9,8 @@ const AuthService = {
       const {
         data: { accessToken },
       } = await apiRequest({
-        ...API_URL.AUTH.LOGIN,
+        method: 'POST',
+        url: 'auth/login',
         data: { password },
       });
       return accessToken;
