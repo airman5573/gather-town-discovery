@@ -21,7 +21,7 @@ export default function ResetModal() {
     }
     allReset()
       .unwrap()
-      .then((data) => {
+      .then(() => {
         toasty.success('초기화 성공');
       })
       .catch((e) => {

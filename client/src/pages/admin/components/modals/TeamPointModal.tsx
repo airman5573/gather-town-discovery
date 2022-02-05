@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   Button,
   Col,
@@ -23,7 +23,6 @@ export default function TeamPointModal() {
   const {
     register,
     handleSubmit,
-    setError,
     reset,
     formState: { errors },
   } = useForm<FormValues>();

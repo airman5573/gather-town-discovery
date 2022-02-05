@@ -16,13 +16,7 @@ import { useAppSelector } from '../../redux';
 import teamPasswordsApi from '../../redux/api/team-password.api';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
-import { css } from '@emotion/react';
 import { NavMenuItemEnum } from '../../types';
-
-const style = css`
-  color: hotpink;
-  margin-right: 100px;
-`;
 
 type FormValues = Array<TeamPassword>;
 

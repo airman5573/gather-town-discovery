@@ -28,12 +28,7 @@ type TPointFormValue = {
 };
 
 function PointTableRow({ name, pointTableKey, point }: TPointTableRowProps) {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<TPointFormValue>();
+  const { register, handleSubmit, reset } = useForm<TPointFormValue>();
   const [updatePoint] = pointTableApi.useUpdatePointTableItemMutation();
   const handlePointSubmit = ({ point }: TPointFormValue) => {
     updatePoint({ key: pointTableKey, point })

@@ -8,18 +8,14 @@ import {
   Row,
   Col,
 } from 'react-bootstrap';
-import { YesOrNo } from '../../../../common/types';
 import CustomModal from '../CustomModal';
 import optionApi from '../../redux/api/option.api';
 import secondsToMinutes from '../../../../utils/seconds-to-minutes';
 import { useForm } from 'react-hook-form';
 import toasty from '../../../../utils/toasty';
 import timerApi from '../../redux/api/timer.api';
-import RemainTime from '../RemainTime';
 import { useEffect } from 'react';
-import { updateActiveNavMenuItem } from '../../redux/features/modal-control.slice';
-import { useAppDispatch, useAppSelector } from '../../redux';
-import classNames from 'classnames';
+import { useAppSelector } from '../../redux';
 import TimerBtn from '../TimerBtn';
 import { TEAMS } from '../../../../constants';
 import CustomModalFooter from '../CustomModalFooter';
@@ -63,7 +59,7 @@ export default function TimerModal() {
   const onLapTimeUpdateSubmit = async ({ lapTime }: { lapTime: string }) => {
     updateLapTime({ lapTime: Number(lapTime) })
       .unwrap()
-      .then((data) => {
+      .then(() => {
         toasty.success('랩타임을 성공적으로 수정했습니다');
         lapTimeForm.reset();
       })

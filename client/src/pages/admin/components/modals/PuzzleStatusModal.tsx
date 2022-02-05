@@ -1,4 +1,4 @@
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { NavMenuItemEnum } from '../../types';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';

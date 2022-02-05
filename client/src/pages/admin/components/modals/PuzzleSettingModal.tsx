@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { ChangeEventHandler, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Modal, Row, Col, InputGroup, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { YesOrNo } from '../../../../common/types';
