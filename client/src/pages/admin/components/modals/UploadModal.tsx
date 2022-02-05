@@ -76,7 +76,9 @@ export default function UploadModal() {
           <Col className="flex-grow-0">
             <div className="preview">
               <img
-                src={`/public/uploads/admin/${companyImageObj.data?.optionValue}`}
+                src={`${import.meta.env.VITE_ADMIN_UPLOADS}/${
+                  companyImageObj.data?.optionValue
+                }`}
               />
             </div>
           </Col>
@@ -104,7 +106,9 @@ export default function UploadModal() {
           <Col className="flex-grow-0">
             <div className="preview">
               <img
-                src={`/public/uploads/admin/${mapImageObj.data?.optionValue}`}
+                src={`${import.meta.env.VITE_ADMIN_UPLOADS}/${
+                  mapImageObj.data?.optionValue
+                }`}
               />
             </div>
           </Col>
