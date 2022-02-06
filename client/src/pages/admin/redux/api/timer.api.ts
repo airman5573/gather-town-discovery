@@ -9,6 +9,10 @@ const timerApi = createApi({
     baseUrl: 'timer',
   }),
   endpoints: (build) => ({
+    get: build.query<Timer, number>({
+      query: (team: number) => ({ url: `${team}` }),
+      providesTags: ['Timers'],
+    }),
     getAll: build.query<Array<Timer>, void>({
       query: () => ({ url: 'all' }),
       providesTags: ['Timers'],

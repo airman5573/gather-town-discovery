@@ -9,8 +9,8 @@ const initialState: InitialState = {
   activeNavMenuItem: null,
 };
 
-const modalControlSlice = createSlice({
-  name: 'modal-control',
+const pageControlSlice = createSlice({
+  name: 'page-control',
   initialState,
   reducers: {
     updateActiveNavMenuItem(
@@ -22,5 +22,5 @@ const modalControlSlice = createSlice({
   },
 });
 
-export const { updateActiveNavMenuItem } = modalControlSlice.actions;
-export default modalControlSlice.reducer;
+export const { updateActiveNavMenuItem } = pageControlSlice.actions;
+export default pageControlSlice.reducer;
