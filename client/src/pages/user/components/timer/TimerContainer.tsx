@@ -1,7 +1,9 @@
+/** @jsxImportSource @emotion/react */
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import useAuth from '../../../../auth/auth.hooks';
 import optionApi from '../../../admin/redux/api/option.api';
 import timerApi from '../../../admin/redux/api/timer.api';
+import { timerContainerStyle } from './style';
 import Timer from './Timer';
 
 export default function TimerContainer() {
@@ -16,9 +18,8 @@ export default function TimerContainer() {
   const startTime = timerData?.startTime;
   const lapTime = lapTimeObj.data?.optionValue;
   const isReady = team && isRunning && startTime && lapTime;
-
   return (
-    <>
+    <div className="timer-container" css={timerContainerStyle}>
       {isReady && (
         <Timer
           team={team}
@@ -27,6 +28,6 @@ export default function TimerContainer() {
           lapTime={lapTime}
         />
       )}
-    </>
+    </div>
   );
 }

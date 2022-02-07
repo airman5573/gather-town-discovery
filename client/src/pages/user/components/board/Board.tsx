@@ -12,7 +12,7 @@ import { NavMenuItemEnum } from '../../types';
 import Pages from '../page';
 import Timer from '../timer/Timer';
 import TimerContainer from '../timer/TimerContainer';
-import { boardStyle, mainStyle, sidebarStyle } from './style';
+import { mainStyle, sidebarStyle } from './style';
 
 type MenuItemProps = {
   menuItemClassName: NavMenuItemEnum;
@@ -47,7 +47,7 @@ export default function Board() {
 
   return (
     <Row>
-      <div className="board" css={boardStyle}>
+      <div className="board">
         <TimerContainer />
         <div className="sidebar" css={sidebarStyle}>
           <ul className="nav-menu list-unstyled">
