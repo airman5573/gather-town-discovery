@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { PointTable, PointTableEntity } from '../../../../types';
+import { PointTable, PointTableEntity } from '../../../../common/types';
 import baseQueryWithAuth from './baseQueryWithAuth';
 
 const pointTableApi = createApi({

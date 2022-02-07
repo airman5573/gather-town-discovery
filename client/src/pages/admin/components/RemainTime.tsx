@@ -2,6 +2,7 @@ import { ChronoUnit, LocalDateTime } from '@js-joda/core';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import secondsToMinutes from '../../../utils/seconds-to-minutes';
+import { getRemainTimeInSecond } from '../../../utils/timer';
 
 type TProps = {
   startTime: string;
@@ -9,19 +10,12 @@ type TProps = {
 };
 
 export default function RemainTime({ startTime, lapTime }: TProps) {
-  const getDiff = (startTime: string, lapTime: number) => {
-    const startLocalDateTime = LocalDateTime.parse(startTime);
-    const endLocalDateTime = startLocalDateTime.plusSeconds(lapTime);
-    const now = LocalDateTime.now();
-    return now.until(endLocalDateTime, ChronoUnit.SECONDS);
-  };
-
   const [remainTime, setRemainTime] = useState<number>(
-    getDiff(startTime, lapTime),
+    getRemainTimeInSecond(startTime, lapTime),
   );
 
   useEffect(() => {
-    setRemainTime(getDiff(startTime, lapTime));
+    setRemainTime(getRemainTimeInSecond(startTime, lapTime));
     const timer = setInterval(() => {
       setRemainTime((prev) => prev - 1);
     }, 1000);

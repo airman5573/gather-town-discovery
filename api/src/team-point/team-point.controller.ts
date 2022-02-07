@@ -2,13 +2,17 @@ import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { AuthUser } from 'src/auth/decorators/user.decorator';
 import { ADMIN_ROLE, USER_ROLE } from 'src/constants';
+import { OptionsService } from 'src/options/options.service';
 import { UpdateTeamPointsDto } from './team-point.dto';
 import { TeamPointEntity } from './team-point.entity';
 import { TeamPointService } from './team-point.service';
 
 @Controller('team-point')
 export class TeamPointController {
-  constructor(private readonly teamPointService: TeamPointService) {}
+  constructor(
+    private readonly teamPointService: TeamPointService,
+    private readonly optionsService: OptionsService,
+  ) {}
 
   @Roles(USER_ROLE)
   @Get()
@@ -21,7 +25,9 @@ export class TeamPointController {
   @Roles(ADMIN_ROLE, USER_ROLE)
   @Get('all')
   async getAllTeamPoint(): Promise<TeamPointEntity[]> {
-    return await this.teamPointService.getAllTeamPoints();
+    const teamPoints = await this.teamPointService.getAllTeamPoints();
+    const teamCount = (await this.optionsService.getTeamCount()).optionValue;
+    return teamPoints.slice(0, teamCount);
   }
 
   @Roles(ADMIN_ROLE)

@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { Timer } from '../../../../types';
+import { Timer } from '../../../../common/types';
 import baseQueryWithAuth from './baseQueryWithAuth';
 
 const timerApi = createApi({
@@ -9,6 +9,10 @@ const timerApi = createApi({
     baseUrl: 'timer',
   }),
   endpoints: (build) => ({
+    get: build.query<Timer, number>({
+      query: (team: number) => ({ url: `${team}` }),
+      providesTags: ['Timers'],
+    }),
     getAll: build.query<Array<Timer>, void>({
       query: () => ({ url: 'all' }),
       providesTags: ['Timers'],

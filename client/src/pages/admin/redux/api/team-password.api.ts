@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { TeamPassword } from '../../../../types';
+import { TeamPassword } from '../../../../common/types';
 import baseQueryWithAuth from './baseQueryWithAuth';
 
 const teamPasswordApi = createApi({

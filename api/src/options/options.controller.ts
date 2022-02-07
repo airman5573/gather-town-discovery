@@ -19,6 +19,7 @@ import {
   UpdateIsRunningTimerDto,
   OptionDto,
   UpdateLapTimeDto,
+  UpdateTeamCountDto,
 } from './options.dto';
 import { OptionsService } from './options.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -28,6 +29,20 @@ import { OptionEntity } from './options.entity';
 @Controller('options')
 export class OptionsController {
   constructor(private optionsService: OptionsService) {}
+
+  @Roles(ADMIN_ROLE)
+  @Get('team-count')
+  async getTeamCount(): Promise<OptionDto> {
+    return this.optionsService.getTeamCount();
+  }
+
+  @Roles(ADMIN_ROLE)
+  @Put('team-count')
+  async updateTeamCount(
+    @Body() { teamCount }: UpdateTeamCountDto,
+  ): Promise<OptionDto> {
+    return this.optionsService.updateTeamCount(teamCount);
+  }
 
   @Roles(ADMIN_ROLE)
   @Get()

@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { TeamStatistics } from '../../../../types';
+import { TeamStatistics } from '../../../../common/types';
 import baseQueryWithAuth from './baseQueryWithAuth';
 
 const statisticsApi = createApi({

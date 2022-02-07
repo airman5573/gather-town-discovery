@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContextType, User, UserRole } from '../types';
+import { AuthContextType, User, UserRole } from '../common/types';
 import AuthService from './auth.service';
 import toasty from '../utils/toasty';
 import { ACCESS_TOKEN_KEY } from '../constants';

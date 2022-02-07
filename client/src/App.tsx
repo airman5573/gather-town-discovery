@@ -7,6 +7,7 @@ import AdminPage from './pages/admin/AdminPage';
 import LoginPage from './pages/login/LoginPage';
 import UserPage from './pages/user/UserPage';
 import { ToastContainer } from 'react-toastify';
+import './common/scss/style.scss';
 
 function Router() {
   return (

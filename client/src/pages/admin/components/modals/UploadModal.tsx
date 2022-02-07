@@ -1,11 +1,20 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { useEffect, useRef } from 'react';
 import { Button, Col, FormControl, Modal, Row } from 'react-bootstrap';
-import { NavMenuItemEnum } from '../../../../types';
 import { getFileExtension } from '../../../../utils/files';
 import { useAppSelector } from '../../redux';
 import optionApi from '../../redux/api/option.api';
+import { NavMenuItemEnum } from '../../types';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
+
+const previewStyle = css`
+  width: 100px;
+  img {
+    width: 100%;
+  }
+`;
 
 export default function UploadModal() {
   const companyImageObj = optionApi.useGetCompanyImageQuery();
@@ -74,7 +83,7 @@ export default function UploadModal() {
             </Button>
           </Col>
           <Col className="flex-grow-0">
-            <div className="preview">
+            <div className="preview" css={previewStyle}>
               <img
                 src={`${import.meta.env.VITE_ADMIN_UPLOADS}/${
                   companyImageObj.data?.optionValue

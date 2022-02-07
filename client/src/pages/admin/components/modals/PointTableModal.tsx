@@ -1,12 +1,21 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { useEffect } from 'react';
 import { Alert, Form, Modal, Table, Button, InputGroup } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { NavMenuItemEnum, PointTableKey } from '../../../../types';
+import { PointTableKey } from '../../../../common/types';
 import toasty from '../../../../utils/toasty';
 import { useAppSelector } from '../../redux';
 import pointTableApi from '../../redux/api/point-table.api';
+import { NavMenuItemEnum } from '../../types';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
+
+const tableStyle = css`
+  tr > td:first-child {
+    width: 70%;
+  }
+`;
 
 type TPointTableRowProps = {
   name: string;
@@ -76,7 +85,7 @@ export default function PointTableModal() {
     >
       <Modal.Header>점수배정표</Modal.Header>
       <Modal.Body>
-        <Table>
+        <Table css={tableStyle}>
           <thead>
             <tr>
               <th>항목</th>

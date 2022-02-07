@@ -9,10 +9,11 @@ import {
   Row,
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { NavMenuItemEnum, PointType, TeamPoint } from '../../../../types';
+import { PointType, TeamPoint } from '../../../../common/types';
 import toasty from '../../../../utils/toasty';
 import { useAppSelector } from '../../redux';
 import teamPointApi from '../../redux/api/team-point.api';
+import { NavMenuItemEnum } from '../../types';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
 

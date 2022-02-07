@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NavMenuItemEnum } from '../../../../types';
+import { NavMenuItemEnum } from '../../types';
 
 type InitialState = {
   activeNavMenuItem: NavMenuItemEnum | null;

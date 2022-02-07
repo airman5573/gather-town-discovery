@@ -16,6 +16,7 @@ export enum YesOrNo {
 }
 
 export enum OptionKey {
+  TeamCount = 'teamCount',
   AdminPassword = 'adminPassword',
   CanSubmitDescryptedSentence = 'canSubmitDescryptedSentence',
   PuzzleCount = 'puzzleCount',

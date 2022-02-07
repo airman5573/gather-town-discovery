@@ -1,8 +1,11 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { useEffect } from 'react';
 import { Modal, Table } from 'react-bootstrap';
-import { NavMenuItemEnum, TeamStatistics } from '../../../../types';
+import { TeamStatistics } from '../../../../common/types';
 import { useAppSelector } from '../../redux';
 import statisticsApi from '../../redux/api/statistics.api';
+import { NavMenuItemEnum } from '../../types';
 import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
 
@@ -13,6 +16,13 @@ type TTableRowProps = {
 type TStatisticsTable = {
   data: Array<TeamStatistics>;
 };
+
+const tableStyle = css`
+  * {
+    text-align: center;
+    vertical-align: middle;
+  }
+`;
 
 function TableRow({ row }: TTableRowProps) {
   const {
@@ -50,7 +60,7 @@ function TableRow({ row }: TTableRowProps) {
 
 function StatisticsTable({ data }: TStatisticsTable) {
   return (
-    <Table bordered={true}>
+    <Table bordered={true} css={tableStyle}>
       <thead>
         <tr>
           <th rowSpan={2} colSpan={1}>

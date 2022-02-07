@@ -1,8 +1,12 @@
+/** @jsxImportSource @emotion/react */
 import { useEffect } from 'react';
+import { Provider } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../auth/auth.hooks';
-import { UserRole } from '../../types';
+import { UserRole } from '../../common/types';
 import toasty from '../../utils/toasty';
+import Board from './components/board/Board';
+import { store } from './redux';
 
 export default function UserPage() {
   const { user } = useAuth();
@@ -14,6 +18,11 @@ export default function UserPage() {
       navigate('/login', { replace: true });
     }
   }, [user]);
-
-  return <div className="user-page">THIS IS USER PAGE</div>;
+  return (
+    <Provider store={store}>
+      <div className="admin-page">
+        <Board></Board>
+      </div>
+    </Provider>
+  );
 }

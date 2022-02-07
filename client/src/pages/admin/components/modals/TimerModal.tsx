@@ -1,4 +1,4 @@
-import '../../scss/style.scss';
+/** @jsxImportSource @emotion/react */
 import {
   Button,
   Modal,
@@ -8,7 +8,7 @@ import {
   Row,
   Col,
 } from 'react-bootstrap';
-import { NavMenuItemEnum, YesOrNo } from '../../../../types';
+import { YesOrNo } from '../../../../common/types';
 import CustomModal from '../CustomModal';
 import optionApi from '../../redux/api/option.api';
 import secondsToMinutes from '../../../../utils/seconds-to-minutes';
@@ -23,6 +23,14 @@ import classNames from 'classnames';
 import TimerBtn from '../TimerBtn';
 import { TEAMS } from '../../../../constants';
 import CustomModalFooter from '../CustomModalFooter';
+import { css } from '@emotion/react';
+import { NavMenuItemEnum } from '../../types';
+
+const modalHeaderStyle = css`
+  & > .l-right {
+    flex-basis: 250px;
+  }
+`;
 
 type LapTimeFormValue = {
   lapTime: string;
@@ -80,7 +88,10 @@ export default function TimerModal() {
       size="lg"
       navMenuItem={NavMenuItemEnum.Timer}
     >
-      <Modal.Header className="d-flex justify-content-between align-items-center">
+      <Modal.Header
+        className="d-flex justify-content-between align-items-center"
+        css={modalHeaderStyle}
+      >
         <div className="l-left">타이머</div>
         <div className="l-right">
           <Form onSubmit={lapTimeForm.handleSubmit(onLapTimeUpdateSubmit)}>

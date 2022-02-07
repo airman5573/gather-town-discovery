@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { TeamPoint, TeamPointEntity } from '../../../../types';
+import { TeamPoint, TeamPointEntity } from '../../../../common/types';
 import baseQueryWithAuth from './baseQueryWithAuth';
 
 const teamPointApi = createApi({

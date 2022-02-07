@@ -7,6 +7,13 @@ export class OptionEntity {
   id: number;
 
   @Column({
+    type: 'int',
+    name: 'team_count',
+    default: 0,
+  })
+  teamCount: number;
+
+  @Column({
     type: 'text',
     name: 'admin_password',
   })
