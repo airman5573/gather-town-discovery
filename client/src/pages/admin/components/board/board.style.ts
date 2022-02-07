@@ -14,6 +14,6 @@ export const sidebarStyle = css`
 
 export const mainStyle = css`
   width: 100%;
-  margin-left: 250px;
   padding: 30px;
+  padding-left(250px + 30px);
 `;
