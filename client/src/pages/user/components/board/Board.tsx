@@ -9,6 +9,7 @@ import timerApi from '../../../admin/redux/api/timer.api';
 import { useAppDispatch, useAppSelector } from '../../redux';
 import { updateActiveNavMenuItem } from '../../redux/features/page-control.slice';
 import { NavMenuItemEnum } from '../../types';
+import Pages from '../page';
 import Timer from '../timer/Timer';
 import TimerContainer from '../timer/TimerContainer';
 import { boardStyle, mainStyle, sidebarStyle } from './style';
@@ -61,7 +62,9 @@ export default function Board() {
             })}
           </ul>
         </div>
-        <div className="main" css={mainStyle}></div>
+        <div className="main" css={mainStyle}>
+          <Pages />
+        </div>
       </div>
     </Row>
   );
