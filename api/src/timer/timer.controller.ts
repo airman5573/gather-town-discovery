@@ -1,17 +1,23 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE } from 'src/constants';
+import { OptionsService } from 'src/options/options.service';
 import { StartTimerDto, StopTimerDto } from './timer.dto';
 import { TimerEntity } from './timer.entity';
 import { TimerService } from './timer.service';
 
 @Controller('timer')
 export class TimerController {
-  constructor(private readonly timerService: TimerService) {}
+  constructor(
+    private readonly timerService: TimerService,
+    private readonly optionsService: OptionsService,
+  ) {}
 
   @Get('all')
   async getAllTimers(): Promise<TimerEntity[]> {
-    return await this.timerService.findAll();
+    const timers = await this.timerService.findAll();
+    const teamCount = (await this.optionsService.getTeamCount()).optionValue;
+    return timers.slice(0, teamCount);
   }
 
   @Get(':team')
