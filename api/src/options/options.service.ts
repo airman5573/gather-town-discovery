@@ -22,6 +22,18 @@ export class OptionsService {
     return entity;
   }
 
+  async getTeamCount(): Promise<OptionDto> {
+    const { teamCount } = await this.getOptions();
+    return OptionDto.create(OptionKey.TeamCount, teamCount);
+  }
+
+  async updateTeamCount(teamCount: number): Promise<OptionDto> {
+    const entity = await this.getOptions();
+    entity.teamCount = teamCount;
+    await this.optionsRepository.save(entity);
+    return OptionDto.create(OptionKey.TeamCount, teamCount);
+  }
+
   async getAdminPassword(): Promise<OptionDto> {
     const { adminPassword } = await this.getOptions();
     return OptionDto.create(OptionKey.AdminPassword, adminPassword);
@@ -173,6 +185,7 @@ export class OptionsService {
   async reset(): Promise<OptionEntity> {
     const entity =
       (await this.optionsRepository.findOne()) || new OptionEntity();
+    entity.teamCount = 0;
     entity.adminPassword = '5911';
     entity.canSubmitDescryptedSentence = YesOrNo.NO;
     entity.puzzleCount = 10 * 8;

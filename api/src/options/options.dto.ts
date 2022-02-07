@@ -22,6 +22,12 @@ export class OptionDto {
 }
 
 // Admin Password
+export class UpdateTeamCountDto {
+  @IsPositive()
+  teamCount: number;
+}
+
+// Admin Password
 export class UpdateAdminPasswordDto {
   @IsNotEmpty()
   @IsString()
