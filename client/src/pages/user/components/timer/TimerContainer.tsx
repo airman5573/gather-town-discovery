@@ -7,7 +7,10 @@ import Timer from './Timer';
 export default function TimerContainer() {
   const { user } = useAuth();
   const team = user?.team;
-  const { data: timerData } = timerApi.useGetQuery(team ? team : skipToken);
+  const { data: timerData } = timerApi.useGetQuery(team ? team : skipToken, {
+    // 3초마다 타이머 상태를 확인한다. 관리자가 타이머를 종료할수도 있으니, 실시간으로 반영해야 하기 때문이다.
+    pollingInterval: 1500,
+  });
   const lapTimeObj = optionApi.useGetLapTimeQuery();
   const isRunning = timerData?.isRunning;
   const startTime = timerData?.startTime;
