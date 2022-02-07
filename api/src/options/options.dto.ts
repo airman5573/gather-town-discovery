@@ -23,7 +23,12 @@ export class OptionDto {
 
 // Admin Password
 export class UpdateTeamCountDto {
-  @IsPositive()
+  @IsPositive({
+    message: '전체팀수는 1이상이어야 합니다',
+  })
+  @Max(10, {
+    message: '최대 10팀까지만 설정 가능합니다',
+  })
   teamCount: number;
 }
 
