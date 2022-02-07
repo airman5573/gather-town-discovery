@@ -13,11 +13,26 @@ const optionApi = createApi({
     'CanOpenLastPuzzle',
     'CanSubmitDescryptedSentence',
     'AdminPassword',
+    'TeamCount',
   ],
   baseQuery: baseQueryWithAuth({
     baseUrl: 'options',
   }),
   endpoints: (build) => ({
+    getTeamCount: build.query<Option<number>, void>({
+      query: () => ({ url: 'team-count' }),
+      providesTags: ['TeamCount'],
+    }),
+    updateTeamCount: build.mutation<Option<number>, number>({
+      query: (teamCount: number) => ({
+        url: `team-count`,
+        method: 'PUT',
+        body: {
+          teamCount,
+        },
+      }),
+      invalidatesTags: ['TeamCount'],
+    }),
     getLapTime: build.query<Option<number>, void>({
       query: () => ({ url: 'lap-time' }),
       providesTags: ['LapTime'],

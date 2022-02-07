@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Button,
   Col,
@@ -18,6 +18,7 @@ import CustomModal from '../CustomModal';
 import CustomModalFooter from '../CustomModalFooter';
 import { css } from '@emotion/react';
 import { NavMenuItemEnum } from '../../types';
+import optionApi from '../../redux/api/option.api';
 
 const style = css`
   color: hotpink;
@@ -34,8 +35,12 @@ export default function TeamPasswordModal() {
     reset,
     formState: { errors },
   } = useForm<FormValues>();
-  const { data: teamPasswords, refetch } = teamPasswordsApi.useGetAllQuery();
 
+  // get teamPasswords
+  const teamPasswordsObj = teamPasswordsApi.useGetAllQuery();
+  const teamPasswords = teamPasswordsObj.data;
+
+  // update teamPasswords
   const [updateTeamPasswords] = teamPasswordsApi.useUpdateMutation();
   const onSubmit = (data: { [team: number]: TeamPassword }) => {
     const teamPasswordValues = Object.values(data)
@@ -103,9 +108,42 @@ export default function TeamPasswordModal() {
       });
   };
 
+  // get teamCount
+  const teamCountObj = optionApi.useGetTeamCountQuery();
+  const teamCount = teamCountObj.data?.optionValue || 0;
+
+  // update teamCount
+  const [updateTeamCount] = optionApi.useUpdateTeamCountMutation();
+  const teamCountInput = useRef<HTMLInputElement>(null);
+  const handleTeamCountSubmit = () => {
+    if (!teamCountInput.current) {
+      return;
+    }
+    const value = teamCountInput.current.value;
+    if (!value) {
+      toasty.error('전체팀수를 다시 확인해주세요');
+      teamCountInput.current.value = '';
+      return;
+    }
+    const teamCount = parseInt(value);
+    updateTeamCount(teamCount)
+      .unwrap()
+      .then((data) => {
+        toasty.success('전체팀수를 설정했습니다');
+        teamPasswordsObj.refetch();
+      })
+      .catch((e) => {
+        const message = e.data.message[0];
+        toasty.error(message);
+      });
+    teamCountInput.current.value = '';
+  };
+
+  // refetch when modal open
   const { activeNavMenuItem } = useAppSelector((state) => state.modalControl);
   useEffect(() => {
-    refetch();
+    teamCountObj.refetch();
+    teamPasswordsObj.refetch();
   }, [activeNavMenuItem]);
 
   return (
@@ -115,10 +153,24 @@ export default function TeamPasswordModal() {
       navMenuItem={NavMenuItemEnum.TeamPassword}
     >
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Modal.Header>팀 비밀번호 설정</Modal.Header>
+        <Modal.Header>
+          <div className="l-left">팀 비밀번호 설정</div>
+          <div className="l-right d-flex">
+            <InputGroup>
+              <InputGroup.Text id="team-count">전체팀수</InputGroup.Text>
+              <Form.Control
+                type="number"
+                id="team-count"
+                ref={teamCountInput}
+                placeholder={`${teamCount}팀`}
+              />
+              <Button onClick={handleTeamCountSubmit}>확인</Button>
+            </InputGroup>
+          </div>
+        </Modal.Header>
         <Modal.Body>
           <Row>
-            {teamPasswords?.map(({ team, password }) => {
+            {teamPasswords?.slice(0, teamCount).map(({ team, password }) => {
               return (
                 <Col sm="3" key={team} className="mb-3">
                   <InputGroup>
