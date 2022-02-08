@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import optionApi from '../../admin/redux/api/option.api';
+import teamPointApi from '../../admin/redux/api/team-point.api';
 import timerApi from '../../admin/redux/api/timer.api';
 import pageControlReducer from './features/page-control.slice';
 
 export const store = configureStore({
   reducer: {
     pageControl: pageControlReducer,
+    [teamPointApi.reducerPath]: teamPointApi.reducer,
     [timerApi.reducerPath]: timerApi.reducer,
     [optionApi.reducerPath]: optionApi.reducer,
   },
