@@ -5,7 +5,7 @@ import { NavMenuItemEnum } from '../../types';
 type Props = {
   className: string;
   navMenuItem: NavMenuItemEnum;
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[] | boolean;
 };
 
 export default function PageWrapper({

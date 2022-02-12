@@ -16,6 +16,7 @@ export async function apiRequest<
       config.headers = {
         Authorization: `Bearer ${accessToken}`,
         withCredentials: true,
+        ...config.headers,
       };
     }
     const response = await axiosInstance.request<T, ReturnType, RequestData>(

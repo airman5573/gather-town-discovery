@@ -1,4 +1,5 @@
 import { FILE_EXTENSIONS } from '../constants';
+import { apiRequest } from './axios-jwt';
 
 export function getFileExtension(filename: string) {
   return filename.slice(((filename.lastIndexOf('.') - 1) >>> 0) + 2);
@@ -19,4 +20,25 @@ export function getMediaType(filename: string) {
   }
 
   return null;
+}
+
+export function upload(
+  team: number,
+  post: number,
+  file: File,
+  onUploadProgress: (progressEvent: any) => void,
+) {
+  const formData = new FormData();
+  formData.append('mission-file', file);
+  formData.append('team', `${team}`);
+  formData.append('post', `${post}`);
+  return apiRequest({
+    url: '/mission-upload',
+    method: 'POST',
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    onUploadProgress,
+  });
 }
