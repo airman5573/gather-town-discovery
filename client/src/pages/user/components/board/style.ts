@@ -1,13 +1,5 @@
 import { css } from '@emotion/react';
 
-export const boardStyle = css`
-  .timer {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-  }
-`;
-
 export const sidebarStyle = css`
   width: 250px;
   height: 100%;
