@@ -25,7 +25,6 @@ export class MissionUploadService {
     post: number,
     filename: string,
   ): Promise<MissionUploadEntity> {
-    console.log('filename :', filename);
     const entity = await this.getPostFileList(team);
     if (!entity) {
       throw new NotExistTeamException();

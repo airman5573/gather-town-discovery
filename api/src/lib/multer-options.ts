@@ -52,7 +52,6 @@ export const userMulterOptions: MulterOptions = {
       callback(null, uploadPath);
     },
     filename: (request, file, callback) => {
-      console.log('file :', file);
       const fn = LocalDateTime.now().format(
         DateTimeFormatter.ofPattern('yyyy-MM-dd-HH-mm-ss'),
       );
