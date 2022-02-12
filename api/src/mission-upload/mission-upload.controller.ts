@@ -17,15 +17,14 @@ import { MissionUploadService } from './mission-upload.service';
 @Controller('mission-upload')
 export class MissionUploadController {
   constructor(private readonly missionUploadService: MissionUploadService) {}
-
-  @UseInterceptors(FileInterceptor('image', userMulterOptions))
+  @UseInterceptors(FileInterceptor('mission-file', userMulterOptions))
   @Roles(USER_ROLE)
   @Post()
   async upload(
-    @Body() { team }: UploadMissionFileDto,
-    @UploadedFile() file,
+    @Body() { team, post }: UploadMissionFileDto,
+    @UploadedFile() file: Express.Multer.File,
   ): Promise<MissionUploadEntity> {
-    return await this.missionUploadService.addFile(team, file.filename);
+    return await this.missionUploadService.addFile(team, post, file.filename);
   }
 
   @Roles(ADMIN_ROLE)

@@ -12,7 +12,7 @@ export class MissionUploadService {
     private readonly missionUploadRepository: Repository<MissionUploadEntity>,
   ) {}
 
-  async getFileList(team: number): Promise<MissionUploadEntity> {
+  async getPostFileList(team: number): Promise<MissionUploadEntity> {
     return await this.missionUploadRepository.findOne({ team });
   }
 
@@ -20,12 +20,17 @@ export class MissionUploadService {
     return await this.missionUploadRepository.find();
   }
 
-  async addFile(team: number, filename: string): Promise<MissionUploadEntity> {
-    const entity = await this.getFileList(team);
+  async addFile(
+    team: number,
+    post: number,
+    filename: string,
+  ): Promise<MissionUploadEntity> {
+    console.log('filename :', filename);
+    const entity = await this.getPostFileList(team);
     if (!entity) {
       throw new NotExistTeamException();
     }
-    entity.fileList.push(`${process.env.USER_UPLOAD_PATH}/${filename}`);
+    entity[`post${post}` as any].push(filename);
     return await this.missionUploadRepository.save(entity);
   }
 
@@ -35,7 +40,16 @@ export class MissionUploadService {
     for (const team of TEAMS) {
       const entity = this.missionUploadRepository.create({
         team,
-        fileList: [],
+        post1: [],
+        post2: [],
+        post3: [],
+        post4: [],
+        post5: [],
+        post6: [],
+        post7: [],
+        post8: [],
+        post9: [],
+        post10: [],
       });
       entities.push(entity);
       await this.missionUploadRepository.save(entity);
