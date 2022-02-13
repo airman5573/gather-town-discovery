@@ -3,7 +3,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { AuthUser } from 'src/auth/decorators/user.decorator';
 import { ADMIN_ROLE, USER_ROLE } from 'src/constants';
 import { OptionsService } from 'src/options/options.service';
-import { UpdateTeamPointsDto } from './team-point.dto';
+import { UpdateTeamPointDto, UpdateTeamPointsDto } from './team-point.dto';
 import { TeamPointEntity } from './team-point.entity';
 import { TeamPointService } from './team-point.service';
 
@@ -43,10 +43,18 @@ export class TeamPointController {
   }
 
   @Roles(ADMIN_ROLE)
-  @Put()
+  @Put('all')
   async updatePoints(
     @Body() { teamPoints }: UpdateTeamPointsDto,
   ): Promise<TeamPointEntity[]> {
     return await this.teamPointService.updatePoints(teamPoints);
+  }
+
+  @Roles(ADMIN_ROLE)
+  @Put()
+  async updatePoint(
+    @Body() { team, point, pointType }: UpdateTeamPointDto,
+  ): Promise<TeamPointEntity> {
+    return await this.teamPointService.updatePoint({ team, point, pointType });
   }
 }

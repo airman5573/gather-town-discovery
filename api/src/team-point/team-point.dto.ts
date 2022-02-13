@@ -14,7 +14,9 @@ export class TeamPointDto {
   team: number;
 
   @Type(() => Number)
-  @IsNumber()
+  @IsNumber(undefined, {
+    message: '점수는 숫자만 입력 가능합니다',
+  })
   point: number;
 
   @IsEnum(PointType)
@@ -27,3 +29,5 @@ export class UpdateTeamPointsDto {
   @IsArray()
   teamPoints: TeamPointDto[];
 }
+
+export class UpdateTeamPointDto extends TeamPointDto {}
