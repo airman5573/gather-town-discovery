@@ -7,6 +7,7 @@ export const sidebarStyle = css`
   left: 0;
   top: 0;
   bottom: 0;
+  z-index: 9999;
   background-color: #ffffff;
   box-shadow: 0 0px 15px 8px rgba(0, 0, 0, 0.06),
     0 1px 0px 0 rgba(0, 0, 0, 0.02);
@@ -14,6 +15,14 @@ export const sidebarStyle = css`
 
 export const mainStyle = css`
   width: 100%;
+  min-height: 100vh;
   padding: 30px;
-  padding-left(250px + 30px);
+  padding-left: calc(250px + 30px);
+  position: relative;
+`;
+
+export const loadMissionUploadFilesBtn = css`
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
 `;
