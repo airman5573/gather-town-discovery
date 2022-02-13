@@ -53,3 +53,10 @@ export enum PointTableKey {
 export type PointTable = {
   [k in PointTableKey]?: number;
 };
+
+export type MissionUploadFileType = {
+  team: number;
+  post: number;
+  filename: string;
+  isCheckedByAdmin: YesOrNo;
+};

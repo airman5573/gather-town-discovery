@@ -29,7 +29,14 @@ export class MissionUploadService {
     if (!entity) {
       throw new NotExistTeamException();
     }
-    entity[`post${post}` as any].push(filename);
+    const postArr = entity[`post${post}` as any] || [];
+    postArr.push({
+      team,
+      post,
+      filename,
+      isCheckedByAdmin: false,
+    });
+    entity[`post${post}` as any] = postArr;
     return await this.missionUploadRepository.save(entity);
   }
 

@@ -8,7 +8,7 @@ import { Column, Entity } from 'typeorm';
 export class TimerEntity extends TeamBaseEntity {
   @Column({
     name: 'start_time',
-    type: 'datetime',
+    type: 'timestamptz',
     transformer: new LocalDateTimeTransformer(),
   })
   startTime: LocalDateTime;

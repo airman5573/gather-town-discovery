@@ -1,7 +1,7 @@
 module.exports = {
-  type: 'mysql',
+  type: 'postgres',
   host: 'localhost',
-  port: process.env.DB_PORT || 3306,
+  port: process.env.DB_PORT || 5432,
   username: process.env.DB_USERNAME || 'rpf5573',
   password: process.env.DB_PASSWORD || 'thoumas138',
   database: process.env.DB_DATABASE || 'discovery',
