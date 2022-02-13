@@ -23,13 +23,12 @@ export default function TeamPointModal() {
   const {
     register,
     handleSubmit,
-    setError,
     reset,
     formState: { errors },
   } = useForm<FormValues>();
   const { data: teamPoints, refetch } = teamPointApi.useGetAllQuery();
 
-  const [updateTeamPoints] = teamPointApi.useUpdateMutation();
+  const [updateTeamPoints] = teamPointApi.useUpdateAllMutation();
   const onSubmit = (data: { [team: number]: TeamPoint }) => {
     const teamPointValues = Object.values(data)
       .filter(({ point }) => {

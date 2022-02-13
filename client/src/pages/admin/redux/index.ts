@@ -8,6 +8,7 @@ import modalControlReducer from './features/modal-control.slice';
 import pointTableApi from './api/point-table.api';
 import resetApi from './api/reset.api';
 import statisticsApi from './api/statistics.api';
+import missionUploadApi from './api/mission-upload';
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     [pointTableApi.reducerPath]: pointTableApi.reducer,
     [resetApi.reducerPath]: resetApi.reducer,
     [statisticsApi.reducerPath]: statisticsApi.reducer,
+    [missionUploadApi.reducerPath]: missionUploadApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     const middlewares = getDefaultMiddleware();
@@ -31,6 +33,7 @@ export const store = configureStore({
       pointTableApi.middleware,
       resetApi.middleware,
       statisticsApi.middleware,
+      missionUploadApi.middleware,
     ];
   },
 });

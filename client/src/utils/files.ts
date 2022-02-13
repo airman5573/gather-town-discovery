@@ -1,5 +1,10 @@
 import { FILE_EXTENSIONS } from '../constants';
 import { apiRequest } from './axios-jwt';
+import {
+  MissionUploadEntity,
+  MissionUploadFileType,
+  YesOrNo,
+} from '../common/types';
 
 export function getFileExtension(filename: string) {
   return filename.slice(((filename.lastIndexOf('.') - 1) >>> 0) + 2);
@@ -41,4 +46,23 @@ export function upload(
     },
     onUploadProgress,
   });
+}
+
+export function getUncheckedFileList(
+  missionFiles: Array<MissionUploadEntity>,
+): Array<MissionUploadFileType> {
+  return missionFiles.reduce((acc: any, entity: MissionUploadEntity) => {
+    const keys = Object.keys(entity);
+    keys.forEach((k) => {
+      const fileList = entity[k as keyof typeof entity];
+      if (!Array.isArray(fileList) || fileList.length === 0) {
+        return;
+      }
+      const newFileList = fileList.filter((file) => {
+        return file.isCheckedByAdmin === YesOrNo.NO;
+      });
+      acc.push(...newFileList);
+    });
+    return acc;
+  }, []);
 }

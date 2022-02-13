@@ -25,4 +25,5 @@ export const loadMissionUploadFilesBtn = css`
   position: fixed;
   right: 30px;
   bottom: 30px;
+  z-index: 8888;
 `;

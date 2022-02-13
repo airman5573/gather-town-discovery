@@ -1,6 +1,3 @@
-import { MenuItemProps, NavMenuItemEnum } from './common/types';
-import camelCaseToHyphen from './utils/camelCase-to-hyphen';
-
 export const MAX_TEAM = 10;
 export const TEAMS: number[] = [...Array(MAX_TEAM).keys()].map((i) => i + 1);
 
@@ -22,3 +19,5 @@ export const TEAM_COLORS = [
   '#ffa500', // orange => 7팀
   '#00FF00', // lime => 8팀
 ];
+
+export const MAX_POST = 10;

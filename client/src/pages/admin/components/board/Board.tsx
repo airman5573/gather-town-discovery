@@ -1,11 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import classNames from 'classnames';
-import { Row } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
 import { NavMenuItem } from '../../../../common/components/NavMenuItem/NavMenuItem';
 import { useAppDispatch, useAppSelector } from '../../redux';
+import missionUploadApi from '../../redux/api/mission-upload';
 import { updateActiveNavMenuItem } from '../../redux/features/modal-control.slice';
 import { NavMenuItemEnum } from '../../types';
-import { mainStyle, sidebarStyle } from './board.style';
+
+import {
+  loadMissionUploadFilesBtn,
+  mainStyle,
+  sidebarStyle,
+} from './board.style';
+import { getUncheckedFileList } from '../../../../utils/files';
+import MissionUploadFileList from './MissionUploadFileList';
 
 type MenuItemProps = {
   menuItemClassName: NavMenuItemEnum;
@@ -31,6 +39,9 @@ function MenuItemContainer({ label, menuItemClassName }: MenuItemProps) {
 }
 
 export default function Board() {
+  const [trigger, queryResult] = missionUploadApi.useLazyGetAllQuery();
+  const { data: missionFiles, isSuccess } = queryResult;
+
   const menuItems = [
     { label: '팀 비밀번호', menuItemClassName: NavMenuItemEnum.TeamPassword },
     { label: '타이머', menuItemClassName: NavMenuItemEnum.Timer },
@@ -46,6 +57,14 @@ export default function Board() {
     },
     { label: '초기화', menuItemClassName: NavMenuItemEnum.Reset },
   ];
+
+  const handleMissionFilesLoadBtnClick = () => {
+    trigger()
+      .unwrap()
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Row>
@@ -63,7 +82,20 @@ export default function Board() {
             })}
           </ul>
         </div>
-        <div className="main" css={mainStyle}></div>
+        <div className="main" css={mainStyle}>
+          {isSuccess && missionFiles && missionFiles.length > 0 && (
+            <MissionUploadFileList
+              missionFiles={getUncheckedFileList(missionFiles)}
+            ></MissionUploadFileList>
+          )}
+          <Button
+            css={loadMissionUploadFilesBtn}
+            variant="primary"
+            onClick={handleMissionFilesLoadBtnClick}
+          >
+            미션 업로드 파일 불러오기
+          </Button>
+        </div>
       </div>
     </Row>
   );

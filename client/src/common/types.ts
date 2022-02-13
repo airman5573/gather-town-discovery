@@ -97,3 +97,31 @@ export type TeamStatistics = {
   sumOfPoint: number;
   contributionRank: number;
 };
+
+export type MissionUploadFileType = {
+  team: number;
+  post: number;
+  filename: string;
+  isCheckedByAdmin: YesOrNo;
+};
+
+export type MissionUploadEntity = {
+  team: number;
+  post1: MissionUploadFileType[] | null;
+  post2: MissionUploadFileType[] | null;
+  post3: MissionUploadFileType[] | null;
+  post4: MissionUploadFileType[] | null;
+  post5: MissionUploadFileType[] | null;
+  post6: MissionUploadFileType[] | null;
+  post7: MissionUploadFileType[] | null;
+  post8: MissionUploadFileType[] | null;
+  post9: MissionUploadFileType[] | null;
+  post10: MissionUploadFileType[] | null;
+};
+
+export type CheckDto = {
+  team: number;
+  post: number;
+  point: number;
+  filename: string;
+};
