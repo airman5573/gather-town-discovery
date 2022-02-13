@@ -11,13 +11,17 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE, USER_ROLE } from 'src/constants';
 import { userMulterOptions } from 'src/lib/multer-options';
-import { UploadMissionFileDto } from './mission-upload.dto';
+import { TeamPointService } from 'src/team-point/team-point.service';
+import { CheckDto, UploadMissionFileDto } from './mission-upload.dto';
 import { MissionUploadEntity } from './mission-upload.entity';
 import { MissionUploadService } from './mission-upload.service';
 
 @Controller('mission-upload')
 export class MissionUploadController {
-  constructor(private readonly missionUploadService: MissionUploadService) {}
+  constructor(
+    private readonly missionUploadService: MissionUploadService,
+    private readonly teamPointService: TeamPointService,
+  ) {}
 
   @Roles(ADMIN_ROLE)
   @Get('all')
@@ -39,5 +43,18 @@ export class MissionUploadController {
   @Put('reset')
   async reset(): Promise<MissionUploadEntity[]> {
     return await this.missionUploadService.reset();
+  }
+
+  @Roles(ADMIN_ROLE)
+  @Put('check')
+  async check(
+    @Body() { team, post, point, filename }: CheckDto,
+  ): Promise<MissionUploadEntity> {
+    return await this.missionUploadService.check({
+      team,
+      post,
+      point,
+      filename,
+    });
   }
 }

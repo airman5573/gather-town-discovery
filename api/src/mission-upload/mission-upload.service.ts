@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TEAMS } from 'src/constants';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
+import { TeamPointService } from 'src/team-point/team-point.service';
+import { MissionUploadFileType, PointType, YesOrNo } from 'src/types';
 import { Repository } from 'typeorm';
+import { CheckDto } from './mission-upload.dto';
 import { MissionUploadEntity } from './mission-upload.entity';
 
 @Injectable()
@@ -10,6 +13,7 @@ export class MissionUploadService {
   constructor(
     @InjectRepository(MissionUploadEntity)
     private readonly missionUploadRepository: Repository<MissionUploadEntity>,
+    private readonly teamPointService: TeamPointService,
   ) {}
 
   async getPostFileList(team: number): Promise<MissionUploadEntity> {
@@ -34,7 +38,7 @@ export class MissionUploadService {
       team,
       post,
       filename,
-      isCheckedByAdmin: false,
+      isCheckedByAdmin: YesOrNo.NO,
     });
     entity[`post${post}` as any] = postArr;
     return await this.missionUploadRepository.save(entity);
@@ -61,5 +65,31 @@ export class MissionUploadService {
       await this.missionUploadRepository.save(entity);
     }
     return entities;
+  }
+
+  async check({
+    team,
+    post,
+    point,
+    filename,
+  }: CheckDto): Promise<MissionUploadEntity> {
+    await this.teamPointService.updatePoint({
+      team,
+      point,
+      pointType: PointType.Usable,
+    });
+    const entity = await this.getPostFileList(team);
+    if (!entity) {
+      throw new NotExistTeamException();
+    }
+    const postArr = entity[`post${post}` as any] || [];
+    const newPostArr = postArr.map((file: MissionUploadFileType) => {
+      if (file.filename === filename) {
+        file.isCheckedByAdmin = YesOrNo.YES;
+      }
+      return file;
+    });
+    entity[`post${post}` as any] = newPostArr;
+    return await this.missionUploadRepository.save(entity);
   }
 }
