@@ -73,6 +73,7 @@ export default function UploadPage() {
         console.log('result :', result);
       } catch (err) {
         hasError = true;
+        toasty.error('업로드중 에러가 발생했습니다');
         console.error(err);
       }
     }
