@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   Put,
   UploadedFile,
@@ -17,6 +18,13 @@ import { MissionUploadService } from './mission-upload.service';
 @Controller('mission-upload')
 export class MissionUploadController {
   constructor(private readonly missionUploadService: MissionUploadService) {}
+
+  @Roles(ADMIN_ROLE)
+  @Get('all')
+  async getAll(): Promise<MissionUploadEntity[]> {
+    return await this.missionUploadService.getAllFileList();
+  }
+
   @UseInterceptors(FileInterceptor('mission-file', userMulterOptions))
   @Roles(USER_ROLE)
   @Post()
