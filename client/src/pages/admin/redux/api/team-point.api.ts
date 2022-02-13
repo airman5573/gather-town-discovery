@@ -13,10 +13,18 @@ const teamPointApi = createApi({
       query: () => ({ url: 'all' }),
       providesTags: ['TeamPoints'],
     }),
-    update: build.mutation<
+    updateAll: build.mutation<
       Array<TeamPointEntity>,
       { teamPoints: Array<TeamPoint> }
     >({
+      query: (body) => ({
+        url: 'all',
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['TeamPoints'],
+    }),
+    update: build.mutation<TeamPointEntity, TeamPoint>({
       query: (body) => ({
         url: '',
         method: 'PUT',
