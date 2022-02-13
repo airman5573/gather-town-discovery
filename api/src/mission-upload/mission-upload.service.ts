@@ -17,7 +17,7 @@ export class MissionUploadService {
   }
 
   async getAllFileList(): Promise<MissionUploadEntity[]> {
-    return await this.missionUploadRepository.find();
+    return await this.missionUploadRepository.find({ order: { team: 'ASC' } });
   }
 
   async addFile(
