@@ -37,7 +37,7 @@ export default function ResetModal() {
       navMenuItem={NavMenuItemEnum.Reset}
     >
       <Form onSubmit={handleSubmit(handlePasswordSubmit)}>
-        <Modal.Header>관리자 비밀번호</Modal.Header>
+        <Modal.Header>초기화</Modal.Header>
         <Modal.Body>
           <Form.Control
             {...register('resetCheck', {
