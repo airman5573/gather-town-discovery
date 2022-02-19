@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { useAppSelector } from '../../redux';
 import { NavMenuItemEnum } from '../../types';
 
@@ -14,9 +13,8 @@ export default function PageWrapper({
   children,
 }: Props) {
   const { activeNavMenuItem } = useAppSelector((state) => state.pageControl);
-  const cn = classNames(className, {
-    'd-none': activeNavMenuItem !== navMenuItem,
-    'd-block': activeNavMenuItem === navMenuItem,
-  });
-  return <div className={cn}>{children}</div>;
+  if (activeNavMenuItem === navMenuItem) {
+    return <div className={className}>{children}</div>;
+  }
+  return <></>;
 }
