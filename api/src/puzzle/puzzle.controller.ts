@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { ADMIN_ROLE, USER_ROLE } from 'src/constants';
+import { ADMIN_ROLE, PUZZLE_COLS, PUZZLE_PLACE_HOLDER, USER_ROLE } from 'src/constants';
 import { OptionsService } from 'src/options/options.service';
 import { PointTableService } from 'src/point-table/point-table.service';
 import { TeamPointEntity } from 'src/team-point/team-point.entity';
@@ -42,7 +42,22 @@ export class PuzzleController {
   async openPuzzle(
     @Body() { team, boxKey }: OpenPuzzleDto,
   ): Promise<PuzzleEntity[]> {
-    return await this.puzzleService.add(team, boxKey);
+    const puzzleEntity = await this.puzzleService.add(team, boxKey);
+    const pointTable = await this.pointTableService.getAllItems();
+    const { optionValue: shuffledPuzzleMessage } =
+      await this.optionsService.getShuffledPuzzleMessageWithPlaceholder();
+    const [row, col] = boxKey.split(':').map(Number);
+    const boxNum = row * PUZZLE_COLS + col;
+    let point = pointTable.openEmptyBox ?? 0;
+    if (shuffledPuzzleMessage[boxNum] !== PUZZLE_PLACE_HOLDER) {
+      point = pointTable.openLetterBox ?? 0;
+    }
+    await this.teamPointSevice.updatePoint({
+      team,
+      point,
+      pointType: PointType.BoxOpen,
+    });
+    return puzzleEntity;
   }
 
   @Roles(ADMIN_ROLE)

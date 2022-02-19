@@ -4,3 +4,4 @@ export const MAX_PUZZLE_COUNT = 66;
 export const PUZZLE_PLACE_HOLDER = '@';
 export const ADMIN_ROLE = 'admin';
 export const USER_ROLE = 'user';
+export const PUZZLE_COLS = 12;
