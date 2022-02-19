@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE, PUZZLE_COLS, PUZZLE_PLACE_HOLDER, USER_ROLE } from 'src/constants';
+import { NotEnoughPointException } from 'src/exceptions/not-enough-point.exception';
 import { OptionsService } from 'src/options/options.service';
 import { PointTableService } from 'src/point-table/point-table.service';
 import { TeamPointEntity } from 'src/team-point/team-point.entity';
@@ -42,21 +43,24 @@ export class PuzzleController {
   async openPuzzle(
     @Body() { team, boxKey }: OpenPuzzleDto,
   ): Promise<PuzzleEntity[]> {
-    const puzzleEntity = await this.puzzleService.add(team, boxKey);
     const pointTable = await this.pointTableService.getAllItems();
-    const { optionValue: shuffledPuzzleMessage } =
-      await this.optionsService.getShuffledPuzzleMessageWithPlaceholder();
-    const [row, col] = boxKey.split(':').map(Number);
-    const boxNum = row * PUZZLE_COLS + col;
-    let point = pointTable.openEmptyBox ?? 0;
-    if (shuffledPuzzleMessage[boxNum] !== PUZZLE_PLACE_HOLDER) {
-      point = pointTable.openLetterBox ?? 0;
+
+    // 돈 부족하면 stop
+    const cost = pointTable.openBoxCost ?? 0;
+    const teamPoint = await this.teamPointSevice.getPoint(team);
+    if (teamPoint.usable < cost) {
+      throw new NotEnoughPointException();
     }
-    await this.teamPointSevice.updatePoint({
-      team,
-      point,
-      pointType: PointType.BoxOpen,
-    });
+
+    // 퍼즐을 열어본다 (이미 열려있으면 못연다)
+    const puzzleEntity = await this.puzzleService.add(team, boxKey);
+
+    // 비용을 지불한다
+    await this.puzzleService.payForOpen(cost, team);
+
+    // 점수를 부여한다
+    await this.puzzleService.reward(pointTable, team, boxKey);
+
     return puzzleEntity;
   }
 

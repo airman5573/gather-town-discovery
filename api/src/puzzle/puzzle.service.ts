@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MAX_TEAM, TEAMS } from 'src/constants';
+import { MAX_TEAM, PUZZLE_COLS, PUZZLE_PLACE_HOLDER, TEAMS } from 'src/constants';
 import { AlreadyOpenBoxException } from 'src/exceptions/already-open-box.exception';
+import { NotEnoughPointException } from 'src/exceptions/not-enough-point.exception';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
 import { OptionsService } from 'src/options/options.service';
-import { YesOrNo } from 'src/types';
+import { TeamPointService } from 'src/team-point/team-point.service';
+import { PointTable, PointType, YesOrNo } from 'src/types';
 import removeWhiteSpace from 'src/utils/remove-white-space';
 import { Repository } from 'typeorm';
 import { PuzzleEntity } from './puzzle.entity';
@@ -15,6 +17,7 @@ export class PuzzleService {
     @InjectRepository(PuzzleEntity)
     private readonly puzzleRepository: Repository<PuzzleEntity>,
     private readonly optionsService: OptionsService,
+    private readonly teamPointService: TeamPointService,
   ) {}
 
   async getOpenedBoxList(team: number): Promise<PuzzleEntity> | undefined {
@@ -105,5 +108,32 @@ export class PuzzleService {
     entity.didDescryptSentence = YesOrNo.YES;
     entity.rank = rank;
     return await this.puzzleRepository.save(entity);
+  }
+
+  async payForOpen(cost: number, team: number) {
+    await this.teamPointService.updatePoint({
+      team,
+      point: cost * -1,
+      pointType: PointType.Usable,
+    });
+  }
+
+  async reward(pointTable: PointTable, team: number, boxKey: string) {
+    const { optionValue: shuffledPuzzleMessage } =
+      await this.optionsService.getShuffledPuzzleMessageWithPlaceholder();
+    const [row, col] = boxKey.split(':').map(Number);
+    const boxNum = row * PUZZLE_COLS + col;
+    let point = pointTable.openEmptyBox ?? 0;
+    if (
+      shuffledPuzzleMessage[boxNum] &&
+      shuffledPuzzleMessage[boxNum] !== PUZZLE_PLACE_HOLDER
+    ) {
+      point = pointTable.openLetterBox ?? 0;
+    }
+    await this.teamPointService.updatePoint({
+      team,
+      point,
+      pointType: PointType.BoxOpen,
+    });
   }
 }
