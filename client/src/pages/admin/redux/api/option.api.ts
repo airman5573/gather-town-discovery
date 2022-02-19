@@ -83,6 +83,12 @@ const optionApi = createApi({
       }),
       invalidatesTags: ['PuzzleMessage'],
     }),
+    getShuffledPuzzleMessageWithPlaceholder: build.query<
+      Option<Array<string>>,
+      void
+    >({
+      query: () => ({ url: 'shuffled-puzzle-message-with-placeholder' }),
+    }),
     getLastPuzzleVideoUrl: build.query<Option<string>, void>({
       query: () => ({ url: 'last-puzzle-video-url' }),
       providesTags: ['LastPuzzleVideoUrl'],

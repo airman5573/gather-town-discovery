@@ -1,16 +1,23 @@
 /** @jsxImportSource @emotion/react */
 import React, { MouseEventHandler } from 'react';
 import { PuzzleEntity } from '../../../../../common/types';
+import { PUZZLE_COLS, PUZZLE_PLACE_HOLDER } from '../../../../../constants';
 import toasty from '../../../../../utils/toasty';
 import puzzleApi from '../../../../admin/redux/api/puzzle.api';
-import { table } from './style';
+import { puzzleTableContainer, table } from './style';
 
 type TPuzzleTable = {
   team: number;
   allTeamPuzzleData: Array<PuzzleEntity>;
+  shuffledPuzzleMessage: Array<string>;
 };
 
-export default function PuzzleTable({ team, allTeamPuzzleData }: TPuzzleTable) {
+export default function PuzzleTable({
+  team,
+  allTeamPuzzleData,
+  shuffledPuzzleMessage,
+}: TPuzzleTable) {
+  const [clickable, setClickable] = React.useState(true);
   const [openPuzzle] = puzzleApi.useOpenMutation();
   const openedBoxWithTeamMap = allTeamPuzzleData.reduce(
     (acc: { [k in string]: number }, cur: PuzzleEntity) => {
@@ -32,13 +39,21 @@ export default function PuzzleTable({ team, allTeamPuzzleData }: TPuzzleTable) {
       return (
         <tr key={`tr-${index}`}>
           {new Array(cols).fill(0).map((_, i) => {
-            const boxKey = `${index}:${i}`;
+            const [row, col] = [index, i];
+            const boxKey = `${row}:${col}`;
+            const boxIndex = row * PUZZLE_COLS + col;
+            const char =
+              shuffledPuzzleMessage[boxIndex] === PUZZLE_PLACE_HOLDER
+                ? ''
+                : shuffledPuzzleMessage[boxIndex];
             return (
               <td
                 data-team={openedBoxWithTeamMap[boxKey]}
                 data-key={boxKey}
                 key={boxKey}
-              ></td>
+              >
+                {openedBoxWithTeamMap[boxKey] ? char : ''}
+              </td>
             );
           })}
         </tr>
@@ -51,6 +66,13 @@ export default function PuzzleTable({ team, allTeamPuzzleData }: TPuzzleTable) {
     );
   };
   const handleTableClick = (event: React.MouseEvent<HTMLTableElement>) => {
+    if (!clickable) {
+      return;
+    }
+    setClickable(false);
+    setTimeout(() => {
+      setClickable(true);
+    }, 1000);
     if (!event.target) {
       return;
     }
@@ -71,6 +93,8 @@ export default function PuzzleTable({ team, allTeamPuzzleData }: TPuzzleTable) {
       });
   };
   return (
-    <div className="puzzle-table">{generateTable(8, 12, handleTableClick)}</div>
+    <div className="puzzle-table">
+      {generateTable(8, PUZZLE_COLS, handleTableClick)}
+    </div>
   );
 }

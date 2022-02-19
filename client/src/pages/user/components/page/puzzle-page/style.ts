@@ -4,7 +4,7 @@ import { TEAM_COLORS } from '../../../../../constants';
 export const table = css`
   border: solid 1px black;
   border-spacing: 0;
-  border-collapse: collapse;
+  border-collapse: separate;
   padding: 0;
   tr {
     vertical-align: middle;
@@ -15,6 +15,11 @@ export const table = css`
     height: 80px;
     position: relative;
     border: 1px solid black;
+    text-align: center;
+    font-familly: sans;
+    color: yellow;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    font-size: 36px;
   }
   td[data-team='1'] {
     background-color: ${TEAM_COLORS[1]};

@@ -21,3 +21,7 @@ export const TEAM_COLORS = [
 ];
 
 export const MAX_POST = 10;
+
+export const PUZZLE_COLS = 12;
+
+export const PUZZLE_PLACE_HOLDER = '@';
