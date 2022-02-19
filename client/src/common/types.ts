@@ -125,3 +125,18 @@ export type CheckDto = {
   point: number;
   filename: string;
 };
+
+export type PuzzleEntity = {
+  team: number;
+  openedBoxList: string[];
+};
+
+export type OpenPuzzleDto = {
+  team: number;
+  boxKey: string;
+};
+
+export type DescryptSentenceDto = {
+  team: number;
+  sentence: string;
+};
