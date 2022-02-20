@@ -4,7 +4,7 @@ import { PuzzleEntity } from '../../../../../common/types';
 import { PUZZLE_COLS, PUZZLE_PLACE_HOLDER } from '../../../../../constants';
 import toasty from '../../../../../utils/toasty';
 import puzzleApi from '../../../../admin/redux/api/puzzle.api';
-import { puzzleTableContainer, table } from './style';
+import { table } from './style';
 
 type TPuzzleTable = {
   team: number;

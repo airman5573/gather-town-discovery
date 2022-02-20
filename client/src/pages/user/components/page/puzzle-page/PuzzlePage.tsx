@@ -1,11 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useRef } from 'react';
-import { Button, Form, InputGroup } from 'react-bootstrap';
+import { useEffect } from 'react';
 import useAuth from '../../../../../auth/auth.hooks';
 import optionApi from '../../../../admin/redux/api/option.api';
 import puzzleApi from '../../../../admin/redux/api/puzzle.api';
-import { NavMenuItemEnum } from '../../../types';
-import PageWrapper from '../PageWrapper';
 import DescryptSentenceInput from './DescryptSentenceInput';
 import PuzzleTable from './PuzzleTable';
 

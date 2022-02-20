@@ -10,12 +10,7 @@ type TProps = {
 };
 
 export default function DescryptSentenceInput({ team }: TProps) {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<{ sentence: string }>();
+  const { register, handleSubmit, reset } = useForm<{ sentence: string }>();
   const [submitSentence] = puzzleApi.useSubmitMutation();
   const handleSentenceSubmit = ({ sentence }: { sentence: string }) => {
     submitSentence({ team, sentence })

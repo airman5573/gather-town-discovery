@@ -7,7 +7,6 @@ import toasty from '../../utils/toasty';
 import Modals from './components/modals';
 import { store } from './redux';
 import './style.scss';
-import { css } from '@emotion/react';
 import Board from './components/board/Board';
 
 export default function AdminPage() {

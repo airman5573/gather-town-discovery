@@ -1,16 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { skipToken } from '@reduxjs/toolkit/dist/query';
 import classNames from 'classnames';
 import { Row } from 'react-bootstrap';
-import useAuth from '../../../../auth/auth.hooks';
 import { NavMenuItem } from '../../../../common/components/NavMenuItem/NavMenuItem';
-import optionApi from '../../../admin/redux/api/option.api';
-import timerApi from '../../../admin/redux/api/timer.api';
 import { useAppDispatch, useAppSelector } from '../../redux';
 import { updateActiveNavMenuItem } from '../../redux/features/page-control.slice';
 import { NavMenuItemEnum } from '../../types';
 import Pages from '../page';
-import Timer from '../timer/Timer';
 import TimerContainer from '../timer/TimerContainer';
 import { mainStyle, sidebarStyle } from './style';
 

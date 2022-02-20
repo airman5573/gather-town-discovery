@@ -2,8 +2,6 @@
 import { useEffect } from 'react';
 import { TEAM_COLORS } from '../../../../../constants';
 import teamPointApi from '../../../../admin/redux/api/team-point.api';
-import { NavMenuItemEnum } from '../../../types';
-import PageWrapper from '../PageWrapper';
 import { PointChart } from './PointChart';
 import { chartContainerStyle } from './style';
 

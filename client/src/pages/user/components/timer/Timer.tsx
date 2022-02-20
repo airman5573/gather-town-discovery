@@ -11,7 +11,7 @@ type TProps = {
   lapTime: number;
 };
 
-export default function Timer({ team, isRunning, startTime, lapTime }: TProps) {
+export default function Timer({ isRunning, startTime, lapTime }: TProps) {
   const [remainTime, setRemainTime] = useState<number>(
     getRemainTimeInSecond(startTime, lapTime),
   );

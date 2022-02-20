@@ -9,7 +9,6 @@ import pointTableApi from './api/point-table.api';
 import resetApi from './api/reset.api';
 import statisticsApi from './api/statistics.api';
 import missionUploadApi from './api/mission-upload';
-import puzzleApi from './api/puzzle.api';
 
 export const store = configureStore({
   reducer: {
