@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { ADMIN_ROLE, PUZZLE_COLS, PUZZLE_PLACE_HOLDER, USER_ROLE } from 'src/constants';
+import { ADMIN_ROLE, PUZZLE_COLS, PUZZLE_PLACE_HOLDER, USER_ROLE, PUZZLE_ROWS} from 'src/constants';
 import { NotEnoughPointException } from 'src/exceptions/not-enough-point.exception';
 import { OptionsService } from 'src/options/options.service';
 import { PointTableService } from 'src/point-table/point-table.service';
@@ -25,7 +25,7 @@ export class PuzzleController {
     private readonly puzzleService: PuzzleService,
     private readonly optionsService: OptionsService,
     private readonly pointTableService: PointTableService,
-    private readonly teamPointSevice: TeamPointService,
+    private readonly teamPointService: TeamPointService,
   ) {}
 
   @Get('all')
@@ -47,21 +47,39 @@ export class PuzzleController {
 
     // 돈 부족하면 stop
     const cost = pointTable.openBoxCost ?? 0;
-    const teamPoint = await this.teamPointSevice.getPoint(team);
+    const teamPoint = await this.teamPointService.getPoint(team);
     if (teamPoint.usable < cost) {
       throw new NotEnoughPointException();
     }
 
     // 퍼즐을 열어본다 (이미 열려있으면 못연다)
-    const puzzleEntity = await this.puzzleService.add(team, boxKey);
+    const puzzleEntityList = await this.puzzleService.add(team, boxKey);
 
     // 비용을 지불한다
     await this.puzzleService.payForOpen(cost, team);
 
-    // 점수를 부여한다
-    await this.puzzleService.reward(pointTable, team, boxKey);
+    // 3목 만들었는지 확인
+    const bingoCount = this.puzzleService.totalBingoCount(
+      puzzleEntityList,
+      team,
+      boxKey.split(':').map(Number),
+    );
 
-    return puzzleEntity;
+    // 연 박스가 글자 박스인지 확인
+    const isLetterBox = await this.puzzleService.isLetterBox(boxKey);
+
+    // 점수를 부여한다
+    const point =
+      (pointTable.bingo ?? 0) * bingoCount + // bingo 맞춘 점수
+      Number(isLetterBox) * (pointTable.openLetterBox ?? 0) + // 글자박스 열었을때 얻는 점수
+      Number(!isLetterBox) * (pointTable.openEmptyBox ?? 0); // 일반 박스 열었을때 얻는 점수
+    await this.teamPointService.updatePoint({
+      team,
+      point,
+      pointType: PointType.BoxOpen,
+    });
+
+    return puzzleEntityList;
   }
 
   @Roles(ADMIN_ROLE)
@@ -109,7 +127,7 @@ export class PuzzleController {
     );
     const minusPoint = Math.floor(point * 0.1);
     const rewardPoint = point - minusPoint * (rank - 1);
-    await this.teamPointSevice.updatePoint({
+    await this.teamPointService.updatePoint({
       team,
       point: rewardPoint,
       pointType: PointType.SentenceDecryption,

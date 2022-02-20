@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MAX_TEAM, PUZZLE_COLS, PUZZLE_PLACE_HOLDER, TEAMS } from 'src/constants';
+import { MAX_TEAM, PUZZLE_COLS, PUZZLE_PLACE_HOLDER, PUZZLE_ROWS, TEAMS } from 'src/constants';
 import { AlreadyOpenBoxException } from 'src/exceptions/already-open-box.exception';
 import { NotEnoughPointException } from 'src/exceptions/not-enough-point.exception';
 import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
 import { OptionsService } from 'src/options/options.service';
 import { TeamPointService } from 'src/team-point/team-point.service';
-import { PointTable, PointType, YesOrNo } from 'src/types';
+import { PointTable, PointType, YesOrNo, Grid } from 'src/types';
+import { consoleGrid, range, repeat3, threeInLine, zip } from 'src/utils/array';
 import removeWhiteSpace from 'src/utils/remove-white-space';
 import { Repository } from 'typeorm';
 import { PuzzleEntity } from './puzzle.entity';
@@ -118,6 +119,20 @@ export class PuzzleService {
     });
   }
 
+  async isLetterBox(boxKey: string): Promise<boolean> {
+    const { optionValue: shuffledPuzzleMessage } =
+      await this.optionsService.getShuffledPuzzleMessageWithPlaceholder();
+    const [row, col] = boxKey.split(':').map(Number);
+    const boxNum = row * PUZZLE_COLS + col;
+    if (
+      shuffledPuzzleMessage[boxNum] &&
+      shuffledPuzzleMessage[boxNum] !== PUZZLE_PLACE_HOLDER
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   async reward(pointTable: PointTable, team: number, boxKey: string) {
     const { optionValue: shuffledPuzzleMessage } =
       await this.optionsService.getShuffledPuzzleMessageWithPlaceholder();
@@ -135,5 +150,51 @@ export class PuzzleService {
       point,
       pointType: PointType.BoxOpen,
     });
+  }
+
+  totalBingoCount(
+    puzzleEntityList: Array<PuzzleEntity>,
+    team: number,
+    yx: Array<number>,
+  ) {
+    const openedBoxWithTeamMap = puzzleEntityList.reduce(
+      (acc: { [k in string]: number }, cur: PuzzleEntity) => {
+        const team = cur.team;
+        cur.openedBoxList &&
+          cur.openedBoxList.forEach((boxKey) => {
+            acc[boxKey] = team;
+          });
+        return acc;
+      },
+      {},
+    );
+
+    const grid = range(0, PUZZLE_ROWS - 1).map((row) =>
+      range(0, PUZZLE_COLS - 1).map((col) => {
+        return openedBoxWithTeamMap[`${row}:${col}`] ?? 0;
+      }),
+    );
+
+    const [y, x] = yx;
+    const right = zip(repeat3(y), range(x + 1, x + 3));
+    const left = zip(repeat3(y), range(x - 1, x - 3));
+    const top = zip(range(y - 1, y - 3), repeat3(x));
+    const bottom = zip(range(y + 1, y + 3), repeat3(x));
+    const bottomLeft = zip(range(y + 1, y + 3), range(x - 1, x - 3));
+    const bottomRight = zip(range(y + 1, y + 3), range(x + 1, x + 3));
+    const topRight = zip(range(y - 1, y - 3), range(x + 1, x + 3));
+    const topLeft = zip(range(y - 1, y - 3), range(x - 1, x - 3));
+
+    const totalCount = [
+      [left, right],
+      [top, bottom],
+      [topRight, bottomLeft],
+      [topLeft, bottomRight],
+    ].reduce((acc, [dir1, dir2]) => {
+      acc += threeInLine(grid, dir1, dir2, team) ? 1 : 0;
+      return acc;
+    }, 0);
+
+    return totalCount;
   }
 }

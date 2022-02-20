@@ -60,3 +60,7 @@ export type MissionUploadFileType = {
   filename: string;
   isCheckedByAdmin: YesOrNo;
 };
+
+export type Grid = Array<Array<number>>;
+
+export type Position = Array<number>;

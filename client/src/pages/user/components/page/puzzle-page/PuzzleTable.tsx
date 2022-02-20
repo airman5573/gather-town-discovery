@@ -23,7 +23,7 @@ export default function PuzzleTable({
     (acc: { [k in string]: number }, cur: PuzzleEntity) => {
       const team = cur.team;
       cur.openedBoxList &&
-        cur.openedBoxList.map((boxKey) => {
+        cur.openedBoxList.forEach((boxKey) => {
           acc[boxKey] = team;
         });
       return acc;

@@ -16,7 +16,7 @@ export default function PuzzlePage() {
     return <h2>팀설정이 필요합니다</h2>;
   }
   const { data } = puzzleApi.useGetAllQuery(undefined, {
-    pollingInterval: 400,
+    pollingInterval: 250,
   });
   const { data: _shuffledPuzzleMessage, refetch } =
     optionApi.useGetShuffledPuzzleMessageWithPlaceholderQuery();
