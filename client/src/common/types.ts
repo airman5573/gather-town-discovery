@@ -140,3 +140,9 @@ export type DescryptSentenceDto = {
   team: number;
   sentence: string;
 };
+
+export type PointChartBar = {
+  team: string;
+  point: number;
+  color: string;
+};

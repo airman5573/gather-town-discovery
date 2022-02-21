@@ -1,13 +1,18 @@
 // install (please make sure versions match peerDependencies)
 // yarn add @nivo/core @nivo/bar
 import { ResponsiveBar } from '@nivo/bar';
+import { PointChartBar } from '../../../../../common/types';
 
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-export const PointChart = ({ data /* see data tab */ }) => (
+type TProps = {
+  data: Array<PointChartBar>;
+};
+
+export const PointChart = ({ data /* see data tab */ }: TProps) => (
   <ResponsiveBar
     data={data}
     keys={['point']}
@@ -17,7 +22,7 @@ export const PointChart = ({ data /* see data tab */ }) => (
     layout="horizontal"
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
-    colors={({ data }) => data['color']}
+    colors={({ data }) => data['color'] as string}
     axisTop={null}
     axisRight={null}
     axisBottom={{
