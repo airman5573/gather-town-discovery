@@ -6,6 +6,9 @@
   "scripts": {
     "install-dependencies": "npm install && cd api && npm install && cd ../client && npm install",
     "api:start:dev": "cd api && npm run start:dev",
+    "build": "cd api && npm run build && cd ../client && npm run build",
+    "start:production": "cd api && npm run start:prod && cd ../client && npm run start:prod",
+    "restart": "pm2 delete all && npm run start:production",
     "prepare": "husky install"
   },
   "repository": {
