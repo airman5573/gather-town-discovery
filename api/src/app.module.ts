@@ -23,7 +23,7 @@ import { ResetModule } from './reset/reset.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: `.env`,
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(),
