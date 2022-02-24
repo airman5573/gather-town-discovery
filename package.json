@@ -9,7 +9,7 @@
     "start:dev:client": "cd client && npm run dev",
     "build": "cd api && npm run build && cd ../client && npm run build",
     "start:prod": "cd api && npm run start:prod && cd ../client && npm run start:prod",
-    "restart": "pm2 delete all && npm run start:production",
+    "restart": "pm2 delete all && npm run start:prod",
     "prepare": "husky install"
   },
   "repository": {
