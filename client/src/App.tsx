@@ -10,6 +10,7 @@ import DescyptionPost from './pages/posts/post-1/DecryptionPost';
 import { ToastContainer } from 'react-toastify';
 import './common/scss/style.scss';
 import MathPost from './pages/posts/post-2/MathPost';
+import SpacingPost from './pages/posts/post-3/SpacingPost';
 
 function Router() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Routes>
         <Route path="/posts/descryption" element={<DescyptionPost />}></Route>
         <Route path="/posts/math" element={<MathPost />}></Route>
+        <Route path="/posts/spacing" element={<SpacingPost />}></Route>
       </Routes>
       <AuthProvider>
         <Router></Router>
