@@ -7,7 +7,7 @@ import PreviewList from './PreviewList';
 import { upload } from '../../../utils/files';
 import removeWhiteSpace from '../../../utils/remove-white-space';
 import toasty from '../../../utils/toasty';
-import { User } from '../../../common/types';
+import { UploadConfig, User } from '../../../common/types';
 import TeamPasswordModal from '../team-password-modal/TeamPasswordModal';
 
 type TFileWithPreview = File & {
@@ -39,8 +39,7 @@ export default function Upload({ post }: TProps) {
     setShow(false);
   };
 
-  const handleLogin = async (user: User) => {
-    console.log('user :', user);
+  const handleLogin = async (user: User, token: string) => {
     setShow(false);
 
     if (!user.team) {
@@ -50,13 +49,20 @@ export default function Upload({ post }: TProps) {
     let hasError = false;
     for (const file of files) {
       try {
-        const result = await upload(user.team, post, file, (progressEvent) => {
-          const percentage = Math.round(
-            (100 * progressEvent.loaded) / progressEvent.total,
-          );
-          progressInfoStore.current[removeWhiteSpace(file.name)] = percentage;
-          setProgressInfo({ ...progressInfoStore.current });
-        });
+        const config: UploadConfig = {
+          team: user.team,
+          post,
+          file,
+          onUploadProgress: (progressEvent) => {
+            const percentage = Math.round(
+              (100 * progressEvent.loaded) / progressEvent.total,
+            );
+            progressInfoStore.current[removeWhiteSpace(file.name)] = percentage;
+            setProgressInfo({ ...progressInfoStore.current });
+          },
+          accessToken: token,
+        };
+        await upload(config);
       } catch (err) {
         hasError = true;
         toasty.error('업로드중 에러가 발생했습니다');

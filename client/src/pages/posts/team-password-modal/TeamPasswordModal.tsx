@@ -5,11 +5,10 @@ import AuthService from '../../../auth/auth.service';
 import { User } from '../../../common/types';
 import jwt_decode from 'jwt-decode';
 import toasty from '../../../utils/toasty';
-import { ACCESS_TOKEN_KEY } from '../../../constants';
 
 type TProps = {
   isModalActive: boolean;
-  onLogin: (user: User) => Promise<void>;
+  onLogin: (user: User, accessToken: string) => Promise<void>;
   handleClose: () => void;
 };
 
@@ -31,9 +30,8 @@ export default function TeamPasswordModal({
     try {
       const accessToken = await AuthService.login(teamPassword);
       // 여기서 이걸 해줘야~ upload가 문제없이 이뤄진다 이거야~
-      window.localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
       const user = jwt_decode<User>(accessToken);
-      onLogin(user);
+      onLogin(user, accessToken);
     } catch (e: any) {
       console.dir(e);
       toasty.error(e.response.data.message);

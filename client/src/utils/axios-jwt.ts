@@ -9,9 +9,12 @@ export async function apiRequest<
   T = any,
   ReturnType = AxiosResponse<T>,
   RequestData = any,
->(config: AxiosRequestConfig<RequestData>): Promise<ReturnType> {
+>(
+  config: AxiosRequestConfig<RequestData> & { token?: string },
+): Promise<ReturnType> {
   try {
-    const accessToken = window.localStorage.getItem(ACCESS_TOKEN_KEY);
+    const accessToken =
+      config.token ?? window.localStorage.getItem(ACCESS_TOKEN_KEY);
     if (accessToken) {
       config.headers = {
         Authorization: `Bearer ${accessToken}`,

@@ -4,6 +4,7 @@ import {
   MissionUploadEntity,
   MissionUploadFileType,
   YesOrNo,
+  UploadConfig,
 } from '../common/types';
 
 export function getFileExtension(filename: string) {
@@ -27,12 +28,13 @@ export function getMediaType(filename: string) {
   return null;
 }
 
-export function upload(
-  team: number,
-  post: number,
-  file: File,
-  onUploadProgress: (progressEvent: any) => void,
-) {
+export function upload({
+  team,
+  post,
+  file,
+  onUploadProgress,
+  accessToken,
+}: UploadConfig) {
   const formData = new FormData();
   formData.append('mission-file', file);
   formData.append('team', `${team}`);
@@ -41,6 +43,7 @@ export function upload(
     url: '/mission-upload',
     method: 'POST',
     data: formData,
+    token: accessToken,
     headers: {
       'Content-Type': 'multipart/form-data',
     },
