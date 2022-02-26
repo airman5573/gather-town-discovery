@@ -113,7 +113,7 @@ export default function UploadModal() {
             </Button>
           </Col>
           <Col className="flex-grow-0">
-            <div className="preview">
+            <div className="preview" css={previewStyle}>
               <img
                 src={`${import.meta.env.VITE_ADMIN_UPLOADS}/${
                   mapImageObj.data?.optionValue
