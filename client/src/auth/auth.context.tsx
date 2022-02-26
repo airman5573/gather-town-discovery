@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContextType, User, UserRole } from '../common/types';
 import AuthService from './auth.service';
 import toasty from '../utils/toasty';
@@ -16,8 +16,14 @@ const AuthProvider = ({
     AuthService.getCurrentUser(),
   );
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    // posts page에서는 검사 하지 않는다
+    if (location.pathname && location.pathname.includes('posts')) {
+      return;
+    }
+
     if (!user) {
       navigate('/login');
     } else if (user.role === UserRole.ADMIN) {

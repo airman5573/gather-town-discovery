@@ -1,15 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { NavMenuItemEnum } from '../../../types';
-import PageWrapper from '../PageWrapper';
 import { useRef, useState } from 'react';
-import { upload } from '../../../../../utils/files';
 import { useDropzone } from 'react-dropzone';
 import { fileUploadZone, uploadBtnContainer } from './style';
 import { Button } from 'react-bootstrap';
-import removeWhiteSpace from '../../../../../utils/remove-white-space';
 import PreviewList from './PreviewList';
-import toasty from '../../../../../utils/toasty';
-import useAuth from '../../../../../auth/auth.hooks';
+import { upload } from '../../../utils/files';
+import removeWhiteSpace from '../../../utils/remove-white-space';
+import toasty from '../../../utils/toasty';
+import { User } from '../../../common/types';
+import TeamPasswordModal from '../team-password-modal/TeamPasswordModal';
 
 type TFileWithPreview = File & {
   preview: string;
@@ -19,17 +18,61 @@ type TProgressInfo = {
   [filename in string]: number;
 };
 
-export default function UploadPage() {
-  const { user } = useAuth();
-  const team = user?.team;
-  if (!team) {
-    return <h2>팀설정이 필요합니다</h2>;
-  }
+type TProps = {
+  post: number;
+};
+
+export default function Upload({ post }: TProps) {
   const progressInfoStore = useRef<TProgressInfo>({});
   const [files, setFiles] = useState<Array<TFileWithPreview>>([]);
   const [progressInfo, setProgressInfo] = useState<TProgressInfo>(
     progressInfoStore.current,
   );
+  const [show, setShow] = useState<boolean>(false);
+
+  const handleShow = () => {
+    console.log('show ', show);
+    setShow(true);
+  };
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const handleLogin = async (user: User) => {
+    console.log('user :', user);
+    setShow(false);
+
+    if (!user.team) {
+      return;
+    }
+
+    let hasError = false;
+    for (const file of files) {
+      try {
+        const result = await upload(user.team, post, file, (progressEvent) => {
+          const percentage = Math.round(
+            (100 * progressEvent.loaded) / progressEvent.total,
+          );
+          progressInfoStore.current[removeWhiteSpace(file.name)] = percentage;
+          setProgressInfo({ ...progressInfoStore.current });
+        });
+      } catch (err) {
+        hasError = true;
+        toasty.error('업로드중 에러가 발생했습니다');
+        console.error(err);
+      }
+    }
+
+    // after all file upload
+    if (!hasError) {
+      setTimeout(() => {
+        toasty.success('성공적으로 업로드하였습니다');
+        reset();
+      }, files.length * 250);
+    }
+  };
+
   const onDrop = (acceptedFiles: Array<File>) => {
     const newFiles = acceptedFiles.map((file: File) =>
       Object.assign(file, {
@@ -58,37 +101,8 @@ export default function UploadPage() {
     progressInfoStore.current = {};
   };
 
-  const handleUploadBtnClick = async () => {
-    let hasError = false;
-    for (const file of files) {
-      try {
-        const result = await upload(team, 4, file, (progressEvent) => {
-          console.log('onProgress is called');
-          const percentage = Math.round(
-            (100 * progressEvent.loaded) / progressEvent.total,
-          );
-          progressInfoStore.current[removeWhiteSpace(file.name)] = percentage;
-          setProgressInfo({ ...progressInfoStore.current });
-        });
-        console.log('result :', result);
-      } catch (err) {
-        hasError = true;
-        toasty.error('업로드중 에러가 발생했습니다');
-        console.error(err);
-      }
-    }
-
-    // after all file upload
-    if (!hasError) {
-      setTimeout(() => {
-        toasty.success('성공적으로 업로드하였습니다');
-        reset();
-      }, files.length * 250);
-    }
-  };
-
   return (
-    <PageWrapper className="upload-page" navMenuItem={NavMenuItemEnum.Upload}>
+    <>
       <div css={fileUploadZone} {...rootProps}>
         <input {...inputProps} />
         {isDragActive ? (
@@ -98,7 +112,7 @@ export default function UploadPage() {
             <div>
               <i className="guide-icon material-icons">cloud_upload</i>
             </div>
-            <div className="guide-text">이미지 드랍 or 클릭</div>
+            <div className="guide-text">여기에 이미지를 놓아주세요</div>
           </div>
         )}
       </div>
@@ -110,13 +124,18 @@ export default function UploadPage() {
               progressInfo={progressInfo}
             ></PreviewList>
             <div css={uploadBtnContainer}>
-              <Button onClick={handleUploadBtnClick} size="lg">
+              <Button onClick={handleShow} size="lg">
                 업로드
               </Button>
             </div>
           </>
         )}
       </div>
-    </PageWrapper>
+      <TeamPasswordModal
+        isModalActive={show}
+        onLogin={handleLogin}
+        handleClose={handleClose}
+      ></TeamPasswordModal>
+    </>
   );
 }

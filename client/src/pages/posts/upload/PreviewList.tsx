@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { ListGroup } from 'react-bootstrap';
-import removeWhiteSpace from '../../../../../utils/remove-white-space';
+import removeWhiteSpace from '../../../utils/remove-white-space';
 import PreviewItem from './PreviewItem';
 
 type TProgressInfo = {
@@ -14,7 +14,6 @@ type TPreviewList = {
   progressInfo: TProgressInfo;
 };
 export default function PreviewList({ files, progressInfo }: TPreviewList) {
-  console.log('PreviewList - progressInfo :', progressInfo);
   return (
     <ListGroup>
       {files.map((file) => {

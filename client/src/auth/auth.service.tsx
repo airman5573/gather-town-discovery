@@ -4,7 +4,7 @@ import { apiRequest } from '../utils/axios-jwt';
 import jwt_decode from 'jwt-decode';
 
 const AuthService = {
-  login: async (password: string): Promise<string | undefined> => {
+  login: async (password: string): Promise<string> => {
     try {
       const {
         data: { accessToken },

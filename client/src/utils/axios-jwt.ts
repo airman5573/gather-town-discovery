@@ -24,6 +24,7 @@ export async function apiRequest<
     );
     return response;
   } catch (err: any) {
+    console.log(err);
     throw err;
   }
 }

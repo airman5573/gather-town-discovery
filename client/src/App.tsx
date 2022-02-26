@@ -6,6 +6,7 @@ import { AuthProvider } from './auth/auth.context';
 import AdminPage from './pages/admin/AdminPage';
 import LoginPage from './pages/login/LoginPage';
 import UserPage from './pages/user/UserPage';
+import DescyptionPost from './pages/posts/post-1/DecryptionPost';
 import { ToastContainer } from 'react-toastify';
 import './common/scss/style.scss';
 
@@ -23,6 +24,9 @@ function Router() {
 function App() {
   return (
     <BrowserRouter>
+      <Routes>
+        <Route path="/posts/descryption" element={<DescyptionPost />}></Route>
+      </Routes>
       <AuthProvider>
         <Router></Router>
       </AuthProvider>
