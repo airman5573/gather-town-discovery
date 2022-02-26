@@ -146,3 +146,11 @@ export type PointChartBar = {
   point: number;
   color: string;
 };
+
+export type UploadConfig = {
+  team: number;
+  post: number;
+  file: File;
+  onUploadProgress: (progressEvent: any) => void;
+  accessToken?: string;
+};
