@@ -5,8 +5,7 @@ import PageWrapper from '../PageWrapper';
 import { imageContainerStyle } from './style';
 
 export default function MapPage() {
-  const { data } = optionApi.useGetCompanyImageQuery();
-  console.log('data :', data);
+  const { data } = optionApi.useGetMapImageQuery();
   return (
     <PageWrapper className="map-page" navMenuItem={NavMenuItemEnum.Map}>
       <div className="image-container" css={imageContainerStyle}>

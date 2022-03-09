@@ -153,7 +153,7 @@ export default function PuzzleSettingModal() {
             </Form>
           </Col>
         </Row>
-        <Row className="mb-3">
+        <Row className="mb-3 d-none">
           <Col xs="12" className="d-flex justify-content-between">
             <Form
               onSubmit={lastPuzzleVideoUrlForm.handleSubmit(
@@ -204,7 +204,7 @@ export default function PuzzleSettingModal() {
           </Col>
         </Row>
         <Row>
-          <Col xs="6">
+          <Col xs="6" className="d-none">
             <div className="d-flex">
               <label className="me-3">물음표 구역 :</label>
               <div className="radio abc-radio abc-radio-primary me-3">

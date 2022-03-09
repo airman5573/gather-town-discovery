@@ -62,8 +62,8 @@ export default function UploadModal() {
     >
       <Modal.Header>이미지 설정</Modal.Header>
       <Modal.Body>
-        <div>회사 이미지 업로드</div>
-        <Row className="company-image-upload justify-content-between mb-3">
+        <div className="d-none">회사 이미지 업로드</div>
+        <Row className="company-image-upload justify-content-between mb-3 d-none">
           <Col className="d-flex align-items-center">
             <FormControl
               className="d-none"
@@ -92,7 +92,7 @@ export default function UploadModal() {
             </div>
           </Col>
         </Row>
-        <div>전체지도 업로드</div>
+        <div>미션 도전 순서 업로드</div>
         <Row className="map-image-upload justify-content-between">
           <Col className="d-flex align-items-center">
             <FormControl

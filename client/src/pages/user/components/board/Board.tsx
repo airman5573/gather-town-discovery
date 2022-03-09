@@ -37,13 +37,11 @@ export default function Board() {
     { label: '전체지도', menuItemClassName: NavMenuItemEnum.Map },
     { label: '점수', menuItemClassName: NavMenuItemEnum.Point },
     { label: '구역오픈', menuItemClassName: NavMenuItemEnum.Puzzle },
-    { label: '업로드', menuItemClassName: NavMenuItemEnum.Upload },
   ];
 
   return (
     <Row>
       <div className="board">
-        <TimerContainer />
         <div className="sidebar" css={sidebarStyle}>
           <ul className="nav-menu list-unstyled">
             {menuItems.map(({ menuItemClassName, label }) => {
