@@ -67,9 +67,13 @@ export class StatisticsService {
       (a: TeamStatisticsDto, b: TeamStatisticsDto) =>
         b.sumOfPoint - a.sumOfPoint,
     );
-    statistics.forEach((el: TeamStatisticsDto, i) => {
-      el.contributionRank = i + 1;
-    });
+    statistics[0].contributionRank = 1;
+    for (let i = 0; i < statistics.length - 1; i += 1) {
+      statistics[i + 1].contributionRank = statistics[i].contributionRank + 1;
+      if (statistics[i].sumOfPoint === statistics[i + 1].sumOfPoint) {
+        statistics[i + 1].contributionRank = statistics[i].contributionRank;
+      }
+    }
 
     return statistics;
   }
