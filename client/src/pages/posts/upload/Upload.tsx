@@ -7,8 +7,7 @@ import PreviewList from './PreviewList';
 import { upload } from '../../../utils/files';
 import removeWhiteSpace from '../../../utils/remove-white-space';
 import toasty from '../../../utils/toasty';
-import { UploadConfig, User } from '../../../common/types';
-import TeamPasswordModal from '../team-password-modal/TeamPasswordModal';
+import { UploadConfig } from '../../../common/types';
 
 type TFileWithPreview = File & {
   preview: string;
@@ -20,37 +19,23 @@ type TProgressInfo = {
 
 type TProps = {
   post: number;
+  team: number;
+  token: string;
 };
 
-export default function Upload({ post }: TProps) {
+export default function Upload({ post, team, token }: TProps) {
   const progressInfoStore = useRef<TProgressInfo>({});
   const [files, setFiles] = useState<Array<TFileWithPreview>>([]);
   const [progressInfo, setProgressInfo] = useState<TProgressInfo>(
     progressInfoStore.current,
   );
-  const [show, setShow] = useState<boolean>(false);
 
-  const handleShow = () => {
-    console.log('show ', show);
-    setShow(true);
-  };
-
-  const handleClose = () => {
-    setShow(false);
-  };
-
-  const handleLogin = async (user: User, token: string) => {
-    setShow(false);
-
-    if (!user.team) {
-      return;
-    }
-
+  const handleUploadBtnClick = async (team: number, token: string) => {
     let hasError = false;
     for (const file of files) {
       try {
         const config: UploadConfig = {
-          team: user.team,
+          team,
           post,
           file,
           onUploadProgress: (progressEvent) => {
@@ -130,18 +115,18 @@ export default function Upload({ post }: TProps) {
               progressInfo={progressInfo}
             ></PreviewList>
             <div css={uploadBtnContainer}>
-              <Button onClick={handleShow} size="lg">
+              <Button
+                onClick={() => {
+                  handleUploadBtnClick(team, token);
+                }}
+                size="lg"
+              >
                 업로드
               </Button>
             </div>
           </>
         )}
       </div>
-      <TeamPasswordModal
-        isModalActive={show}
-        onLogin={handleLogin}
-        handleClose={handleClose}
-      ></TeamPasswordModal>
     </>
   );
 }

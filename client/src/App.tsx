@@ -6,12 +6,15 @@ import { AuthProvider } from './auth/auth.context';
 import AdminPage from './pages/admin/AdminPage';
 import LoginPage from './pages/login/LoginPage';
 import UserPage from './pages/user/UserPage';
-import DescyptionPost from './pages/posts/post-1/DecryptionPost';
 import { ToastContainer } from 'react-toastify';
 import './common/scss/style.scss';
-import MathPost from './pages/posts/post-2/MathPost';
-import SpacingPost from './pages/posts/post-3/SpacingPost';
-import EnglishPost from './pages/posts/post-4/EnglishPost';
+import { Provider } from 'react-redux';
+import { store } from './pages/posts/redux';
+import Post from './pages/posts/post/Post';
+import DecryptionImage from './pages/posts/post-images/decryption.png';
+import MathImage from './pages/posts/post-images/math.jpeg';
+import SpacingImage from './pages/posts/post-images/spacing.jpeg';
+import EnglishImage from './pages/posts/post-images/english.jpg';
 
 function Router() {
   return (
@@ -27,12 +30,26 @@ function Router() {
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/posts/descryption" element={<DescyptionPost />}></Route>
-        <Route path="/posts/math" element={<MathPost />}></Route>
-        <Route path="/posts/spacing" element={<SpacingPost />}></Route>
-        <Route path="/posts/english" element={<EnglishPost />}></Route>
-      </Routes>
+      <Provider store={store}>
+        <Routes>
+          <Route
+            path="/posts/decryption"
+            element={<Post missionImage={DecryptionImage} post={1} />}
+          ></Route>
+          <Route
+            path="/posts/math"
+            element={<Post missionImage={MathImage} post={2} />}
+          ></Route>
+          <Route
+            path="/posts/spacing"
+            element={<Post missionImage={SpacingImage} post={3} />}
+          ></Route>
+          <Route
+            path="/posts/english"
+            element={<Post missionImage={EnglishImage} post={4} />}
+          ></Route>
+        </Routes>
+      </Provider>
       <AuthProvider>
         <Router></Router>
       </AuthProvider>

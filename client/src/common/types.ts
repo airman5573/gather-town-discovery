@@ -154,3 +154,8 @@ export type UploadConfig = {
   onUploadProgress: (progressEvent: any) => void;
   accessToken?: string;
 };
+
+export type LoginInfo = {
+  team?: number;
+  token?: string;
+};

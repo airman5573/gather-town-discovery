@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { YesOrNo } from '../../../../common/types';
-import secondsToMinutes from '../../../../utils/seconds-to-minutes';
-import { getRemainTimeInSecond } from '../../../../utils/timer';
+import { YesOrNo } from '../../../common/types';
+import secondsToMinutes from '../../../utils/seconds-to-minutes';
+import { getRemainTimeInSecond } from '../../../utils/timer';
 
 type TProps = {
   team: number;
@@ -31,5 +31,5 @@ export default function Timer({ isRunning, startTime, lapTime }: TProps) {
   const cn = classNames('timer', 'text-center', {
     red: remainTime <= 0 ? true : false,
   });
-  return <h3 className={cn}>{secondsToMinutes(remainTime)}</h3>;
+  return <h4 className={cn}>남은시간 : {secondsToMinutes(remainTime)}</h4>;
 }

@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../redux';
 import { updateActiveNavMenuItem } from '../../redux/features/page-control.slice';
 import { NavMenuItemEnum } from '../../types';
 import Pages from '../page';
-import TimerContainer from '../timer/TimerContainer';
 import { mainStyle, sidebarStyle } from './style';
 
 type MenuItemProps = {
