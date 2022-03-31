@@ -74,6 +74,9 @@ export class StatisticsService {
         statistics[i + 1].contributionRank = statistics[i].contributionRank;
       }
     }
+    statistics.sort(
+      (a: TeamStatisticsDto, b: TeamStatisticsDto) => a.team - b.team,
+    );
 
     return statistics;
   }
