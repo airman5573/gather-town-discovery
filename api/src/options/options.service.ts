@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PUZZLE_PLACE_HOLDER } from 'src/constants';
+import { PUZZLE_COLS, PUZZLE_PLACE_HOLDER, PUZZLE_ROWS } from 'src/constants';
 import { OptionKey, YesOrNo } from 'src/types';
 import { shuffle } from 'src/utils/random';
 import { Repository } from 'typeorm';
@@ -188,7 +188,7 @@ export class OptionsService {
     entity.teamCount = 0;
     entity.adminPassword = '5911';
     entity.canSubmitDescryptedSentence = YesOrNo.NO;
-    entity.puzzleCount = 10 * 8;
+    entity.puzzleCount = PUZZLE_COLS * PUZZLE_ROWS;
     entity.originalPuzzleMessage = '';
     entity.shuffledPuzzleMessageWithPlaceholder = [];
     entity.lastPuzzleVideoUrl = '';
