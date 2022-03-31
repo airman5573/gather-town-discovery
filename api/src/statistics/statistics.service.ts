@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { PUZZLE_PLACE_HOLDER } from 'src/constants';
+import { PUZZLE_COLS, PUZZLE_PLACE_HOLDER } from 'src/constants';
 import { OptionsService } from 'src/options/options.service';
 import { PuzzleService } from 'src/puzzle/puzzle.service';
 import { TeamPointService } from 'src/team-point/team-point.service';
@@ -39,10 +39,13 @@ export class StatisticsService {
 
       teamStatistics.openEmptyBoxCount = 0;
       teamStatistics.openLetterBoxCount = 0;
+
       // 일반구역/글자구역을 각각 몇개 열었는지 기록
       openedBoxList.forEach((boxNum) => {
+        const [y, x] = boxNum.split(':').map(Number);
+        const index = y * PUZZLE_COLS + x;
         if (
-          shuffledPuzzleMessageWithPlaceholder[boxNum] === PUZZLE_PLACE_HOLDER
+          shuffledPuzzleMessageWithPlaceholder[index] === PUZZLE_PLACE_HOLDER
         ) {
           teamStatistics.openEmptyBoxCount += 1;
         } else {
@@ -50,8 +53,10 @@ export class StatisticsService {
         }
       });
       teamStatistics.percentageOfBoxOpen = Math.floor(
-        (teamStatistics.openEmptyBoxCount + teamStatistics.openLetterBoxCount) /
-          parseInt(puzzleCount, 10),
+        ((teamStatistics.openEmptyBoxCount +
+          teamStatistics.openLetterBoxCount) /
+          parseInt(puzzleCount, 10)) *
+          100,
       );
       teamStatistics.sumOfPoint =
         teamStatistics.usable +
