@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ADMIN_ROLE } from 'src/constants';
 import { OptionsService } from 'src/options/options.service';
+import { PointTableService } from 'src/point-table/point-table.service';
+import { TeamPointService } from 'src/team-point/team-point.service';
+import { PointType } from 'src/types';
 import { StartTimerDto, StopTimerDto } from './timer.dto';
 import { TimerEntity } from './timer.entity';
 import { TimerService } from './timer.service';
@@ -11,6 +14,8 @@ export class TimerController {
   constructor(
     private readonly timerService: TimerService,
     private readonly optionsService: OptionsService,
+    private readonly teamPointService: TeamPointService,
+    private readonly pointTableService: PointTableService,
   ) {}
 
   @Get('all')
@@ -34,7 +39,22 @@ export class TimerController {
   @Roles(ADMIN_ROLE)
   @Put('stop')
   async stop(@Body() stopTimerDto: StopTimerDto): Promise<TimerEntity> {
-    return await this.timerService.stop(stopTimerDto.team);
+    const { team } = stopTimerDto;
+    const { optionValue: lapTime } = await this.optionsService.getLapTime();
+    const { timerPlus, timerMinus } =
+      await this.pointTableService.getAllItems();
+    const diff = await this.timerService.getTimeDiff(team);
+    const lapTimeDiff = lapTime - diff;
+    const point =
+      lapTimeDiff < 0
+        ? Math.ceil(lapTimeDiff / 30) * timerMinus
+        : Math.floor(lapTimeDiff / 30) * timerPlus;
+    await this.teamPointService.updatePoint({
+      team,
+      point,
+      pointType: PointType.Timer,
+    });
+    return await this.timerService.stop(team);
   }
 
   @Roles(ADMIN_ROLE)

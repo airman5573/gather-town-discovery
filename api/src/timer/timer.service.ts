@@ -1,10 +1,9 @@
-import { LocalDateTime } from '@js-joda/core';
+import { ChronoUnit, LocalDateTime } from '@js-joda/core';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TEAMS } from 'src/constants';
-import { NotExistTeamException } from 'src/exceptions/not-exist-team.exception';
 import { YesOrNo } from 'src/types';
-import { Repository, UpdateResult } from 'typeorm';
+import { Repository } from 'typeorm';
 import { TimerEntity } from './timer.entity';
 
 @Injectable()
@@ -52,6 +51,12 @@ export class TimerService {
       await this.timerRepository.save(entity);
     }
     return entites;
+  }
+
+  async getTimeDiff(team): Promise<number> {
+    const { startTime } = await this.findOne(team);
+    const now = LocalDateTime.now();
+    return startTime.until(now, ChronoUnit.SECONDS);
   }
 
   async stop(team: number): Promise<TimerEntity> {
