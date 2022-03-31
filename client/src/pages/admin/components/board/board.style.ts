@@ -7,7 +7,7 @@ export const sidebarStyle = css`
   left: 0;
   top: 0;
   bottom: 0;
-  z-index: 9999;
+  z-index: 1000;
   background-color: #ffffff;
   box-shadow: 0 0px 15px 8px rgba(0, 0, 0, 0.06),
     0 1px 0px 0 rgba(0, 0, 0, 0.02);
