@@ -55,4 +55,5 @@ export const uploadBtnContainer = css`
   display: flex;
   justify-content: flex-end;
   padding-top: 20px;
+  margin-bottom: 20px;
 `;

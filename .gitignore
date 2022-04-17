@@ -42,3 +42,6 @@ api/.env*
 
 # public folder
 public
+
+*.pub
+*.private

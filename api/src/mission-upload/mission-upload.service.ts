@@ -92,4 +92,9 @@ export class MissionUploadService {
     entity[`post${post}` as any] = newPostArr;
     return await this.missionUploadRepository.save(entity);
   }
+
+  async didUpload(team: number): Promise<YesOrNo> {
+    const fileList = await this.getPostFileList(team);
+    return YesOrNo.YES;
+  }
 }

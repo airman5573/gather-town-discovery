@@ -17,7 +17,10 @@ const puzzleApi = createApi({
       query: () => ({ url: 'all' }),
       providesTags: ['Puzzles'],
     }),
-    open: build.mutation<PuzzleEntity, OpenPuzzleDto>({
+    open: build.mutation<
+      { isLetterBox: boolean; bingoCount: number },
+      OpenPuzzleDto
+    >({
       query: ({ team, boxKey }) => ({
         url: 'open',
         method: 'PUT',

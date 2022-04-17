@@ -33,6 +33,7 @@ export interface Timer {
   team: number;
   startTime: string;
   isRunning: YesOrNo;
+  canUpload: YesOrNo;
 }
 
 export interface Option<ValueType> {

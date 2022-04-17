@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsPositive, IsString, MinLength } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class OpenPuzzleDto {
   @IsPositive()
@@ -7,6 +14,14 @@ export class OpenPuzzleDto {
   @IsNotEmpty()
   @IsString()
   boxKey: string;
+}
+
+export class OpenPuzzleResultDto {
+  @IsBoolean()
+  isLetterBox: boolean;
+
+  @IsNumber()
+  bingoCount: number;
 }
 
 export class DescryptSentenceDto {

@@ -46,6 +46,7 @@ export class TimerService {
         team,
         startTime,
         isRunning: YesOrNo.NO,
+        canUpload: YesOrNo.YES,
       });
       entites.push(entity);
       await this.timerRepository.save(entity);
@@ -65,6 +66,17 @@ export class TimerService {
       this.timerRepository.create({
         ...timer,
         isRunning: YesOrNo.NO,
+        canUpload: YesOrNo.YES,
+      }),
+    );
+  }
+
+  async disableUpload(team: number): Promise<TimerEntity> {
+    const timer = await this.findOne(team);
+    return await this.timerRepository.save(
+      this.timerRepository.create({
+        ...timer,
+        canUpload: YesOrNo.NO,
       }),
     );
   }

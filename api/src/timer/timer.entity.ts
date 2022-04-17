@@ -18,4 +18,10 @@ export class TimerEntity extends TeamBaseEntity {
     type: 'text',
   })
   isRunning: YesOrNo;
+
+  @Column({
+    name: 'can_upload',
+    type: 'text',
+  })
+  canUpload: YesOrNo;
 }

@@ -8,14 +8,17 @@ import {
   Put,
 } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { ADMIN_ROLE, PUZZLE_COLS, PUZZLE_PLACE_HOLDER, USER_ROLE, PUZZLE_ROWS} from 'src/constants';
+import { ADMIN_ROLE, USER_ROLE } from 'src/constants';
 import { NotEnoughPointException } from 'src/exceptions/not-enough-point.exception';
 import { OptionsService } from 'src/options/options.service';
 import { PointTableService } from 'src/point-table/point-table.service';
-import { TeamPointEntity } from 'src/team-point/team-point.entity';
 import { TeamPointService } from 'src/team-point/team-point.service';
 import { PointTableKey, PointType, YesOrNo } from 'src/types';
-import { DescryptSentenceDto, OpenPuzzleDto } from './puzzle.dto';
+import {
+  DescryptSentenceDto,
+  OpenPuzzleDto,
+  OpenPuzzleResultDto,
+} from './puzzle.dto';
 import { PuzzleEntity } from './puzzle.entity';
 import { PuzzleService } from './puzzle.service';
 
@@ -42,7 +45,7 @@ export class PuzzleController {
   @Put('open')
   async openPuzzle(
     @Body() { team, boxKey }: OpenPuzzleDto,
-  ): Promise<PuzzleEntity[]> {
+  ): Promise<OpenPuzzleResultDto> {
     const pointTable = await this.pointTableService.getAllItems();
 
     // 돈 부족하면 stop
@@ -79,7 +82,7 @@ export class PuzzleController {
       pointType: PointType.BoxOpen,
     });
 
-    return puzzleEntityList;
+    return { isLetterBox, bingoCount };
   }
 
   @Roles(ADMIN_ROLE)

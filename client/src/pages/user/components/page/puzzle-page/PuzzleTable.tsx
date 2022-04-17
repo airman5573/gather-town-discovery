@@ -72,19 +72,19 @@ export default function PuzzleTable({
     setClickable(false);
     setTimeout(() => {
       setClickable(true);
-    }, 1000);
+    }, 500);
     if (!event.target) {
       return;
     }
     const el = event.target as HTMLTableCellElement;
     const boxKey = el.getAttribute('data-key');
-    if (boxKey === null) {
-      return;
-    }
+    if (boxKey === null) return;
     openPuzzle({ team, boxKey })
       .unwrap()
       .then((res) => {
-        console.log('response :', res);
+        const { isLetterBox, bingoCount } = res;
+        isLetterBox && toasty.info('글자 박스를 열었습니다!');
+        bingoCount > 0 && toasty.success('빙고를 맞추었습니다!');
       })
       .catch((err) => {
         console.log('err :', err);
